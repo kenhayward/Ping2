@@ -27,11 +27,11 @@ Partial Class frmMain
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMain))
-        Dim ChartArea2 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend2 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim ListViewGroup4 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Switch", System.Windows.Forms.HorizontalAlignment.Left)
-        Dim ListViewGroup5 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Gateway", System.Windows.Forms.HorizontalAlignment.Left)
-        Dim ListViewGroup6 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Access Point", System.Windows.Forms.HorizontalAlignment.Left)
+        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim ListViewGroup1 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Switch", System.Windows.Forms.HorizontalAlignment.Left)
+        Dim ListViewGroup2 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Gateway", System.Windows.Forms.HorizontalAlignment.Left)
+        Dim ListViewGroup3 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Access Point", System.Windows.Forms.HorizontalAlignment.Left)
         Me.PrintPreviewDialog1 = New System.Windows.Forms.PrintPreviewDialog()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.txtIPAddress = New System.Windows.Forms.TextBox()
@@ -335,22 +335,22 @@ Partial Class frmMain
         'Chart1
         '
         Me.Chart1.BorderSkin.BorderColor = System.Drawing.Color.DarkGray
-        ChartArea2.AxisX.LineColor = System.Drawing.Color.Gray
-        ChartArea2.AxisX.MajorGrid.LineColor = System.Drawing.Color.Silver
-        ChartArea2.AxisX.MinorGrid.LineColor = System.Drawing.Color.Silver
-        ChartArea2.AxisY.LineColor = System.Drawing.Color.Gray
-        ChartArea2.AxisY.MajorGrid.LineColor = System.Drawing.Color.Silver
-        ChartArea2.AxisY.Title = "Milliseconds"
-        ChartArea2.BorderColor = System.Drawing.Color.Silver
-        ChartArea2.Name = "ChartArea1"
-        Me.Chart1.ChartAreas.Add(ChartArea2)
+        ChartArea1.AxisX.LineColor = System.Drawing.Color.Gray
+        ChartArea1.AxisX.MajorGrid.LineColor = System.Drawing.Color.Silver
+        ChartArea1.AxisX.MinorGrid.LineColor = System.Drawing.Color.Silver
+        ChartArea1.AxisY.LineColor = System.Drawing.Color.Gray
+        ChartArea1.AxisY.MajorGrid.LineColor = System.Drawing.Color.Silver
+        ChartArea1.AxisY.Minimum = 0R
+        ChartArea1.AxisY.Title = "Milliseconds"
+        ChartArea1.BorderColor = System.Drawing.Color.Silver
+        ChartArea1.Name = "ChartArea1"
+        Me.Chart1.ChartAreas.Add(ChartArea1)
         Me.Chart1.Dock = System.Windows.Forms.DockStyle.Fill
-        Legend2.DockedToChartArea = "ChartArea1"
-        Legend2.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom
-        Legend2.IsDockedInsideChartArea = False
-        Legend2.LegendStyle = System.Windows.Forms.DataVisualization.Charting.LegendStyle.Row
-        Legend2.Name = "Legend1"
-        Me.Chart1.Legends.Add(Legend2)
+        Legend1.DockedToChartArea = "ChartArea1"
+        Legend1.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom
+        Legend1.IsDockedInsideChartArea = False
+        Legend1.Name = "Legend1"
+        Me.Chart1.Legends.Add(Legend1)
         Me.Chart1.Location = New System.Drawing.Point(0, 0)
         Me.Chart1.Name = "Chart1"
         Me.Chart1.Size = New System.Drawing.Size(897, 641)
@@ -406,13 +406,13 @@ Partial Class frmMain
         Me.lstIP.Dock = System.Windows.Forms.DockStyle.Fill
         Me.lstIP.FullRowSelect = True
         Me.lstIP.GridLines = True
-        ListViewGroup4.Header = "Switch"
-        ListViewGroup4.Name = "ListViewGroup1"
-        ListViewGroup5.Header = "Gateway"
-        ListViewGroup5.Name = "ListViewGroup2"
-        ListViewGroup6.Header = "Access Point"
-        ListViewGroup6.Name = "ListViewGroup3"
-        Me.lstIP.Groups.AddRange(New System.Windows.Forms.ListViewGroup() {ListViewGroup4, ListViewGroup5, ListViewGroup6})
+        ListViewGroup1.Header = "Switch"
+        ListViewGroup1.Name = "ListViewGroup1"
+        ListViewGroup2.Header = "Gateway"
+        ListViewGroup2.Name = "ListViewGroup2"
+        ListViewGroup3.Header = "Access Point"
+        ListViewGroup3.Name = "ListViewGroup3"
+        Me.lstIP.Groups.AddRange(New System.Windows.Forms.ListViewGroup() {ListViewGroup1, ListViewGroup2, ListViewGroup3})
         Me.lstIP.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable
         Me.lstIP.HideSelection = False
         Me.lstIP.Location = New System.Drawing.Point(0, 185)
@@ -491,6 +491,7 @@ Partial Class frmMain
         Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.MenuStrip1)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MainMenuStrip = Me.MenuStrip1
         Me.Margin = New System.Windows.Forms.Padding(2)
         Me.Name = "frmMain"

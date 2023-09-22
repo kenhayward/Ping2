@@ -37,7 +37,14 @@ Public Class frmMain
             If ip.Equals(PIngit) Then
                 For Each series In Chart1.Series
                     If series.Tag.Equals(PIngit) Then
-                        series.Points.AddXY(PingStep, PIngit.RoundtripTime)
+                        If series.Points.Count = 0 Then
+                            Dim MyPoint As New DataPoint(PingStep, PIngit.RoundtripTime)
+                            MyPoint.Label = PIngit.FriendlyName
+                            series.Points.Add(MyPoint)
+                        Else
+                            series.Points.AddXY(PingStep, PIngit.RoundtripTime)
+                        End If
+
                     End If
                 Next
             End If
@@ -316,7 +323,6 @@ Public Class frmMain
     End Sub
 
     Private Sub ExitToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem1.Click
-        Me.Close()
         End
     End Sub
 
@@ -367,22 +373,23 @@ Public Class frmMain
         End If
 
     End Sub
-
-    Private Sub mnuGroups_Click(sender As Object, e As EventArgs)
+    Private Sub SetSelectedItemGroup(Group As ListViewGroup)
         If lstIP.SelectedItems.Count > 0 Then
             For Each item In lstIP.SelectedItems
-                item.Group = sender.tag
+                item.Group = Group
                 CType(item.tag, PingIP).Group = CType(item.group, ListViewGroup).Header
             Next
         End If
+    End Sub
+    Private Sub mnuGroups_Click(sender As Object, e As EventArgs)
+        SetSelectedItemGroup(sender.tag)
     End Sub
     Private Sub mnuAddnew_click(sender As Object, e As EventArgs)
         Dim NewGroup As String = InputBox("Enter new Group Name", "IP Groups", "")
         If NewGroup IsNot Nothing Then
             Dim group As New ListViewGroup(NewGroup)
-            'group.CollapsedState = ListViewGroupCollapsedState.Expanded
             lstIP.Groups.Add(group)
-            mnuGroups_Click(sender, e)
+            SetSelectedItemGroup(group)
         End If
     End Sub
     Private Sub ShowChart()
@@ -414,7 +421,7 @@ Public Class frmMain
 
     Private Sub btnResetGraph_Click(sender As Object, e As EventArgs) Handles btnResetGraph.Click
         Me.Chart1.Series.Clear()
-
+        Me.ChartIPs.Clear()
     End Sub
     Private ChartIPs As New List(Of PingIP)
 
@@ -433,7 +440,6 @@ Public Class frmMain
                 If Not Foundit Then
                     ChartIPs.Add(MyIP)
                     Dim MySeries As New Series(MyIP.FriendlyName)
-                    'MySeries.ChartType = SeriesChartType.Line
                     MySeries.Tag = MyIP
                     MySeries.BorderWidth = 5
                     MySeries.IsValueShownAsLabel = True

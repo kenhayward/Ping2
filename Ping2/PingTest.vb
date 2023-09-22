@@ -47,7 +47,7 @@ Public Class PingIP
             Me.IPAddress = reply.Address.ToString()
             Me.RoundtripTime = reply.RoundtripTime
             Me.ttl = reply.Options.Ttl
-            If Me.HostName Is Nothing Or Me.HostName = Me.IPAddress Then
+            If Me.HostName Is Nothing Then
                 Me.HostName = GetHostName(IPAddress)
             End If
             Me.Success = True
