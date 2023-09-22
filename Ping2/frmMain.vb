@@ -4,6 +4,7 @@ Imports System
 Imports System.Net
 Imports System.Threading
 Imports System.ComponentModel
+Imports System.Windows.Forms.DataVisualization.Charting
 
 Public Class frmMain
     Public Event PingResult(Ping As PingIP)
@@ -12,6 +13,8 @@ Public Class frmMain
     Private RefreshNow As Boolean ' Refresh the ping list immediately then revert to refreshinterval
     Private RefreshInterval As Integer = 1
     Private WithEvents RefreshWorker As BackgroundWorker
+    Private PingStep As Long
+
     Private Sub AddGroup(Pingit As PingIP, Item As ListViewItem)
         If Pingit.Group <> "" Then
             Dim thisGroup As ListViewGroup = Nothing
@@ -27,8 +30,20 @@ Public Class frmMain
         End If
     End Sub
     Private Sub UpdateListView(PIngit As PingIP)
-        'UpdateStatus("Refreshing " & PIngit.FriendlyName)
-        'lstIP.BeginUpdate()
+
+
+        ' Update the Chart if needed
+        For Each ip In ChartIPs
+            If ip.Equals(PIngit) Then
+                For Each series In Chart1.Series
+                    If series.Tag.Equals(PIngit) Then
+                        series.Points.AddXY(PingStep, PIngit.RoundtripTime)
+                    End If
+                Next
+            End If
+        Next
+
+
         Dim MyItem As ListViewItem = Nothing
         For Each item In lstIP.Items
             If item.tag.Equals(PIngit) Then
@@ -148,6 +163,7 @@ Public Class frmMain
     Private Sub btnAddIP_Click(sender As Object, e As EventArgs) Handles btnAddIP.Click
         CreatePing(txtIPAddress.Text.Trim, txtFriendly.Text.Trim, "")
         StartWorker()
+        Me.lstIP.Refresh()
     End Sub
 
     Private Sub StartWorker()
@@ -180,7 +196,7 @@ Public Class frmMain
         Do
             SyncLock (Blocking)
                 Dim x As Integer = 0
-
+                PingStep += 1
                 For Each pingit In PingList
                     x += 1
                     UpdateStatus("Pinging " & pingit.Value.FriendlyName & " (" & pingit.Value.RequestedAddress & ")")
@@ -321,6 +337,16 @@ Public Class frmMain
         SetStyle(ControlStyles.AllPaintingInWmPaint, True)
         SetStyle(ControlStyles.UserPaint, True)
         SetStyle(ControlStyles.DoubleBuffer, True)
+        lstIP.Columns(0).Width = 122
+        lstIP.Columns(1).Width = 138
+        lstIP.Columns(2).Width = 81
+        lstIP.Columns(3).Width = 161
+        lstIP.Columns(4).Width = 77
+        lstIP.Columns(5).Width = 77
+        lstIP.Columns(6).Width = 77
+        lstIP.Columns(7).Width = 77
+        lstIP.Columns(8).Width = 77
+        lstIP.Columns(9).Width = 77
     End Sub
 
     Private Sub lstContextMenu_Opening(sender As Object, e As CancelEventArgs) Handles lstContextMenu.Opening
@@ -359,18 +385,74 @@ Public Class frmMain
             mnuGroups_Click(sender, e)
         End If
     End Sub
+    Private Sub ShowChart()
+        ShowChartToolStripMenuItem.Text = "Hide Chart"
+        pnlChart.Visible = True
 
-    Private Sub lstIP_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lstIP.SelectedIndexChanged
-
+        'For Each col In lstIP.Columns
+        ' Debug.Print(col.text & " " & col.width)
+        ' Next
+    End Sub
+    Private Sub HideChart()
+        ShowChartToolStripMenuItem.Text = "Show Chart"
+        pnlChart.Visible = False
+    End Sub
+    Private Function isChartVisible() As Boolean
+        If ShowChartToolStripMenuItem.Text = "Show Chart" Then
+            Return False
+        Else
+            Return True
+        End If
+    End Function
+    Private Sub ShowChartToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowChartToolStripMenuItem.Click
+        If isChartVisible() Then
+            HideChart()
+        Else
+            ShowChart()
+        End If
     End Sub
 
-    Private Sub ShowChartToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowChartToolStripMenuItem.Click
-        If ShowChartToolStripMenuItem.Text = "Show Chart" Then
-            ShowChartToolStripMenuItem.Text = "Hide Chart"
-            Chart1.Visible = True
-        Else
-            ShowChartToolStripMenuItem.Text = "Show Chart"
-            Chart1.Visible = False
+    Private Sub btnResetGraph_Click(sender As Object, e As EventArgs) Handles btnResetGraph.Click
+        Me.Chart1.Series.Clear()
+
+    End Sub
+    Private ChartIPs As New List(Of PingIP)
+
+    Private Sub AddToChartToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AddToChartToolStripMenuItem.Click
+        ' Add this one to the chart as a new series
+        If lstIP.SelectedItems.Count > 0 Then
+            For Each item In lstIP.SelectedItems
+                Dim MyIP As PingIP = item.tag
+                Dim Foundit As Boolean = False
+                For Each ChartPing In ChartIPs
+                    If ChartPing.Equals(MyIP) Then
+                        Foundit = True
+                        Exit For
+                    End If
+                Next
+                If Not Foundit Then
+                    ChartIPs.Add(MyIP)
+                    Dim MySeries As New Series(MyIP.FriendlyName)
+                    'MySeries.ChartType = SeriesChartType.Line
+                    MySeries.Tag = MyIP
+                    MySeries.BorderWidth = 5
+                    MySeries.IsValueShownAsLabel = True
+                    MySeries.ChartType = SeriesChartType.Spline
+
+                    Me.Chart1.Series.Add(MySeries)
+                    If Not isChartVisible() Then
+                        ShowChart()
+                    End If
+                Else
+                    ChartIPs.Remove(MyIP)
+                    For Each series In Chart1.Series
+                        If series.Tag.Equals(MyIP) Then
+                            Chart1.Series.Remove(series)
+                            Exit For
+                        End If
+                    Next
+                End If
+            Next
         End If
     End Sub
 End Class
