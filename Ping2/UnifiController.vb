@@ -12,6 +12,15 @@ Imports RestSharp
     Public Property UserName As String
     Public Property Password As String
     Public Property Site As String
+    <NonSerialized()> Private Token As Cookie
+    <NonSerialized()> Private _LoggedIn As Boolean
+    <NonSerialized()> Private LastResponse As RestResponse
+    <NonSerialized()> Private Client As RestClient
+    Public ReadOnly Property LoggedIn As Boolean
+        Get
+            Return _LoggedIn
+        End Get
+    End Property
 
     Const LoginFormat = """username"": ""{0}"", ""password"": ""{1}"""
 
@@ -41,24 +50,63 @@ Imports RestSharp
         End Try
 
     End Sub
-
-    Public Function Test() As Boolean
-        Dim client = New RestClient(URLBase & "auth/login")
-        Dim request As RestRequest = New RestRequest
-        request.Method = Method.Post
+    Public Function Login() As Boolean
+        Dim JSONString = "{" & String.Format(LoginFormat, UserName, Password) & "}"
+        Dim Result As Boolean = False
+        Dim Response = ExecutePOST("auth/login", JSONString)
+        If Response.StatusCode = Net.HttpStatusCode.OK Then
+            ' Save Cookie with Login Token
+            If Response.Cookies.Count > 0 Then
+                Token = Response.Cookies(0)
+                Result = True
+            End If
+        End If
+        Return Result
+    End Function
+    Public Function ExecuteGET(Endpoint As String) As RestResponse
+        If Client Is Nothing Then
+            Client = New RestClient(URLBase)
+        End If
+        Dim request As RestRequest = New RestRequest(Endpoint, Method.Get)
         ServicePointManager.ServerCertificateValidationCallback =
             New RemoteCertificateValidationCallback(AddressOf AcceptAllCertifications)
         ServicePointManager.Expect100Continue = True
         ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
-        'ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
+        If Token IsNot Nothing Then
+            request.CookieContainer = New CookieContainer
+            request.CookieContainer.Add(Token)
+        End If
+        Dim response As RestResponse = client.Execute(request)
+        LastResponse = response
+        Return response
+
+    End Function
+    Public Function ExecutePOST(Endpoint As String, Payload As String) As RestResponse
+        If client Is Nothing Then
+            Client = New RestClient(URLBase)
+        End If
+        Dim request As RestRequest = New RestRequest(Endpoint, Method.Post)
+        ServicePointManager.ServerCertificateValidationCallback =
+            New RemoteCertificateValidationCallback(AddressOf AcceptAllCertifications)
+        ServicePointManager.Expect100Continue = True
+        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
 
         request.AddHeader("content-type", "application/json")
-        'request.AddParameter("application/json", strOutput, ParameterType.RequestBody)
         Dim JSONString = "{" & String.Format(LoginFormat, UserName, Password) & "}"
-        request.AddParameter("application/json", JSONString, ParameterType.RequestBody)
+        request.AddParameter("application/json", Payload, ParameterType.RequestBody)
+        If Token IsNot Nothing Then
+            request.CookieContainer = New CookieContainer
+            request.CookieContainer.Add(Token)
+        End If
+
         Dim response As RestResponse = client.Execute(request)
-        Debug.Print(response.Content)
-        If response.StatusCode = Net.HttpStatusCode.OK Then
+        LastResponse = response
+        Return response
+
+    End Function
+    Public Function Test() As Boolean
+        Dim LogResult = Login()
+        If LogResult Then
             Return True
         Else
             Return False
