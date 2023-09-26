@@ -14,7 +14,7 @@ Public Class frmMain
     Private RefreshInterval As Integer = 1
     Private WithEvents RefreshWorker As BackgroundWorker
     Private PingStep As Long
-
+    Public UnifiController As New UnifiController
     Private Sub AddGroup(Pingit As PingIP, Item As ListViewItem)
         If Pingit.Group <> "" Then
             Dim thisGroup As ListViewGroup = Nothing
@@ -25,6 +25,7 @@ Public Class frmMain
             Next
             If thisGroup Is Nothing Then
                 thisGroup = New ListViewGroup(Pingit.Group)
+                lstIP.Groups.Add(thisGroup)
             End If
             Item.Group = thisGroup
         End If
@@ -460,5 +461,13 @@ Public Class frmMain
                 End If
             Next
         End If
+    End Sub
+
+    Private Sub mnuUnifi_Click(sender As Object, e As EventArgs) Handles mnuUnifi.Click
+        Dim MyForm As New frmUnifi
+        MyForm.Controller = Me.UnifiController
+
+        MyForm.ShowDialog()
+
     End Sub
 End Class

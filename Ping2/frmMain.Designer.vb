@@ -37,6 +37,8 @@ Partial Class frmMain
         Me.txtIPAddress = New System.Windows.Forms.TextBox()
         Me.lstContextMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.mnuGroups = New System.Windows.Forms.ToolStripMenuItem()
+        Me.AddToChartToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
         Me.RemoveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.NumInterval = New System.Windows.Forms.NumericUpDown()
@@ -63,8 +65,6 @@ Partial Class frmMain
         Me.Chart1 = New System.Windows.Forms.DataVisualization.Charting.Chart()
         Me.Splitter1 = New System.Windows.Forms.Splitter()
         Me.btnResetGraph = New System.Windows.Forms.Button()
-        Me.AddToChartToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
         Me.pnlChart = New System.Windows.Forms.Panel()
         Me.lstIP = New Ping.ListViewX()
         Me.ColumnHeader7 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
@@ -77,6 +77,7 @@ Partial Class frmMain
         Me.ColumnHeader6 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader8 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader9 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.mnuUnifi = New System.Windows.Forms.ToolStripMenuItem()
         Me.lstContextMenu.SuspendLayout()
         CType(Me.NumInterval, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MenuStrip1.SuspendLayout()
@@ -127,6 +128,17 @@ Partial Class frmMain
         Me.mnuGroups.Name = "mnuGroups"
         Me.mnuGroups.Size = New System.Drawing.Size(397, 44)
         Me.mnuGroups.Text = "Group"
+        '
+        'AddToChartToolStripMenuItem
+        '
+        Me.AddToChartToolStripMenuItem.Name = "AddToChartToolStripMenuItem"
+        Me.AddToChartToolStripMenuItem.Size = New System.Drawing.Size(397, 44)
+        Me.AddToChartToolStripMenuItem.Text = "Add / Remove from Chart"
+        '
+        'ToolStripSeparator1
+        '
+        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(394, 6)
         '
         'RemoveToolStripMenuItem
         '
@@ -182,7 +194,7 @@ Partial Class frmMain
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.Padding = New System.Windows.Forms.Padding(12, 4, 0, 4)
-        Me.MenuStrip1.Size = New System.Drawing.Size(2204, 54)
+        Me.MenuStrip1.Size = New System.Drawing.Size(2204, 51)
         Me.MenuStrip1.TabIndex = 14
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -190,7 +202,7 @@ Partial Class frmMain
         '
         Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OpenIPListToolStripMenuItem, Me.SaveIPListToolStripMenuItem, Me.ExitToolStripMenuItem, Me.ExitToolStripMenuItem1})
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
-        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(80, 46)
+        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(80, 43)
         Me.FileToolStripMenuItem.Text = "&File"
         '
         'OpenIPListToolStripMenuItem
@@ -220,29 +232,29 @@ Partial Class frmMain
         '
         'EditToolStripMenuItem
         '
-        Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RemoveSelectedToolStripMenuItem, Me.EditGroupingToolStripMenuItem})
+        Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RemoveSelectedToolStripMenuItem, Me.EditGroupingToolStripMenuItem, Me.mnuUnifi})
         Me.EditToolStripMenuItem.Name = "EditToolStripMenuItem"
-        Me.EditToolStripMenuItem.Size = New System.Drawing.Size(85, 46)
+        Me.EditToolStripMenuItem.Size = New System.Drawing.Size(85, 43)
         Me.EditToolStripMenuItem.Text = "&Edit"
         '
         'RemoveSelectedToolStripMenuItem
         '
         Me.RemoveSelectedToolStripMenuItem.Name = "RemoveSelectedToolStripMenuItem"
         Me.RemoveSelectedToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete
-        Me.RemoveSelectedToolStripMenuItem.Size = New System.Drawing.Size(426, 48)
+        Me.RemoveSelectedToolStripMenuItem.Size = New System.Drawing.Size(451, 48)
         Me.RemoveSelectedToolStripMenuItem.Text = "&Remove Selected"
         '
         'EditGroupingToolStripMenuItem
         '
         Me.EditGroupingToolStripMenuItem.Name = "EditGroupingToolStripMenuItem"
-        Me.EditGroupingToolStripMenuItem.Size = New System.Drawing.Size(426, 48)
+        Me.EditGroupingToolStripMenuItem.Size = New System.Drawing.Size(451, 48)
         Me.EditGroupingToolStripMenuItem.Text = "Edit Grouping"
         '
         'ViewToolStripMenuItem
         '
         Me.ViewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowChartToolStripMenuItem})
         Me.ViewToolStripMenuItem.Name = "ViewToolStripMenuItem"
-        Me.ViewToolStripMenuItem.Size = New System.Drawing.Size(97, 46)
+        Me.ViewToolStripMenuItem.Size = New System.Drawing.Size(97, 43)
         Me.ViewToolStripMenuItem.Text = "View"
         '
         'ShowChartToolStripMenuItem
@@ -265,7 +277,7 @@ Partial Class frmMain
         Me.Panel1.Controls.Add(Me.btnAddIP)
         Me.Panel1.Controls.Add(Me.Label2)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Panel1.Location = New System.Drawing.Point(0, 54)
+        Me.Panel1.Location = New System.Drawing.Point(0, 51)
         Me.Panel1.Margin = New System.Windows.Forms.Padding(6)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(2204, 131)
@@ -353,7 +365,7 @@ Partial Class frmMain
         Me.Chart1.Legends.Add(Legend1)
         Me.Chart1.Location = New System.Drawing.Point(0, 0)
         Me.Chart1.Name = "Chart1"
-        Me.Chart1.Size = New System.Drawing.Size(897, 641)
+        Me.Chart1.Size = New System.Drawing.Size(897, 644)
         Me.Chart1.TabIndex = 17
         Me.Chart1.Text = "Chart1"
         '
@@ -361,41 +373,30 @@ Partial Class frmMain
         '
         Me.Splitter1.BackColor = System.Drawing.SystemColors.Highlight
         Me.Splitter1.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Splitter1.Location = New System.Drawing.Point(1297, 185)
+        Me.Splitter1.Location = New System.Drawing.Point(1297, 182)
         Me.Splitter1.Name = "Splitter1"
-        Me.Splitter1.Size = New System.Drawing.Size(10, 641)
+        Me.Splitter1.Size = New System.Drawing.Size(10, 644)
         Me.Splitter1.TabIndex = 18
         Me.Splitter1.TabStop = False
         '
         'btnResetGraph
         '
         Me.btnResetGraph.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnResetGraph.Location = New System.Drawing.Point(773, 585)
+        Me.btnResetGraph.Location = New System.Drawing.Point(773, 588)
         Me.btnResetGraph.Name = "btnResetGraph"
         Me.btnResetGraph.Size = New System.Drawing.Size(121, 53)
         Me.btnResetGraph.TabIndex = 19
         Me.btnResetGraph.Text = "Reset"
         Me.btnResetGraph.UseVisualStyleBackColor = True
         '
-        'AddToChartToolStripMenuItem
-        '
-        Me.AddToChartToolStripMenuItem.Name = "AddToChartToolStripMenuItem"
-        Me.AddToChartToolStripMenuItem.Size = New System.Drawing.Size(397, 44)
-        Me.AddToChartToolStripMenuItem.Text = "Add / Remove from Chart"
-        '
-        'ToolStripSeparator1
-        '
-        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        Me.ToolStripSeparator1.Size = New System.Drawing.Size(394, 6)
-        '
         'pnlChart
         '
         Me.pnlChart.Controls.Add(Me.btnResetGraph)
         Me.pnlChart.Controls.Add(Me.Chart1)
         Me.pnlChart.Dock = System.Windows.Forms.DockStyle.Right
-        Me.pnlChart.Location = New System.Drawing.Point(1307, 185)
+        Me.pnlChart.Location = New System.Drawing.Point(1307, 182)
         Me.pnlChart.Name = "pnlChart"
-        Me.pnlChart.Size = New System.Drawing.Size(897, 641)
+        Me.pnlChart.Size = New System.Drawing.Size(897, 644)
         Me.pnlChart.TabIndex = 20
         Me.pnlChart.Visible = False
         '
@@ -415,10 +416,10 @@ Partial Class frmMain
         Me.lstIP.Groups.AddRange(New System.Windows.Forms.ListViewGroup() {ListViewGroup1, ListViewGroup2, ListViewGroup3})
         Me.lstIP.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable
         Me.lstIP.HideSelection = False
-        Me.lstIP.Location = New System.Drawing.Point(0, 185)
+        Me.lstIP.Location = New System.Drawing.Point(0, 182)
         Me.lstIP.Margin = New System.Windows.Forms.Padding(2)
         Me.lstIP.Name = "lstIP"
-        Me.lstIP.Size = New System.Drawing.Size(1297, 641)
+        Me.lstIP.Size = New System.Drawing.Size(1297, 644)
         Me.lstIP.TabIndex = 4
         Me.lstIP.UseCompatibleStateImageBehavior = False
         Me.lstIP.View = System.Windows.Forms.View.Details
@@ -478,6 +479,12 @@ Partial Class frmMain
         Me.ColumnHeader9.Text = "Failures"
         Me.ColumnHeader9.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.ColumnHeader9.Width = 150
+        '
+        'mnuUnifi
+        '
+        Me.mnuUnifi.Name = "mnuUnifi"
+        Me.mnuUnifi.Size = New System.Drawing.Size(451, 48)
+        Me.mnuUnifi.Text = "Unifi Controller Settings"
         '
         'frmMain
         '
@@ -557,4 +564,5 @@ Partial Class frmMain
     Friend WithEvents AddToChartToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator1 As ToolStripSeparator
     Friend WithEvents pnlChart As Panel
+    Friend WithEvents mnuUnifi As ToolStripMenuItem
 End Class
