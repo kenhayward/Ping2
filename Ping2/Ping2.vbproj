@@ -117,6 +117,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\UNIFIClient.vb" />
     <Compile Include="Forms\frmUnifi.Designer.vb">
       <DependentUpon>frmUnifi.vb</DependentUpon>
     </Compile>

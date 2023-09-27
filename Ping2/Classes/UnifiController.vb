@@ -6,6 +6,7 @@ Imports System.Runtime.Serialization.Formatters.Binary
 Imports System.Security.Cryptography.X509Certificates
 Imports System.Windows.Forms.VisualStyles
 Imports Newtonsoft.Json
+Imports Newtonsoft.Json.Converters
 Imports Newtonsoft.Json.Linq
 Imports RestSharp
 
@@ -26,10 +27,17 @@ Imports RestSharp
             Return _LoggedIn
         End Get
     End Property
+
     <NonSerialized()> Private ReadOnly _Devicelist As New UnifiDeviceList
     Public ReadOnly Property DeviceList As UnifiDeviceList
         Get
             Return _Devicelist
+        End Get
+    End Property
+    <NonSerialized()> Private ReadOnly _Clientlist As New UnifiClientList
+    Public ReadOnly Property ClientList As UnifiClientList
+        Get
+            Return _Clientlist
         End Get
     End Property
 
@@ -120,7 +128,61 @@ Imports RestSharp
         Return response
 
     End Function
+    Public Function GetClientList() As Boolean
+        Me.ClientList.Clear()
+        Dim Response = ExecuteGET("/proxy/network/api/s/" & Site & "/rest/user")
+        If Response.StatusCode = HttpStatusCode.OK Then
+            Dim jsonData As JObject = JsonConvert.DeserializeObject(Of Object)(Response.Content)
+            Dim JSONDeviceList As JArray = jsonData("data")
+            For Each UnifiClient In JSONDeviceList.Children()
+                Dim thisCLient As New UNIFIClient
 
+                For Each dataelement As Object In UnifiClient.Children
+                    Select Case dataelement.Name
+                        Case "is_wired"
+                            If dataelement.value = "true" Then
+                                thisCLient.Wifi = False
+                            Else
+                                thisCLient.Wifi = True
+                            End If
+                        Case "oui"
+                            thisCLient.Organisation = dataelement.value
+                        Case "mac"
+                            thisCLient.MacAddress = dataelement.value
+                        Case "name"
+                            thisCLient.Name = dataelement.value
+                        Case "hostname"
+                            thisCLient.HostName = dataelement.value
+                        Case "ip", "last_ip"
+                            'thisCLient.IP = dataelement.value
+                            Dim lastdot = dataelement.value.ToString.LastIndexOf(".")
+                            thisCLient.IP = dataelement.value.ToString.Substring(0, lastdot)
+                            Dim finalvalue As Integer = Val(dataelement.value.ToString.Substring(lastdot + 1))
+                            thisCLient.IP &= "." & finalvalue.ToString("000")
+
+                        Case "first_seen"
+                            thisCLient.FirstSeen = UnixToDateTime(dataelement.value)
+                        Case "last_seen"
+                            thisCLient.LastSeen = UnixToDateTime(dataelement.value)
+                        Case Else
+                            'Debug.Print("Name: " & dataelement.name & " Value: " & dataelement.value)
+                    End Select
+                Next
+                If thisCLient.IP IsNot Nothing Then
+                    ClientList.Add(thisCLient)
+                End If
+            Next
+        End If
+        Return True
+    End Function
+    Public Function UnixToDateTime(ByVal strUnixTime As String) As DateTime
+
+        Dim nTimestamp As Double = strUnixTime
+        Dim nDateTime As System.DateTime = New System.DateTime(1970, 1, 1, 0, 0, 0, 0)
+        nDateTime = nDateTime.AddSeconds(nTimestamp)
+        Return nDateTime
+
+    End Function
     Public Function GetDeviceList() As Boolean
         Me.DeviceList.Clear()
         Dim Response = ExecuteGET("/proxy/network/api/s/" & Site & "/stat/device")
@@ -161,6 +223,10 @@ Imports RestSharp
             ' Now get the device details
             If Not GetDeviceList() Then
                 LogResult = False
+            Else
+                If Not GetClientList() Then
+                    LogResult = False
+                End If
             End If
         End If
         Return LogResult

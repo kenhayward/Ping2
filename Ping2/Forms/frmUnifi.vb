@@ -54,6 +54,22 @@ Public Class frmUnifi
                 MyItem.SubItems.Add(device.MacAddress)
                 MyItem.SubItems.Add(device.Version)
                 Me.lstUnifiDevices.Items.Add(MyItem)
+                MyItem.Tag = device
+            Next
+            Me.lstClient.Items.Clear()
+            For Each client In TestController.ClientList
+                Dim MyItem As New ListViewItem
+                MyItem.Text = client.Name
+                If client.HostName IsNot Nothing Then MyItem.Text &= "(" & client.HostName & ")"
+                MyItem.SubItems.Add(client.Organisation)
+                MyItem.SubItems.Add(client.IP)
+                MyItem.SubItems.Add(client.MacAddress)
+                MyItem.SubItems.Add(client.Wifi.ToString)
+                MyItem.SubItems.Add(client.FirstSeen.ToString)
+                MyItem.SubItems.Add(client.LastSeen.ToString)
+
+                MyItem.Tag = client
+                Me.lstClient.Items.Add(MyItem)
             Next
         Else
             MsgBox("Login Failure", MsgBoxStyle.OkOnly, "Unifi Controller Login")
@@ -77,5 +93,17 @@ Public Class frmUnifi
         Catch ex As Exception
             Me.txtResponse.Text = Response.Content
         End Try
+    End Sub
+
+    Private Sub ColumnClick(ByVal sender As Object,
+    ByVal e As System.Windows.Forms.ColumnClickEventArgs) _
+    Handles lstClient.ColumnClick
+        If lstClient.Columns.Item(e.Column).ListView.Sorting <> SortOrder.Descending Then
+            lstClient.Columns.Item(e.Column).ListView.Sorting = SortOrder.Descending
+        ElseIf lstClient.Columns.Item(e.Column).ListView.Sorting <> SortOrder.Ascending Then
+            lstClient.Columns.Item(e.Column).ListView.Sorting = SortOrder.Ascending
+        End If
+        lstClient.Sort()
+
     End Sub
 End Class

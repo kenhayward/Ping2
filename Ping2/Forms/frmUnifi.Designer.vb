@@ -40,7 +40,6 @@ Partial Class frmUnifi
         Me.txtResponse = New System.Windows.Forms.TextBox()
         Me.pnlTest = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
-        Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.lstUnifiDevices = New System.Windows.Forms.ListView()
         Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
@@ -49,10 +48,21 @@ Partial Class frmUnifi
         Me.ColumnHeader5 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader6 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader7 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.lblRequest = New System.Windows.Forms.Label()
+        Me.TabPage3 = New System.Windows.Forms.TabPage()
+        Me.lstClient = New System.Windows.Forms.ListView()
+        Me.ColumnHeader8 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader9 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader10 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader11 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader12 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader13 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader14 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.lblCode = New System.Windows.Forms.Label()
+        Me.lblRequest = New System.Windows.Forms.Label()
         Me.pnlTest.SuspendLayout()
         Me.TabPage1.SuspendLayout()
+        Me.TabPage3.SuspendLayout()
         Me.TabPage2.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -201,7 +211,11 @@ Partial Class frmUnifi
         '
         'pnlTest
         '
+        Me.pnlTest.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.pnlTest.Controls.Add(Me.TabPage1)
+        Me.pnlTest.Controls.Add(Me.TabPage3)
         Me.pnlTest.Controls.Add(Me.TabPage2)
         Me.pnlTest.Enabled = False
         Me.pnlTest.Location = New System.Drawing.Point(12, 116)
@@ -220,23 +234,6 @@ Partial Class frmUnifi
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Device List"
         Me.TabPage1.UseVisualStyleBackColor = True
-        '
-        'TabPage2
-        '
-        Me.TabPage2.Controls.Add(Me.lblCode)
-        Me.TabPage2.Controls.Add(Me.lblRequest)
-        Me.TabPage2.Controls.Add(Me.txtResponse)
-        Me.TabPage2.Controls.Add(Me.Label5)
-        Me.TabPage2.Controls.Add(Me.Label6)
-        Me.TabPage2.Controls.Add(Me.txtEndPoint)
-        Me.TabPage2.Controls.Add(Me.btnTest)
-        Me.TabPage2.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage2.Name = "TabPage2"
-        Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(801, 325)
-        Me.TabPage2.TabIndex = 1
-        Me.TabPage2.Text = "Debug Test"
-        Me.TabPage2.UseVisualStyleBackColor = True
         '
         'lstUnifiDevices
         '
@@ -283,14 +280,81 @@ Partial Class frmUnifi
         Me.ColumnHeader7.Text = "Version"
         Me.ColumnHeader7.Width = 100
         '
-        'lblRequest
+        'TabPage3
         '
-        Me.lblRequest.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lblRequest.Location = New System.Drawing.Point(355, 11)
-        Me.lblRequest.Name = "lblRequest"
-        Me.lblRequest.Size = New System.Drawing.Size(440, 23)
-        Me.lblRequest.TabIndex = 16
+        Me.TabPage3.Controls.Add(Me.lstClient)
+        Me.TabPage3.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage3.Name = "TabPage3"
+        Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage3.Size = New System.Drawing.Size(801, 325)
+        Me.TabPage3.TabIndex = 2
+        Me.TabPage3.Text = "Client List"
+        Me.TabPage3.UseVisualStyleBackColor = True
+        '
+        'lstClient
+        '
+        Me.lstClient.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader8, Me.ColumnHeader9, Me.ColumnHeader10, Me.ColumnHeader11, Me.ColumnHeader12, Me.ColumnHeader13, Me.ColumnHeader14})
+        Me.lstClient.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.lstClient.FullRowSelect = True
+        Me.lstClient.HideSelection = False
+        Me.lstClient.Location = New System.Drawing.Point(3, 3)
+        Me.lstClient.Name = "lstClient"
+        Me.lstClient.Size = New System.Drawing.Size(795, 319)
+        Me.lstClient.Sorting = System.Windows.Forms.SortOrder.Ascending
+        Me.lstClient.TabIndex = 1
+        Me.lstClient.UseCompatibleStateImageBehavior = False
+        Me.lstClient.View = System.Windows.Forms.View.Details
+        '
+        'ColumnHeader8
+        '
+        Me.ColumnHeader8.Text = "Name"
+        Me.ColumnHeader8.Width = 150
+        '
+        'ColumnHeader9
+        '
+        Me.ColumnHeader9.Text = "Organisation"
+        Me.ColumnHeader9.Width = 150
+        '
+        'ColumnHeader10
+        '
+        Me.ColumnHeader10.Text = "IP"
+        Me.ColumnHeader10.Width = 100
+        '
+        'ColumnHeader11
+        '
+        Me.ColumnHeader11.Text = "MAC"
+        Me.ColumnHeader11.Width = 100
+        '
+        'ColumnHeader12
+        '
+        Me.ColumnHeader12.Text = "WiFi"
+        '
+        'ColumnHeader13
+        '
+        Me.ColumnHeader13.Text = "First Seen"
+        Me.ColumnHeader13.Width = 120
+        '
+        'ColumnHeader14
+        '
+        Me.ColumnHeader14.Text = "Last Seen"
+        Me.ColumnHeader14.Width = 120
+        '
+        'TabPage2
+        '
+        Me.TabPage2.Controls.Add(Me.lblCode)
+        Me.TabPage2.Controls.Add(Me.lblRequest)
+        Me.TabPage2.Controls.Add(Me.txtResponse)
+        Me.TabPage2.Controls.Add(Me.Label5)
+        Me.TabPage2.Controls.Add(Me.Label6)
+        Me.TabPage2.Controls.Add(Me.txtEndPoint)
+        Me.TabPage2.Controls.Add(Me.btnTest)
+        Me.TabPage2.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage2.Name = "TabPage2"
+        Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage2.Size = New System.Drawing.Size(801, 325)
+        Me.TabPage2.TabIndex = 1
+        Me.TabPage2.Text = "Debug Test"
+        Me.TabPage2.UseVisualStyleBackColor = True
         '
         'lblCode
         '
@@ -300,6 +364,15 @@ Partial Class frmUnifi
         Me.lblCode.Name = "lblCode"
         Me.lblCode.Size = New System.Drawing.Size(55, 250)
         Me.lblCode.TabIndex = 17
+        '
+        'lblRequest
+        '
+        Me.lblRequest.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lblRequest.Location = New System.Drawing.Point(355, 11)
+        Me.lblRequest.Name = "lblRequest"
+        Me.lblRequest.Size = New System.Drawing.Size(440, 23)
+        Me.lblRequest.TabIndex = 16
         '
         'frmUnifi
         '
@@ -320,7 +393,6 @@ Partial Class frmUnifi
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.btnOK)
         Me.Controls.Add(Me.btnCancel)
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.Margin = New System.Windows.Forms.Padding(1)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
@@ -328,6 +400,7 @@ Partial Class frmUnifi
         Me.Text = "Setup Unifi Controller"
         Me.pnlTest.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
+        Me.TabPage3.ResumeLayout(False)
         Me.TabPage2.ResumeLayout(False)
         Me.TabPage2.PerformLayout()
         Me.ResumeLayout(False)
@@ -364,4 +437,13 @@ Partial Class frmUnifi
     Friend WithEvents ColumnHeader7 As ColumnHeader
     Friend WithEvents lblCode As Label
     Friend WithEvents lblRequest As Label
+    Friend WithEvents TabPage3 As TabPage
+    Friend WithEvents lstClient As ListView
+    Friend WithEvents ColumnHeader8 As ColumnHeader
+    Friend WithEvents ColumnHeader9 As ColumnHeader
+    Friend WithEvents ColumnHeader10 As ColumnHeader
+    Friend WithEvents ColumnHeader11 As ColumnHeader
+    Friend WithEvents ColumnHeader12 As ColumnHeader
+    Friend WithEvents ColumnHeader13 As ColumnHeader
+    Friend WithEvents ColumnHeader14 As ColumnHeader
 End Class
