@@ -118,6 +118,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\UNIFIClient.vb" />
+    <Compile Include="Classes\UNIFIDeviceType.vb" />
     <Compile Include="Forms\frmUnifi.Designer.vb">
       <DependentUpon>frmUnifi.vb</DependentUpon>
     </Compile>

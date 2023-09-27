@@ -15,9 +15,15 @@ Imports RestSharp
     Public Property URLBase As String
     Public Property UserName As String
     Public Property Password As String
+    <NonSerialized()> Private ReadOnly _DeviceTypes As New UNIFIDeviceTypes
+    Public ReadOnly Property DeviceTypes As UNIFIDeviceTypes
+        Get
+            Return _DeviceTypes
+        End Get
+    End Property
     Public Property Site As String
     <NonSerialized()> Private Token As Cookie
-    <NonSerialized()> Private _LoggedIn As Boolean
+    <NonSerialized()> Private ReadOnly _LoggedIn As Boolean
     <NonSerialized()> Private LastResponse As RestResponse
     <NonSerialized()> Private Client As RestClient
     <NonSerialized()> Private _csrf_token
@@ -134,10 +140,10 @@ Imports RestSharp
         If Response.StatusCode = HttpStatusCode.OK Then
             Dim jsonData As JObject = JsonConvert.DeserializeObject(Of Object)(Response.Content)
             Dim JSONDeviceList As JArray = jsonData("data")
-            For Each UnifiClient In JSONDeviceList.Children()
+            For Each UnifiClientJSON In JSONDeviceList.Children()
                 Dim thisCLient As New UNIFIClient
 
-                For Each dataelement As Object In UnifiClient.Children
+                For Each dataelement As Object In UnifiClientJSON.Children
                     Select Case dataelement.Name
                         Case "is_wired"
                             If dataelement.value = "true" Then
@@ -169,6 +175,7 @@ Imports RestSharp
                     End Select
                 Next
                 If thisCLient.IP IsNot Nothing Then
+                    thisCLient.FullDetails = UnifiClientJSON.ToString
                     ClientList.Add(thisCLient)
                 End If
             Next

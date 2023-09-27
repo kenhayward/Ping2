@@ -4,9 +4,10 @@ Imports Newtonsoft.Json.Linq
 Public Class frmUnifi
     Public Property Controller As UnifiController
     Private TestController As New UnifiController
+
     Private Sub frmUnifi_Load(sender As Object, e As EventArgs) Handles Me.Load
         Controller.Load(My.Computer.FileSystem.SpecialDirectories.CurrentUserApplicationData & "\UnifiController.bin")
-
+        'AddHandler lstClient.ColumnClick, AddressOf lstClient.sortingcolumnclick
         Me.txtPassword.Text = Controller.Password
         Me.txtSite.Text = Controller.Site
         Me.txtURLBase.Text = Controller.URLBase
@@ -49,6 +50,12 @@ Public Class frmUnifi
                 MyItem.Text = device.Name
                 MyItem.SubItems.Add(device.DeviceType)
                 MyItem.SubItems.Add(device.Model)
+                Dim Model = TestController.DeviceTypes(device.Model)
+                If Model IsNot Nothing Then
+                    MyItem.SubItems.Add(Model.Name)
+                Else
+                    MyItem.SubItems.Add("")
+                End If
                 MyItem.SubItems.Add(device.IP)
                 MyItem.SubItems.Add(device.IPType)
                 MyItem.SubItems.Add(device.MacAddress)
@@ -95,15 +102,19 @@ Public Class frmUnifi
         End Try
     End Sub
 
-    Private Sub ColumnClick(ByVal sender As Object,
-    ByVal e As System.Windows.Forms.ColumnClickEventArgs) _
-    Handles lstClient.ColumnClick
-        If lstClient.Columns.Item(e.Column).ListView.Sorting <> SortOrder.Descending Then
-            lstClient.Columns.Item(e.Column).ListView.Sorting = SortOrder.Descending
-        ElseIf lstClient.Columns.Item(e.Column).ListView.Sorting <> SortOrder.Ascending Then
-            lstClient.Columns.Item(e.Column).ListView.Sorting = SortOrder.Ascending
+    Private Sub lstClient_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lstClient.SelectedIndexChanged
+        If lstClient.SelectedItems.Count = 1 Then
+            Dim Client As UNIFIClient = lstClient.SelectedItems(0).Tag
+            Me.lblFullDetails.Text = Client.FullDetails
+            Try
+                Dim jsonFormatted = JValue.Parse(Client.FullDetails).ToString(Formatting.Indented)
+                Me.lblFullDetails.Text = jsonFormatted
+            Catch ex As Exception
+                Me.lblFullDetails.Text = Client.FullDetails
+            End Try
         End If
-        lstClient.Sort()
-
     End Sub
+
 End Class
+
+

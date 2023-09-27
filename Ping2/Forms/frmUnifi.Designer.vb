@@ -49,7 +49,13 @@ Partial Class frmUnifi
         Me.ColumnHeader6 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader7 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.TabPage3 = New System.Windows.Forms.TabPage()
-        Me.lstClient = New System.Windows.Forms.ListView()
+        Me.lblFullDetails = New System.Windows.Forms.Label()
+        Me.Splitter1 = New System.Windows.Forms.Splitter()
+        Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.lblCode = New System.Windows.Forms.Label()
+        Me.lblRequest = New System.Windows.Forms.Label()
+        Me.ColumnHeader15 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.lstClient = New Ping.ListViewX()
         Me.ColumnHeader8 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader9 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader10 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
@@ -57,9 +63,6 @@ Partial Class frmUnifi
         Me.ColumnHeader12 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader13 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader14 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.TabPage2 = New System.Windows.Forms.TabPage()
-        Me.lblCode = New System.Windows.Forms.Label()
-        Me.lblRequest = New System.Windows.Forms.Label()
         Me.pnlTest.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.TabPage3.SuspendLayout()
@@ -70,7 +73,7 @@ Partial Class frmUnifi
         '
         Me.btnCancel.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.btnCancel.Location = New System.Drawing.Point(746, 473)
+        Me.btnCancel.Location = New System.Drawing.Point(980, 580)
         Me.btnCancel.Name = "btnCancel"
         Me.btnCancel.Size = New System.Drawing.Size(75, 23)
         Me.btnCancel.TabIndex = 0
@@ -80,7 +83,7 @@ Partial Class frmUnifi
         'btnOK
         '
         Me.btnOK.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnOK.Location = New System.Drawing.Point(665, 473)
+        Me.btnOK.Location = New System.Drawing.Point(899, 580)
         Me.btnOK.Name = "btnOK"
         Me.btnOK.Size = New System.Drawing.Size(75, 23)
         Me.btnOK.TabIndex = 1
@@ -102,7 +105,7 @@ Partial Class frmUnifi
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtURLBase.Location = New System.Drawing.Point(74, 12)
         Me.txtURLBase.Name = "txtURLBase"
-        Me.txtURLBase.Size = New System.Drawing.Size(747, 20)
+        Me.txtURLBase.Size = New System.Drawing.Size(981, 20)
         Me.txtURLBase.TabIndex = 3
         '
         'txtUser
@@ -206,7 +209,7 @@ Partial Class frmUnifi
         Me.txtResponse.Multiline = True
         Me.txtResponse.Name = "txtResponse"
         Me.txtResponse.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        Me.txtResponse.Size = New System.Drawing.Size(718, 277)
+        Me.txtResponse.Size = New System.Drawing.Size(952, 384)
         Me.txtResponse.TabIndex = 14
         '
         'pnlTest
@@ -221,7 +224,7 @@ Partial Class frmUnifi
         Me.pnlTest.Location = New System.Drawing.Point(12, 116)
         Me.pnlTest.Name = "pnlTest"
         Me.pnlTest.SelectedIndex = 0
-        Me.pnlTest.Size = New System.Drawing.Size(809, 351)
+        Me.pnlTest.Size = New System.Drawing.Size(1043, 458)
         Me.pnlTest.TabIndex = 15
         '
         'TabPage1
@@ -230,19 +233,20 @@ Partial Class frmUnifi
         Me.TabPage1.Location = New System.Drawing.Point(4, 22)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(801, 325)
+        Me.TabPage1.Size = New System.Drawing.Size(1035, 432)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Device List"
         Me.TabPage1.UseVisualStyleBackColor = True
         '
         'lstUnifiDevices
         '
-        Me.lstUnifiDevices.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader1, Me.ColumnHeader2, Me.ColumnHeader3, Me.ColumnHeader4, Me.ColumnHeader5, Me.ColumnHeader6, Me.ColumnHeader7})
+        Me.lstUnifiDevices.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader1, Me.ColumnHeader2, Me.ColumnHeader3, Me.ColumnHeader15, Me.ColumnHeader4, Me.ColumnHeader5, Me.ColumnHeader6, Me.ColumnHeader7})
         Me.lstUnifiDevices.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.lstUnifiDevices.FullRowSelect = True
         Me.lstUnifiDevices.HideSelection = False
         Me.lstUnifiDevices.Location = New System.Drawing.Point(3, 3)
         Me.lstUnifiDevices.Name = "lstUnifiDevices"
-        Me.lstUnifiDevices.Size = New System.Drawing.Size(795, 319)
+        Me.lstUnifiDevices.Size = New System.Drawing.Size(1029, 426)
         Me.lstUnifiDevices.TabIndex = 0
         Me.lstUnifiDevices.UseCompatibleStateImageBehavior = False
         Me.lstUnifiDevices.View = System.Windows.Forms.View.Details
@@ -282,24 +286,83 @@ Partial Class frmUnifi
         '
         'TabPage3
         '
+        Me.TabPage3.Controls.Add(Me.lblFullDetails)
+        Me.TabPage3.Controls.Add(Me.Splitter1)
         Me.TabPage3.Controls.Add(Me.lstClient)
         Me.TabPage3.Location = New System.Drawing.Point(4, 22)
         Me.TabPage3.Name = "TabPage3"
         Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage3.Size = New System.Drawing.Size(801, 325)
+        Me.TabPage3.Size = New System.Drawing.Size(1035, 432)
         Me.TabPage3.TabIndex = 2
         Me.TabPage3.Text = "Client List"
         Me.TabPage3.UseVisualStyleBackColor = True
         '
+        'lblFullDetails
+        '
+        Me.lblFullDetails.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.lblFullDetails.Location = New System.Drawing.Point(3, 285)
+        Me.lblFullDetails.Name = "lblFullDetails"
+        Me.lblFullDetails.Size = New System.Drawing.Size(1029, 144)
+        Me.lblFullDetails.TabIndex = 2
+        '
+        'Splitter1
+        '
+        Me.Splitter1.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Splitter1.Location = New System.Drawing.Point(3, 275)
+        Me.Splitter1.Name = "Splitter1"
+        Me.Splitter1.Size = New System.Drawing.Size(1029, 10)
+        Me.Splitter1.TabIndex = 3
+        Me.Splitter1.TabStop = False
+        '
+        'TabPage2
+        '
+        Me.TabPage2.Controls.Add(Me.lblCode)
+        Me.TabPage2.Controls.Add(Me.lblRequest)
+        Me.TabPage2.Controls.Add(Me.txtResponse)
+        Me.TabPage2.Controls.Add(Me.Label5)
+        Me.TabPage2.Controls.Add(Me.Label6)
+        Me.TabPage2.Controls.Add(Me.txtEndPoint)
+        Me.TabPage2.Controls.Add(Me.btnTest)
+        Me.TabPage2.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage2.Name = "TabPage2"
+        Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage2.Size = New System.Drawing.Size(1035, 432)
+        Me.TabPage2.TabIndex = 1
+        Me.TabPage2.Text = "Debug Test"
+        Me.TabPage2.UseVisualStyleBackColor = True
+        '
+        'lblCode
+        '
+        Me.lblCode.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.lblCode.Location = New System.Drawing.Point(15, 69)
+        Me.lblCode.Name = "lblCode"
+        Me.lblCode.Size = New System.Drawing.Size(55, 357)
+        Me.lblCode.TabIndex = 17
+        '
+        'lblRequest
+        '
+        Me.lblRequest.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lblRequest.Location = New System.Drawing.Point(355, 11)
+        Me.lblRequest.Name = "lblRequest"
+        Me.lblRequest.Size = New System.Drawing.Size(674, 23)
+        Me.lblRequest.TabIndex = 16
+        '
+        'ColumnHeader15
+        '
+        Me.ColumnHeader15.Text = "Model Name"
+        Me.ColumnHeader15.Width = 150
+        '
         'lstClient
         '
         Me.lstClient.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader8, Me.ColumnHeader9, Me.ColumnHeader10, Me.ColumnHeader11, Me.ColumnHeader12, Me.ColumnHeader13, Me.ColumnHeader14})
-        Me.lstClient.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.lstClient.Dock = System.Windows.Forms.DockStyle.Top
         Me.lstClient.FullRowSelect = True
         Me.lstClient.HideSelection = False
         Me.lstClient.Location = New System.Drawing.Point(3, 3)
         Me.lstClient.Name = "lstClient"
-        Me.lstClient.Size = New System.Drawing.Size(795, 319)
+        Me.lstClient.Size = New System.Drawing.Size(1029, 272)
         Me.lstClient.Sorting = System.Windows.Forms.SortOrder.Ascending
         Me.lstClient.TabIndex = 1
         Me.lstClient.UseCompatibleStateImageBehavior = False
@@ -339,48 +402,13 @@ Partial Class frmUnifi
         Me.ColumnHeader14.Text = "Last Seen"
         Me.ColumnHeader14.Width = 120
         '
-        'TabPage2
-        '
-        Me.TabPage2.Controls.Add(Me.lblCode)
-        Me.TabPage2.Controls.Add(Me.lblRequest)
-        Me.TabPage2.Controls.Add(Me.txtResponse)
-        Me.TabPage2.Controls.Add(Me.Label5)
-        Me.TabPage2.Controls.Add(Me.Label6)
-        Me.TabPage2.Controls.Add(Me.txtEndPoint)
-        Me.TabPage2.Controls.Add(Me.btnTest)
-        Me.TabPage2.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage2.Name = "TabPage2"
-        Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(801, 325)
-        Me.TabPage2.TabIndex = 1
-        Me.TabPage2.Text = "Debug Test"
-        Me.TabPage2.UseVisualStyleBackColor = True
-        '
-        'lblCode
-        '
-        Me.lblCode.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.lblCode.Location = New System.Drawing.Point(15, 69)
-        Me.lblCode.Name = "lblCode"
-        Me.lblCode.Size = New System.Drawing.Size(55, 250)
-        Me.lblCode.TabIndex = 17
-        '
-        'lblRequest
-        '
-        Me.lblRequest.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lblRequest.Location = New System.Drawing.Point(355, 11)
-        Me.lblRequest.Name = "lblRequest"
-        Me.lblRequest.Size = New System.Drawing.Size(440, 23)
-        Me.lblRequest.TabIndex = 16
-        '
         'frmUnifi
         '
         Me.AcceptButton = Me.btnTest
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.btnCancel
-        Me.ClientSize = New System.Drawing.Size(833, 508)
+        Me.ClientSize = New System.Drawing.Size(1067, 615)
         Me.Controls.Add(Me.pnlTest)
         Me.Controls.Add(Me.btnLogin)
         Me.Controls.Add(Me.txtSite)
@@ -438,7 +466,7 @@ Partial Class frmUnifi
     Friend WithEvents lblCode As Label
     Friend WithEvents lblRequest As Label
     Friend WithEvents TabPage3 As TabPage
-    Friend WithEvents lstClient As ListView
+    Friend WithEvents lstClient As ListViewX
     Friend WithEvents ColumnHeader8 As ColumnHeader
     Friend WithEvents ColumnHeader9 As ColumnHeader
     Friend WithEvents ColumnHeader10 As ColumnHeader
@@ -446,4 +474,7 @@ Partial Class frmUnifi
     Friend WithEvents ColumnHeader12 As ColumnHeader
     Friend WithEvents ColumnHeader13 As ColumnHeader
     Friend WithEvents ColumnHeader14 As ColumnHeader
+    Friend WithEvents lblFullDetails As Label
+    Friend WithEvents Splitter1 As Splitter
+    Friend WithEvents ColumnHeader15 As ColumnHeader
 End Class

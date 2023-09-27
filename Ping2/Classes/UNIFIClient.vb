@@ -10,6 +10,7 @@
     Public Property Wifi As Boolean
     Public Property FirstSeen As DateTime
     Public Property LastSeen As DateTime
+    Public Property FullDetails As String
 
 End Class
 

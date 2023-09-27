@@ -53,6 +53,7 @@ Partial Class frmMain
         Me.EditToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RemoveSelectedToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EditGroupingToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.mnuUnifi = New System.Windows.Forms.ToolStripMenuItem()
         Me.ViewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ShowChartToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Panel1 = New System.Windows.Forms.Panel()
@@ -77,7 +78,6 @@ Partial Class frmMain
         Me.ColumnHeader6 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader8 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader9 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.mnuUnifi = New System.Windows.Forms.ToolStripMenuItem()
         Me.lstContextMenu.SuspendLayout()
         CType(Me.NumInterval, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MenuStrip1.SuspendLayout()
@@ -100,19 +100,19 @@ Partial Class frmMain
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(22, 25)
-        Me.Label1.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label1.Location = New System.Drawing.Point(9, 11)
+        Me.Label1.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(102, 29)
+        Me.Label1.Size = New System.Drawing.Size(45, 13)
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "Address"
         '
         'txtIPAddress
         '
-        Me.txtIPAddress.Location = New System.Drawing.Point(212, 21)
-        Me.txtIPAddress.Margin = New System.Windows.Forms.Padding(2)
+        Me.txtIPAddress.Location = New System.Drawing.Point(91, 9)
+        Me.txtIPAddress.Margin = New System.Windows.Forms.Padding(1, 1, 1, 1)
         Me.txtIPAddress.Name = "txtIPAddress"
-        Me.txtIPAddress.Size = New System.Drawing.Size(354, 35)
+        Me.txtIPAddress.Size = New System.Drawing.Size(154, 20)
         Me.txtIPAddress.TabIndex = 1
         Me.txtIPAddress.Text = "192.168.1.1"
         '
@@ -121,80 +121,79 @@ Partial Class frmMain
         Me.lstContextMenu.ImageScalingSize = New System.Drawing.Size(36, 36)
         Me.lstContextMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuGroups, Me.AddToChartToolStripMenuItem, Me.ToolStripSeparator1, Me.RemoveToolStripMenuItem})
         Me.lstContextMenu.Name = "ContextMenuStrip1"
-        Me.lstContextMenu.Size = New System.Drawing.Size(398, 142)
+        Me.lstContextMenu.Size = New System.Drawing.Size(212, 76)
         '
         'mnuGroups
         '
         Me.mnuGroups.Name = "mnuGroups"
-        Me.mnuGroups.Size = New System.Drawing.Size(397, 44)
+        Me.mnuGroups.Size = New System.Drawing.Size(211, 22)
         Me.mnuGroups.Text = "Group"
         '
         'AddToChartToolStripMenuItem
         '
         Me.AddToChartToolStripMenuItem.Name = "AddToChartToolStripMenuItem"
-        Me.AddToChartToolStripMenuItem.Size = New System.Drawing.Size(397, 44)
+        Me.AddToChartToolStripMenuItem.Size = New System.Drawing.Size(211, 22)
         Me.AddToChartToolStripMenuItem.Text = "Add / Remove from Chart"
         '
         'ToolStripSeparator1
         '
         Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        Me.ToolStripSeparator1.Size = New System.Drawing.Size(394, 6)
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(208, 6)
         '
         'RemoveToolStripMenuItem
         '
         Me.RemoveToolStripMenuItem.Name = "RemoveToolStripMenuItem"
-        Me.RemoveToolStripMenuItem.Size = New System.Drawing.Size(397, 44)
+        Me.RemoveToolStripMenuItem.Size = New System.Drawing.Size(211, 22)
         Me.RemoveToolStripMenuItem.Text = "Remove"
         '
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(730, 25)
-        Me.Label2.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label2.Location = New System.Drawing.Point(313, 11)
+        Me.Label2.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(214, 29)
+        Me.Label2.Size = New System.Drawing.Size(95, 13)
         Me.Label2.TabIndex = 8
         Me.Label2.Text = "Refresh (Seconds)"
         '
         'NumInterval
         '
-        Me.NumInterval.Location = New System.Drawing.Point(730, 62)
-        Me.NumInterval.Margin = New System.Windows.Forms.Padding(2)
+        Me.NumInterval.Location = New System.Drawing.Point(313, 28)
+        Me.NumInterval.Margin = New System.Windows.Forms.Padding(1, 1, 1, 1)
         Me.NumInterval.Maximum = New Decimal(New Integer() {60, 0, 0, 0})
         Me.NumInterval.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
         Me.NumInterval.Name = "NumInterval"
-        Me.NumInterval.Size = New System.Drawing.Size(224, 35)
+        Me.NumInterval.Size = New System.Drawing.Size(96, 20)
         Me.NumInterval.TabIndex = 9
         Me.NumInterval.Value = New Decimal(New Integer() {1, 0, 0, 0})
         '
         'txtFriendly
         '
-        Me.txtFriendly.Location = New System.Drawing.Point(212, 60)
-        Me.txtFriendly.Margin = New System.Windows.Forms.Padding(2)
+        Me.txtFriendly.Location = New System.Drawing.Point(91, 27)
+        Me.txtFriendly.Margin = New System.Windows.Forms.Padding(1, 1, 1, 1)
         Me.txtFriendly.Name = "txtFriendly"
-        Me.txtFriendly.Size = New System.Drawing.Size(354, 35)
+        Me.txtFriendly.Size = New System.Drawing.Size(154, 20)
         Me.txtFriendly.TabIndex = 10
         Me.txtFriendly.Text = "Gateway"
         '
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(22, 66)
-        Me.Label3.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label3.Location = New System.Drawing.Point(9, 30)
+        Me.Label3.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(171, 29)
+        Me.Label3.Size = New System.Drawing.Size(74, 13)
         Me.Label3.TabIndex = 11
         Me.Label3.Text = "Friendly Name"
         '
         'MenuStrip1
         '
-        Me.MenuStrip1.GripMargin = New System.Windows.Forms.Padding(2, 2, 0, 2)
         Me.MenuStrip1.ImageScalingSize = New System.Drawing.Size(36, 36)
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.EditToolStripMenuItem, Me.ViewToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Padding = New System.Windows.Forms.Padding(12, 4, 0, 4)
-        Me.MenuStrip1.Size = New System.Drawing.Size(2204, 51)
+        Me.MenuStrip1.Padding = New System.Windows.Forms.Padding(5, 2, 0, 2)
+        Me.MenuStrip1.Size = New System.Drawing.Size(1120, 24)
         Me.MenuStrip1.TabIndex = 14
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -202,66 +201,72 @@ Partial Class frmMain
         '
         Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OpenIPListToolStripMenuItem, Me.SaveIPListToolStripMenuItem, Me.ExitToolStripMenuItem, Me.ExitToolStripMenuItem1})
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
-        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(80, 43)
+        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
         Me.FileToolStripMenuItem.Text = "&File"
         '
         'OpenIPListToolStripMenuItem
         '
         Me.OpenIPListToolStripMenuItem.Name = "OpenIPListToolStripMenuItem"
         Me.OpenIPListToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.O), System.Windows.Forms.Keys)
-        Me.OpenIPListToolStripMenuItem.Size = New System.Drawing.Size(405, 48)
+        Me.OpenIPListToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.OpenIPListToolStripMenuItem.Text = "&Open IP List"
         '
         'SaveIPListToolStripMenuItem
         '
         Me.SaveIPListToolStripMenuItem.Name = "SaveIPListToolStripMenuItem"
         Me.SaveIPListToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.S), System.Windows.Forms.Keys)
-        Me.SaveIPListToolStripMenuItem.Size = New System.Drawing.Size(405, 48)
+        Me.SaveIPListToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.SaveIPListToolStripMenuItem.Text = "&Save IP List"
         '
         'ExitToolStripMenuItem
         '
         Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(402, 6)
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(177, 6)
         '
         'ExitToolStripMenuItem1
         '
         Me.ExitToolStripMenuItem1.Name = "ExitToolStripMenuItem1"
-        Me.ExitToolStripMenuItem1.Size = New System.Drawing.Size(405, 48)
+        Me.ExitToolStripMenuItem1.Size = New System.Drawing.Size(180, 22)
         Me.ExitToolStripMenuItem1.Text = "E&xit"
         '
         'EditToolStripMenuItem
         '
         Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RemoveSelectedToolStripMenuItem, Me.EditGroupingToolStripMenuItem, Me.mnuUnifi})
         Me.EditToolStripMenuItem.Name = "EditToolStripMenuItem"
-        Me.EditToolStripMenuItem.Size = New System.Drawing.Size(85, 43)
+        Me.EditToolStripMenuItem.Size = New System.Drawing.Size(39, 20)
         Me.EditToolStripMenuItem.Text = "&Edit"
         '
         'RemoveSelectedToolStripMenuItem
         '
         Me.RemoveSelectedToolStripMenuItem.Name = "RemoveSelectedToolStripMenuItem"
         Me.RemoveSelectedToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete
-        Me.RemoveSelectedToolStripMenuItem.Size = New System.Drawing.Size(451, 48)
+        Me.RemoveSelectedToolStripMenuItem.Size = New System.Drawing.Size(200, 22)
         Me.RemoveSelectedToolStripMenuItem.Text = "&Remove Selected"
         '
         'EditGroupingToolStripMenuItem
         '
         Me.EditGroupingToolStripMenuItem.Name = "EditGroupingToolStripMenuItem"
-        Me.EditGroupingToolStripMenuItem.Size = New System.Drawing.Size(451, 48)
+        Me.EditGroupingToolStripMenuItem.Size = New System.Drawing.Size(200, 22)
         Me.EditGroupingToolStripMenuItem.Text = "Edit Grouping"
+        '
+        'mnuUnifi
+        '
+        Me.mnuUnifi.Name = "mnuUnifi"
+        Me.mnuUnifi.Size = New System.Drawing.Size(200, 22)
+        Me.mnuUnifi.Text = "Unifi Controller Settings"
         '
         'ViewToolStripMenuItem
         '
         Me.ViewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowChartToolStripMenuItem})
         Me.ViewToolStripMenuItem.Name = "ViewToolStripMenuItem"
-        Me.ViewToolStripMenuItem.Size = New System.Drawing.Size(97, 43)
+        Me.ViewToolStripMenuItem.Size = New System.Drawing.Size(44, 20)
         Me.ViewToolStripMenuItem.Text = "View"
         '
         'ShowChartToolStripMenuItem
         '
         Me.ShowChartToolStripMenuItem.Name = "ShowChartToolStripMenuItem"
         Me.ShowChartToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.T), System.Windows.Forms.Keys)
-        Me.ShowChartToolStripMenuItem.Size = New System.Drawing.Size(394, 48)
+        Me.ShowChartToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
         Me.ShowChartToolStripMenuItem.Text = "Show Chart"
         '
         'Panel1
@@ -277,20 +282,18 @@ Partial Class frmMain
         Me.Panel1.Controls.Add(Me.btnAddIP)
         Me.Panel1.Controls.Add(Me.Label2)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Panel1.Location = New System.Drawing.Point(0, 51)
-        Me.Panel1.Margin = New System.Windows.Forms.Padding(6)
+        Me.Panel1.Location = New System.Drawing.Point(0, 24)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(2204, 131)
+        Me.Panel1.Size = New System.Drawing.Size(1120, 59)
         Me.Panel1.TabIndex = 15
         '
         'chkAutosave
         '
         Me.chkAutosave.AutoSize = True
         Me.chkAutosave.Enabled = False
-        Me.chkAutosave.Location = New System.Drawing.Point(1232, 23)
-        Me.chkAutosave.Margin = New System.Windows.Forms.Padding(6)
+        Me.chkAutosave.Location = New System.Drawing.Point(528, 10)
         Me.chkAutosave.Name = "chkAutosave"
-        Me.chkAutosave.Size = New System.Drawing.Size(143, 33)
+        Me.chkAutosave.Size = New System.Drawing.Size(71, 17)
         Me.chkAutosave.TabIndex = 14
         Me.chkAutosave.Text = "Autosave"
         Me.chkAutosave.UseVisualStyleBackColor = True
@@ -298,10 +301,10 @@ Partial Class frmMain
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(978, 25)
-        Me.Label4.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label4.Location = New System.Drawing.Point(419, 11)
+        Me.Label4.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(210, 29)
+        Me.Label4.Size = New System.Drawing.Size(92, 13)
         Me.Label4.TabIndex = 13
         Me.Label4.Text = "Current IP List File"
         '
@@ -309,21 +312,21 @@ Partial Class frmMain
         '
         Me.txtFile.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtFile.Location = New System.Drawing.Point(978, 62)
-        Me.txtFile.Margin = New System.Windows.Forms.Padding(2)
+        Me.txtFile.Location = New System.Drawing.Point(419, 28)
+        Me.txtFile.Margin = New System.Windows.Forms.Padding(1, 1, 1, 1)
         Me.txtFile.Name = "txtFile"
         Me.txtFile.ReadOnly = True
-        Me.txtFile.Size = New System.Drawing.Size(1202, 35)
+        Me.txtFile.Size = New System.Drawing.Size(692, 20)
         Me.txtFile.TabIndex = 12
         Me.txtFile.Text = "PingList.csv"
         '
         'btnAddIP
         '
         Me.btnAddIP.Image = Global.Ping.My.Resources.Resources.add1
-        Me.btnAddIP.Location = New System.Drawing.Point(572, 21)
-        Me.btnAddIP.Margin = New System.Windows.Forms.Padding(2)
+        Me.btnAddIP.Location = New System.Drawing.Point(245, 9)
+        Me.btnAddIP.Margin = New System.Windows.Forms.Padding(1, 1, 1, 1)
         Me.btnAddIP.Name = "btnAddIP"
-        Me.btnAddIP.Size = New System.Drawing.Size(82, 74)
+        Me.btnAddIP.Size = New System.Drawing.Size(35, 33)
         Me.btnAddIP.TabIndex = 2
         Me.btnAddIP.UseVisualStyleBackColor = True
         '
@@ -331,17 +334,17 @@ Partial Class frmMain
         '
         Me.StatusStrip1.ImageScalingSize = New System.Drawing.Size(36, 36)
         Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.lblStatus})
-        Me.StatusStrip1.Location = New System.Drawing.Point(0, 826)
+        Me.StatusStrip1.Location = New System.Drawing.Point(0, 446)
         Me.StatusStrip1.Name = "StatusStrip1"
-        Me.StatusStrip1.Padding = New System.Windows.Forms.Padding(2, 0, 28, 0)
-        Me.StatusStrip1.Size = New System.Drawing.Size(2204, 48)
+        Me.StatusStrip1.Padding = New System.Windows.Forms.Padding(1, 0, 12, 0)
+        Me.StatusStrip1.Size = New System.Drawing.Size(1120, 22)
         Me.StatusStrip1.TabIndex = 16
         Me.StatusStrip1.Text = "StatusStrip1"
         '
         'lblStatus
         '
         Me.lblStatus.Name = "lblStatus"
-        Me.lblStatus.Size = New System.Drawing.Size(89, 37)
+        Me.lblStatus.Size = New System.Drawing.Size(39, 17)
         Me.lblStatus.Text = "Ready"
         '
         'Chart1
@@ -364,8 +367,9 @@ Partial Class frmMain
         Legend1.Name = "Legend1"
         Me.Chart1.Legends.Add(Legend1)
         Me.Chart1.Location = New System.Drawing.Point(0, 0)
+        Me.Chart1.Margin = New System.Windows.Forms.Padding(1, 1, 1, 1)
         Me.Chart1.Name = "Chart1"
-        Me.Chart1.Size = New System.Drawing.Size(897, 644)
+        Me.Chart1.Size = New System.Drawing.Size(384, 363)
         Me.Chart1.TabIndex = 17
         Me.Chart1.Text = "Chart1"
         '
@@ -373,18 +377,20 @@ Partial Class frmMain
         '
         Me.Splitter1.BackColor = System.Drawing.SystemColors.Highlight
         Me.Splitter1.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Splitter1.Location = New System.Drawing.Point(1297, 182)
+        Me.Splitter1.Location = New System.Drawing.Point(732, 83)
+        Me.Splitter1.Margin = New System.Windows.Forms.Padding(1, 1, 1, 1)
         Me.Splitter1.Name = "Splitter1"
-        Me.Splitter1.Size = New System.Drawing.Size(10, 644)
+        Me.Splitter1.Size = New System.Drawing.Size(4, 363)
         Me.Splitter1.TabIndex = 18
         Me.Splitter1.TabStop = False
         '
         'btnResetGraph
         '
         Me.btnResetGraph.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnResetGraph.Location = New System.Drawing.Point(773, 588)
+        Me.btnResetGraph.Location = New System.Drawing.Point(331, 338)
+        Me.btnResetGraph.Margin = New System.Windows.Forms.Padding(1, 1, 1, 1)
         Me.btnResetGraph.Name = "btnResetGraph"
-        Me.btnResetGraph.Size = New System.Drawing.Size(121, 53)
+        Me.btnResetGraph.Size = New System.Drawing.Size(52, 24)
         Me.btnResetGraph.TabIndex = 19
         Me.btnResetGraph.Text = "Reset"
         Me.btnResetGraph.UseVisualStyleBackColor = True
@@ -394,9 +400,10 @@ Partial Class frmMain
         Me.pnlChart.Controls.Add(Me.btnResetGraph)
         Me.pnlChart.Controls.Add(Me.Chart1)
         Me.pnlChart.Dock = System.Windows.Forms.DockStyle.Right
-        Me.pnlChart.Location = New System.Drawing.Point(1307, 182)
+        Me.pnlChart.Location = New System.Drawing.Point(736, 83)
+        Me.pnlChart.Margin = New System.Windows.Forms.Padding(1, 1, 1, 1)
         Me.pnlChart.Name = "pnlChart"
-        Me.pnlChart.Size = New System.Drawing.Size(897, 644)
+        Me.pnlChart.Size = New System.Drawing.Size(384, 363)
         Me.pnlChart.TabIndex = 20
         Me.pnlChart.Visible = False
         '
@@ -416,10 +423,10 @@ Partial Class frmMain
         Me.lstIP.Groups.AddRange(New System.Windows.Forms.ListViewGroup() {ListViewGroup1, ListViewGroup2, ListViewGroup3})
         Me.lstIP.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable
         Me.lstIP.HideSelection = False
-        Me.lstIP.Location = New System.Drawing.Point(0, 182)
-        Me.lstIP.Margin = New System.Windows.Forms.Padding(2)
+        Me.lstIP.Location = New System.Drawing.Point(0, 83)
+        Me.lstIP.Margin = New System.Windows.Forms.Padding(1, 1, 1, 1)
         Me.lstIP.Name = "lstIP"
-        Me.lstIP.Size = New System.Drawing.Size(1297, 644)
+        Me.lstIP.Size = New System.Drawing.Size(732, 363)
         Me.lstIP.TabIndex = 4
         Me.lstIP.UseCompatibleStateImageBehavior = False
         Me.lstIP.View = System.Windows.Forms.View.Details
@@ -480,18 +487,12 @@ Partial Class frmMain
         Me.ColumnHeader9.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.ColumnHeader9.Width = 150
         '
-        'mnuUnifi
-        '
-        Me.mnuUnifi.Name = "mnuUnifi"
-        Me.mnuUnifi.Size = New System.Drawing.Size(451, 48)
-        Me.mnuUnifi.Text = "Unifi Controller Settings"
-        '
         'frmMain
         '
         Me.AcceptButton = Me.btnAddIP
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(14.0!, 29.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(2204, 874)
+        Me.ClientSize = New System.Drawing.Size(1120, 468)
         Me.Controls.Add(Me.lstIP)
         Me.Controls.Add(Me.Splitter1)
         Me.Controls.Add(Me.pnlChart)
@@ -500,7 +501,7 @@ Partial Class frmMain
         Me.Controls.Add(Me.MenuStrip1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MainMenuStrip = Me.MenuStrip1
-        Me.Margin = New System.Windows.Forms.Padding(2)
+        Me.Margin = New System.Windows.Forms.Padding(1, 1, 1, 1)
         Me.Name = "frmMain"
         Me.Text = "Ping Explorer"
         Me.lstContextMenu.ResumeLayout(False)

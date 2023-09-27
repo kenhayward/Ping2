@@ -3,6 +3,7 @@ Imports System.Drawing
 Imports System.ComponentModel
 Imports System.Windows.Forms
 Imports System.Runtime.InteropServices
+Imports RestSharp
 
 
 Public Enum WM
@@ -41,6 +42,15 @@ Public Class ListViewX
     Private updating As Boolean
     Private itemnumber As Integer
 
+    Public Sub New()
+
+        ' This call is required by the designer.
+        InitializeComponent()
+
+        ' Add any initialization after the InitializeComponent() call.
+        AddHandler Me.ColumnClick, AddressOf SortingColumnClick
+    End Sub
+
     <DllImport("user32.dll", CharSet:=CharSet.Auto)>
     Public Shared Function ValidateRect(ByVal handle As IntPtr, ByRef rect As RECT) As Boolean
     End Function
@@ -75,7 +85,33 @@ Public Class ListViewX
         rect.bottom = Me.Bottom
         Return rect
     End Function
-End Class
 
+    Public Sub SortingColumnClick(ByVal sender As Object, ByVal e As System.Windows.Forms.ColumnClickEventArgs)
+        If Me.Columns.Item(e.Column).ListView.Sorting <> SortOrder.Descending Then
+            Me.Columns.Item(e.Column).ListView.Sorting = SortOrder.Descending
+        ElseIf Me.Columns.Item(e.Column).ListView.Sorting <> SortOrder.Ascending Then
+            Me.Columns.Item(e.Column).ListView.Sorting = SortOrder.Ascending
+        End If
+        Me.ListViewItemSorter = New ListViewItemComparer(e.Column)
+        'MyBase.OnColumnClick(e)
+    End Sub
+End Class
+Public Class ListViewItemComparer
+    Implements IComparer
+
+    Private col As Integer
+
+    Public Sub New()
+        col = 0
+    End Sub
+
+    Public Sub New(ByVal column As Integer)
+        col = column
+    End Sub
+
+    Public Function Compare(ByVal x As Object, ByVal y As Object) As Integer Implements IComparer.Compare
+        Return String.Compare((CType(x, ListViewItem)).SubItems(col).Text, (CType(y, ListViewItem)).SubItems(col).Text)
+    End Function
+End Class
 
 
