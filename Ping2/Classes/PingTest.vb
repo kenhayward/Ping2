@@ -10,7 +10,7 @@ Public Class PingIP
     Public Property Group As String
     Public Property RoundtripTime As Long
     Public Property FriendlyName As String
-    Public Property ttl As Integer
+    Public Property TTL As Integer
     Public Property HostName As String
     Public Property Success As Boolean
     Public Property PingCount As Long
@@ -35,9 +35,10 @@ Public Class PingIP
     End Sub
     Public Sub ExecutePing()
         PingCount += 1
-        Dim pingSender As NetworkInformation.Ping = New NetworkInformation.Ping()
-        Dim options As PingOptions = New PingOptions()
-        options.DontFragment = True
+        Dim pingSender As New NetworkInformation.Ping()
+        Dim options As New PingOptions With {
+            .DontFragment = True
+        }
         Dim data As String = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
         Dim buffer As Byte() = Encoding.ASCII.GetBytes(data)
         Dim timeout As Integer = 120

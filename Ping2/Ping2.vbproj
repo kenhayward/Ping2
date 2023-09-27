@@ -117,22 +117,22 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="frmUnifi.Designer.vb">
+    <Compile Include="Forms\frmUnifi.Designer.vb">
       <DependentUpon>frmUnifi.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmUnifi.vb">
+    <Compile Include="Forms\frmUnifi.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmMain.Designer.vb">
+    <Compile Include="Forms\frmMain.Designer.vb">
       <DependentUpon>frmMain.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmMain.vb">
+    <Compile Include="Forms\frmMain.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ListViewX.Designer.vb">
+    <Compile Include="Controls\ListViewX.Designer.vb">
       <DependentUpon>ListViewX.vb</DependentUpon>
     </Compile>
-    <Compile Include="ListViewX.vb">
+    <Compile Include="Controls\ListViewX.vb">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -151,18 +151,18 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="PingTest.vb" />
-    <Compile Include="UnifiController.vb" />
-    <Compile Include="UnifiDevice.vb" />
+    <Compile Include="Classes\PingTest.vb" />
+    <Compile Include="Classes\UnifiController.vb" />
+    <Compile Include="Classes\UnifiDevice.vb" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="frmUnifi.resx">
+    <EmbeddedResource Include="Forms\frmUnifi.resx">
       <DependentUpon>frmUnifi.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmMain.resx">
+    <EmbeddedResource Include="Forms\frmMain.resx">
       <DependentUpon>frmMain.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ListViewX.resx">
+    <EmbeddedResource Include="Controls\ListViewX.resx">
       <DependentUpon>ListViewX.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -191,5 +191,6 @@
   <ItemGroup>
     <Content Include="Google-Noto-Emoji-Activities-52744-ping-pong.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

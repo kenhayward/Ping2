@@ -70,8 +70,12 @@ Public Class frmUnifi
         Me.Cursor = Cursors.Default
 
         Me.lblCode.Text = "Status: " & Response.StatusCode
-        Dim jsonFormatted = JValue.Parse(Response.Content).ToString(Formatting.Indented)
-        Me.txtResponse.Text = jsonFormatted
         Me.lblRequest.Text = TestController.URLBase & txtEndPoint.Text
+        Try
+            Dim jsonFormatted = JValue.Parse(Response.Content).ToString(Formatting.Indented)
+            Me.txtResponse.Text = jsonFormatted
+        Catch ex As Exception
+            Me.txtResponse.Text = Response.Content
+        End Try
     End Sub
 End Class
