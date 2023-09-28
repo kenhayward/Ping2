@@ -68,7 +68,9 @@ Imports RestSharp
     Public Function Load(Filename As String) As Boolean
         Dim Retval As Boolean
         Try
-
+            Me.ClientList.Clear()
+            Me.DeviceList.Clear()
+            Me.Token = Nothing
             If File.Exists(Filename) Then
                 Using fs As New FileStream(Filename, FileMode.Open, FileAccess.Read)
                     Dim formatter As New BinaryFormatter

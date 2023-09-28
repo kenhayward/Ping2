@@ -356,6 +356,13 @@ Public Class frmMain
         lstIP.Columns(7).Width = 77
         lstIP.Columns(8).Width = 77
         lstIP.Columns(9).Width = 77
+        LoadUnifi()
+    End Sub
+    Private Sub LoadUnifi()
+        Me.lstClient.Items.Clear()
+        Me.lstUnifiDevices.Items.Clear()
+        Me.lblDevicedetail.Text = ""
+        Me.lblFullDetails.Text = ""
 
         If UnifiController.LoadDefaults() Then
             UpdateStatus("UNIFI Details Loaded")
@@ -369,7 +376,6 @@ Public Class frmMain
                 End If
             End If
         End If
-        Me.lstUnifiDevices.Items.Clear()
         For Each device In UnifiController.DeviceList
             Dim MyItem As New ListViewItem
             MyItem.Text = device.Name
@@ -389,7 +395,6 @@ Public Class frmMain
             Me.lstUnifiDevices.Items.Add(MyItem)
             MyItem.Tag = device
         Next
-        Me.lstClient.Items.Clear()
         For Each client In UnifiController.ClientList
             Dim MyItem As New ListViewItem
             MyItem.Text = client.Name
@@ -406,7 +411,6 @@ Public Class frmMain
             Me.lstClient.Items.Add(MyItem)
         Next
     End Sub
-
     Private Sub lstContextMenu_Opening(sender As Object, e As CancelEventArgs) Handles lstContextMenu.Opening
         mnuGroups.DropDownItems.Clear()
         If lstIP.SelectedItems.Count > 0 Then
@@ -518,7 +522,12 @@ Public Class frmMain
         Dim MyForm As New frmUnifi
         MyForm.Controller = Me.UnifiController
 
-        MyForm.ShowDialog()
+        If MyForm.ShowDialog() = DialogResult.OK Then
+            ' Try to load the controller
+            Me.Cursor = Cursors.WaitCursor
+            LoadUnifi()
+            Me.Cursor = Cursors.Default
+        End If
 
     End Sub
 
