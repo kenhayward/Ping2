@@ -49,14 +49,19 @@ Imports RestSharp
 
 
     Const LoginFormat = """username"": ""{0}"", ""password"": ""{1}"""
-
-    Public Sub Save(Filename As String)
+    Public Function SaveDefaults() As Boolean
+        Return Me.Save(My.Computer.FileSystem.SpecialDirectories.CurrentUserApplicationData & "\UnifiController.bin")
+    End Function
+    Public Function Save(Filename As String) As Boolean
+        Dim retval As Boolean
         Using fs As New FileStream(Filename, FileMode.Create)
             Dim MyFormat As New BinaryFormatter()
             MyFormat.Serialize(fs, Me)
             fs.Close()
+            retval = True
         End Using
-    End Sub
+        Return retval
+    End Function
     Public Function LoadDefaults() As Boolean
         Return Me.Load(My.Computer.FileSystem.SpecialDirectories.CurrentUserApplicationData & "\UnifiController.bin")
     End Function
