@@ -5,6 +5,8 @@ Imports System.Net
 Imports System.Threading
 Imports System.ComponentModel
 Imports System.Windows.Forms.DataVisualization.Charting
+Imports Newtonsoft.Json.Linq
+Imports Newtonsoft.Json
 
 Public Class frmMain
     Public Event PingResult(Ping As PingIP)
@@ -354,6 +356,55 @@ Public Class frmMain
         lstIP.Columns(7).Width = 77
         lstIP.Columns(8).Width = 77
         lstIP.Columns(9).Width = 77
+
+        If UnifiController.LoadDefaults() Then
+            UpdateStatus("UNIFI Details Loaded")
+            If UnifiController.Login() Then
+                UpdateStatus("UNIFI Login Successful")
+                If UnifiController.GetDeviceList() Then
+                    UpdateStatus("UNIFI Devices Retrieved")
+                    If UnifiController.GetClientList() Then
+                        UpdateStatus("UNIFI Clients Retrieved")
+                    End If
+                End If
+            End If
+        End If
+        Me.lstUnifiDevices.Items.Clear()
+        For Each device In UnifiController.DeviceList
+            Dim MyItem As New ListViewItem
+            MyItem.Text = device.Name
+            MyItem.SubItems.Add(device.DeviceType)
+            MyItem.SubItems.Add(device.Model)
+            Dim Model = UnifiController.DeviceTypes(device.Model)
+            If Model IsNot Nothing Then
+                MyItem.SubItems.Add(Model.Name)
+            Else
+                MyItem.SubItems.Add("")
+            End If
+            MyItem.SubItems.Add(device.IP)
+            MyItem.SubItems.Add(device.FixedIP.ToString)
+            MyItem.SubItems.Add(device.IPType)
+            MyItem.SubItems.Add(device.MacAddress)
+            MyItem.SubItems.Add(device.Version)
+            Me.lstUnifiDevices.Items.Add(MyItem)
+            MyItem.Tag = device
+        Next
+        Me.lstClient.Items.Clear()
+        For Each client In UnifiController.ClientList
+            Dim MyItem As New ListViewItem
+            MyItem.Text = client.Name
+            If client.HostName IsNot Nothing Then MyItem.Text &= "(" & client.HostName & ")"
+            MyItem.SubItems.Add(client.Organisation)
+            MyItem.SubItems.Add(client.IP)
+            MyItem.SubItems.Add(client.FixedIP.ToString)
+            MyItem.SubItems.Add(client.MacAddress)
+            MyItem.SubItems.Add(client.Wifi.ToString)
+            MyItem.SubItems.Add(client.FirstSeen.ToString)
+            MyItem.SubItems.Add(client.LastSeen.ToString)
+
+            MyItem.Tag = client
+            Me.lstClient.Items.Add(MyItem)
+        Next
     End Sub
 
     Private Sub lstContextMenu_Opening(sender As Object, e As CancelEventArgs) Handles lstContextMenu.Opening
@@ -469,5 +520,30 @@ Public Class frmMain
 
         MyForm.ShowDialog()
 
+    End Sub
+
+
+    Private Sub lstClient_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lstClient.SelectedIndexChanged
+        If lstClient.SelectedItems.Count = 1 Then
+            Dim Client As UNIFIClient = lstClient.SelectedItems(0).Tag
+            Try
+                Dim jsonFormatted = JValue.Parse(Client.FullDetails).ToString(Formatting.Indented)
+                Me.lblFullDetails.Text = jsonFormatted
+            Catch ex As Exception
+                Me.lblFullDetails.Text = Client.FullDetails
+            End Try
+        End If
+    End Sub
+
+    Private Sub lstUnifiDevices_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lstUnifiDevices.SelectedIndexChanged
+        If lstUnifiDevices.SelectedItems.Count = 1 Then
+            Dim thisDevice As UnifiDevice = lstUnifiDevices.SelectedItems(0).Tag
+            Try
+                Dim jsonFormatted = JValue.Parse(thisDevice.FullDetails).ToString(Formatting.Indented)
+                Me.lblDeviceDetail.Text = jsonFormatted
+            Catch ex As Exception
+                Me.lblDeviceDetail.Text = thisDevice.FullDetails
+            End Try
+        End If
     End Sub
 End Class

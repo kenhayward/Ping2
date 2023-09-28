@@ -4,7 +4,7 @@
     Public Property HostName As String
 
     Public Property IP As String
-    Public Property IPType As String
+    Public Property FixedIP As Boolean
     Public Property MacAddress As String
     Public Property Organisation As String
     Public Property Wifi As Boolean

@@ -6,6 +6,9 @@
     Public Property MacAddress As String
     Public Property Model As String
     Public Property Version As String
+    Public Property FullDetails As String
+
+    Public Property FixedIP As Boolean
 
 End Class
 

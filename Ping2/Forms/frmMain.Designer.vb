@@ -27,8 +27,8 @@ Partial Class frmMain
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMain))
-        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim ChartArea3 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend3 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
         Dim ListViewGroup1 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Switch", System.Windows.Forms.HorizontalAlignment.Left)
         Dim ListViewGroup2 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Gateway", System.Windows.Forms.HorizontalAlignment.Left)
         Dim ListViewGroup3 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Access Point", System.Windows.Forms.HorizontalAlignment.Left)
@@ -64,7 +64,6 @@ Partial Class frmMain
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
         Me.lblStatus = New System.Windows.Forms.ToolStripStatusLabel()
         Me.Chart1 = New System.Windows.Forms.DataVisualization.Charting.Chart()
-        Me.Splitter1 = New System.Windows.Forms.Splitter()
         Me.btnResetGraph = New System.Windows.Forms.Button()
         Me.pnlChart = New System.Windows.Forms.Panel()
         Me.lstIP = New Ping.ListViewX()
@@ -78,6 +77,34 @@ Partial Class frmMain
         Me.ColumnHeader6 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader8 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader9 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.TabMain = New System.Windows.Forms.TabControl()
+        Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.Splitter1 = New System.Windows.Forms.Splitter()
+        Me.TabUnifiDevices = New System.Windows.Forms.TabPage()
+        Me.Splitter3 = New System.Windows.Forms.Splitter()
+        Me.lstUnifiDevices = New System.Windows.Forms.ListView()
+        Me.ColumnHeader11 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader12 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader13 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader15 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader14 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader16 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader17 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader18 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.TabUnifiClients = New System.Windows.Forms.TabPage()
+        Me.lblFullDetails = New System.Windows.Forms.Label()
+        Me.Splitter2 = New System.Windows.Forms.Splitter()
+        Me.lstClient = New Ping.ListViewX()
+        Me.ColumnHeader19 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader20 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader21 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader22 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader23 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader24 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader25 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.lblDevicedetail = New System.Windows.Forms.TextBox()
+        Me.ColumnHeader26 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader27 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.lstContextMenu.SuspendLayout()
         CType(Me.NumInterval, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MenuStrip1.SuspendLayout()
@@ -85,6 +112,10 @@ Partial Class frmMain
         Me.StatusStrip1.SuspendLayout()
         CType(Me.Chart1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnlChart.SuspendLayout()
+        Me.TabMain.SuspendLayout()
+        Me.TabPage1.SuspendLayout()
+        Me.TabUnifiDevices.SuspendLayout()
+        Me.TabUnifiClients.SuspendLayout()
         Me.SuspendLayout()
         '
         'PrintPreviewDialog1
@@ -110,7 +141,7 @@ Partial Class frmMain
         'txtIPAddress
         '
         Me.txtIPAddress.Location = New System.Drawing.Point(91, 9)
-        Me.txtIPAddress.Margin = New System.Windows.Forms.Padding(1, 1, 1, 1)
+        Me.txtIPAddress.Margin = New System.Windows.Forms.Padding(1)
         Me.txtIPAddress.Name = "txtIPAddress"
         Me.txtIPAddress.Size = New System.Drawing.Size(154, 20)
         Me.txtIPAddress.TabIndex = 1
@@ -159,7 +190,7 @@ Partial Class frmMain
         'NumInterval
         '
         Me.NumInterval.Location = New System.Drawing.Point(313, 28)
-        Me.NumInterval.Margin = New System.Windows.Forms.Padding(1, 1, 1, 1)
+        Me.NumInterval.Margin = New System.Windows.Forms.Padding(1)
         Me.NumInterval.Maximum = New Decimal(New Integer() {60, 0, 0, 0})
         Me.NumInterval.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
         Me.NumInterval.Name = "NumInterval"
@@ -170,7 +201,7 @@ Partial Class frmMain
         'txtFriendly
         '
         Me.txtFriendly.Location = New System.Drawing.Point(91, 27)
-        Me.txtFriendly.Margin = New System.Windows.Forms.Padding(1, 1, 1, 1)
+        Me.txtFriendly.Margin = New System.Windows.Forms.Padding(1)
         Me.txtFriendly.Name = "txtFriendly"
         Me.txtFriendly.Size = New System.Drawing.Size(154, 20)
         Me.txtFriendly.TabIndex = 10
@@ -313,7 +344,7 @@ Partial Class frmMain
         Me.txtFile.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtFile.Location = New System.Drawing.Point(419, 28)
-        Me.txtFile.Margin = New System.Windows.Forms.Padding(1, 1, 1, 1)
+        Me.txtFile.Margin = New System.Windows.Forms.Padding(1)
         Me.txtFile.Name = "txtFile"
         Me.txtFile.ReadOnly = True
         Me.txtFile.Size = New System.Drawing.Size(692, 20)
@@ -324,7 +355,7 @@ Partial Class frmMain
         '
         Me.btnAddIP.Image = Global.Ping.My.Resources.Resources.add1
         Me.btnAddIP.Location = New System.Drawing.Point(245, 9)
-        Me.btnAddIP.Margin = New System.Windows.Forms.Padding(1, 1, 1, 1)
+        Me.btnAddIP.Margin = New System.Windows.Forms.Padding(1)
         Me.btnAddIP.Name = "btnAddIP"
         Me.btnAddIP.Size = New System.Drawing.Size(35, 33)
         Me.btnAddIP.TabIndex = 2
@@ -350,45 +381,34 @@ Partial Class frmMain
         'Chart1
         '
         Me.Chart1.BorderSkin.BorderColor = System.Drawing.Color.DarkGray
-        ChartArea1.AxisX.LineColor = System.Drawing.Color.Gray
-        ChartArea1.AxisX.MajorGrid.LineColor = System.Drawing.Color.Silver
-        ChartArea1.AxisX.MinorGrid.LineColor = System.Drawing.Color.Silver
-        ChartArea1.AxisY.LineColor = System.Drawing.Color.Gray
-        ChartArea1.AxisY.MajorGrid.LineColor = System.Drawing.Color.Silver
-        ChartArea1.AxisY.Minimum = 0R
-        ChartArea1.AxisY.Title = "Milliseconds"
-        ChartArea1.BorderColor = System.Drawing.Color.Silver
-        ChartArea1.Name = "ChartArea1"
-        Me.Chart1.ChartAreas.Add(ChartArea1)
+        ChartArea3.AxisX.LineColor = System.Drawing.Color.Gray
+        ChartArea3.AxisX.MajorGrid.LineColor = System.Drawing.Color.Silver
+        ChartArea3.AxisX.MinorGrid.LineColor = System.Drawing.Color.Silver
+        ChartArea3.AxisY.LineColor = System.Drawing.Color.Gray
+        ChartArea3.AxisY.MajorGrid.LineColor = System.Drawing.Color.Silver
+        ChartArea3.AxisY.Minimum = 0R
+        ChartArea3.AxisY.Title = "Milliseconds"
+        ChartArea3.BorderColor = System.Drawing.Color.Silver
+        ChartArea3.Name = "ChartArea1"
+        Me.Chart1.ChartAreas.Add(ChartArea3)
         Me.Chart1.Dock = System.Windows.Forms.DockStyle.Fill
-        Legend1.DockedToChartArea = "ChartArea1"
-        Legend1.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom
-        Legend1.IsDockedInsideChartArea = False
-        Legend1.Name = "Legend1"
-        Me.Chart1.Legends.Add(Legend1)
+        Legend3.DockedToChartArea = "ChartArea1"
+        Legend3.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom
+        Legend3.IsDockedInsideChartArea = False
+        Legend3.Name = "Legend1"
+        Me.Chart1.Legends.Add(Legend3)
         Me.Chart1.Location = New System.Drawing.Point(0, 0)
-        Me.Chart1.Margin = New System.Windows.Forms.Padding(1, 1, 1, 1)
+        Me.Chart1.Margin = New System.Windows.Forms.Padding(1)
         Me.Chart1.Name = "Chart1"
-        Me.Chart1.Size = New System.Drawing.Size(384, 363)
+        Me.Chart1.Size = New System.Drawing.Size(384, 331)
         Me.Chart1.TabIndex = 17
         Me.Chart1.Text = "Chart1"
-        '
-        'Splitter1
-        '
-        Me.Splitter1.BackColor = System.Drawing.SystemColors.Highlight
-        Me.Splitter1.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Splitter1.Location = New System.Drawing.Point(732, 83)
-        Me.Splitter1.Margin = New System.Windows.Forms.Padding(1, 1, 1, 1)
-        Me.Splitter1.Name = "Splitter1"
-        Me.Splitter1.Size = New System.Drawing.Size(4, 363)
-        Me.Splitter1.TabIndex = 18
-        Me.Splitter1.TabStop = False
         '
         'btnResetGraph
         '
         Me.btnResetGraph.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnResetGraph.Location = New System.Drawing.Point(331, 338)
-        Me.btnResetGraph.Margin = New System.Windows.Forms.Padding(1, 1, 1, 1)
+        Me.btnResetGraph.Location = New System.Drawing.Point(331, 306)
+        Me.btnResetGraph.Margin = New System.Windows.Forms.Padding(1)
         Me.btnResetGraph.Name = "btnResetGraph"
         Me.btnResetGraph.Size = New System.Drawing.Size(52, 24)
         Me.btnResetGraph.TabIndex = 19
@@ -400,10 +420,10 @@ Partial Class frmMain
         Me.pnlChart.Controls.Add(Me.btnResetGraph)
         Me.pnlChart.Controls.Add(Me.Chart1)
         Me.pnlChart.Dock = System.Windows.Forms.DockStyle.Right
-        Me.pnlChart.Location = New System.Drawing.Point(736, 83)
-        Me.pnlChart.Margin = New System.Windows.Forms.Padding(1, 1, 1, 1)
+        Me.pnlChart.Location = New System.Drawing.Point(725, 3)
+        Me.pnlChart.Margin = New System.Windows.Forms.Padding(1)
         Me.pnlChart.Name = "pnlChart"
-        Me.pnlChart.Size = New System.Drawing.Size(384, 363)
+        Me.pnlChart.Size = New System.Drawing.Size(384, 331)
         Me.pnlChart.TabIndex = 20
         Me.pnlChart.Visible = False
         '
@@ -423,10 +443,10 @@ Partial Class frmMain
         Me.lstIP.Groups.AddRange(New System.Windows.Forms.ListViewGroup() {ListViewGroup1, ListViewGroup2, ListViewGroup3})
         Me.lstIP.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable
         Me.lstIP.HideSelection = False
-        Me.lstIP.Location = New System.Drawing.Point(0, 83)
-        Me.lstIP.Margin = New System.Windows.Forms.Padding(1, 1, 1, 1)
+        Me.lstIP.Location = New System.Drawing.Point(3, 3)
+        Me.lstIP.Margin = New System.Windows.Forms.Padding(1)
         Me.lstIP.Name = "lstIP"
-        Me.lstIP.Size = New System.Drawing.Size(732, 363)
+        Me.lstIP.Size = New System.Drawing.Size(712, 331)
         Me.lstIP.TabIndex = 4
         Me.lstIP.UseCompatibleStateImageBehavior = False
         Me.lstIP.View = System.Windows.Forms.View.Details
@@ -487,21 +507,225 @@ Partial Class frmMain
         Me.ColumnHeader9.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.ColumnHeader9.Width = 150
         '
+        'TabMain
+        '
+        Me.TabMain.Controls.Add(Me.TabPage1)
+        Me.TabMain.Controls.Add(Me.TabUnifiDevices)
+        Me.TabMain.Controls.Add(Me.TabUnifiClients)
+        Me.TabMain.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TabMain.Location = New System.Drawing.Point(0, 83)
+        Me.TabMain.Name = "TabMain"
+        Me.TabMain.SelectedIndex = 0
+        Me.TabMain.Size = New System.Drawing.Size(1120, 363)
+        Me.TabMain.TabIndex = 21
+        '
+        'TabPage1
+        '
+        Me.TabPage1.Controls.Add(Me.lstIP)
+        Me.TabPage1.Controls.Add(Me.Splitter1)
+        Me.TabPage1.Controls.Add(Me.pnlChart)
+        Me.TabPage1.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage1.Name = "TabPage1"
+        Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage1.Size = New System.Drawing.Size(1112, 337)
+        Me.TabPage1.TabIndex = 0
+        Me.TabPage1.Text = "Ping"
+        Me.TabPage1.UseVisualStyleBackColor = True
+        '
+        'Splitter1
+        '
+        Me.Splitter1.BackColor = System.Drawing.SystemColors.Highlight
+        Me.Splitter1.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Splitter1.Location = New System.Drawing.Point(715, 3)
+        Me.Splitter1.Margin = New System.Windows.Forms.Padding(1)
+        Me.Splitter1.Name = "Splitter1"
+        Me.Splitter1.Size = New System.Drawing.Size(10, 331)
+        Me.Splitter1.TabIndex = 21
+        Me.Splitter1.TabStop = False
+        '
+        'TabUnifiDevices
+        '
+        Me.TabUnifiDevices.Controls.Add(Me.lblDevicedetail)
+        Me.TabUnifiDevices.Controls.Add(Me.Splitter3)
+        Me.TabUnifiDevices.Controls.Add(Me.lstUnifiDevices)
+        Me.TabUnifiDevices.Location = New System.Drawing.Point(4, 22)
+        Me.TabUnifiDevices.Name = "TabUnifiDevices"
+        Me.TabUnifiDevices.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabUnifiDevices.Size = New System.Drawing.Size(1112, 337)
+        Me.TabUnifiDevices.TabIndex = 1
+        Me.TabUnifiDevices.Text = "Unifi Devices"
+        Me.TabUnifiDevices.UseVisualStyleBackColor = True
+        '
+        'Splitter3
+        '
+        Me.Splitter3.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Splitter3.Location = New System.Drawing.Point(3, 218)
+        Me.Splitter3.Name = "Splitter3"
+        Me.Splitter3.Size = New System.Drawing.Size(1106, 10)
+        Me.Splitter3.TabIndex = 7
+        Me.Splitter3.TabStop = False
+        '
+        'lstUnifiDevices
+        '
+        Me.lstUnifiDevices.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader11, Me.ColumnHeader12, Me.ColumnHeader13, Me.ColumnHeader15, Me.ColumnHeader14, Me.ColumnHeader26, Me.ColumnHeader16, Me.ColumnHeader17, Me.ColumnHeader18})
+        Me.lstUnifiDevices.Dock = System.Windows.Forms.DockStyle.Top
+        Me.lstUnifiDevices.FullRowSelect = True
+        Me.lstUnifiDevices.HideSelection = False
+        Me.lstUnifiDevices.Location = New System.Drawing.Point(3, 3)
+        Me.lstUnifiDevices.Name = "lstUnifiDevices"
+        Me.lstUnifiDevices.Size = New System.Drawing.Size(1106, 215)
+        Me.lstUnifiDevices.TabIndex = 1
+        Me.lstUnifiDevices.UseCompatibleStateImageBehavior = False
+        Me.lstUnifiDevices.View = System.Windows.Forms.View.Details
+        '
+        'ColumnHeader11
+        '
+        Me.ColumnHeader11.Text = "Name"
+        Me.ColumnHeader11.Width = 150
+        '
+        'ColumnHeader12
+        '
+        Me.ColumnHeader12.Text = "Type"
+        '
+        'ColumnHeader13
+        '
+        Me.ColumnHeader13.Text = "Model"
+        Me.ColumnHeader13.Width = 100
+        '
+        'ColumnHeader15
+        '
+        Me.ColumnHeader15.Text = "Model Name"
+        Me.ColumnHeader15.Width = 150
+        '
+        'ColumnHeader14
+        '
+        Me.ColumnHeader14.Text = "IP Address"
+        Me.ColumnHeader14.Width = 100
+        '
+        'ColumnHeader16
+        '
+        Me.ColumnHeader16.Text = "IP Type"
+        '
+        'ColumnHeader17
+        '
+        Me.ColumnHeader17.Text = "MAC"
+        Me.ColumnHeader17.Width = 100
+        '
+        'ColumnHeader18
+        '
+        Me.ColumnHeader18.Text = "Version"
+        Me.ColumnHeader18.Width = 100
+        '
+        'TabUnifiClients
+        '
+        Me.TabUnifiClients.Controls.Add(Me.lblFullDetails)
+        Me.TabUnifiClients.Controls.Add(Me.Splitter2)
+        Me.TabUnifiClients.Controls.Add(Me.lstClient)
+        Me.TabUnifiClients.Location = New System.Drawing.Point(4, 22)
+        Me.TabUnifiClients.Name = "TabUnifiClients"
+        Me.TabUnifiClients.Size = New System.Drawing.Size(1112, 337)
+        Me.TabUnifiClients.TabIndex = 2
+        Me.TabUnifiClients.Text = "Unifi Clients"
+        Me.TabUnifiClients.UseVisualStyleBackColor = True
+        '
+        'lblFullDetails
+        '
+        Me.lblFullDetails.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.lblFullDetails.Location = New System.Drawing.Point(0, 282)
+        Me.lblFullDetails.Name = "lblFullDetails"
+        Me.lblFullDetails.Size = New System.Drawing.Size(1112, 55)
+        Me.lblFullDetails.TabIndex = 4
+        '
+        'Splitter2
+        '
+        Me.Splitter2.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Splitter2.Location = New System.Drawing.Point(0, 272)
+        Me.Splitter2.Name = "Splitter2"
+        Me.Splitter2.Size = New System.Drawing.Size(1112, 10)
+        Me.Splitter2.TabIndex = 5
+        Me.Splitter2.TabStop = False
+        '
+        'lstClient
+        '
+        Me.lstClient.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader19, Me.ColumnHeader20, Me.ColumnHeader21, Me.ColumnHeader27, Me.ColumnHeader22, Me.ColumnHeader23, Me.ColumnHeader24, Me.ColumnHeader25})
+        Me.lstClient.Dock = System.Windows.Forms.DockStyle.Top
+        Me.lstClient.FullRowSelect = True
+        Me.lstClient.HideSelection = False
+        Me.lstClient.Location = New System.Drawing.Point(0, 0)
+        Me.lstClient.Name = "lstClient"
+        Me.lstClient.Size = New System.Drawing.Size(1112, 272)
+        Me.lstClient.Sorting = System.Windows.Forms.SortOrder.Ascending
+        Me.lstClient.TabIndex = 2
+        Me.lstClient.UseCompatibleStateImageBehavior = False
+        Me.lstClient.View = System.Windows.Forms.View.Details
+        '
+        'ColumnHeader19
+        '
+        Me.ColumnHeader19.Text = "Name"
+        Me.ColumnHeader19.Width = 150
+        '
+        'ColumnHeader20
+        '
+        Me.ColumnHeader20.Text = "Organisation"
+        Me.ColumnHeader20.Width = 150
+        '
+        'ColumnHeader21
+        '
+        Me.ColumnHeader21.Text = "IP"
+        Me.ColumnHeader21.Width = 100
+        '
+        'ColumnHeader22
+        '
+        Me.ColumnHeader22.Text = "MAC"
+        Me.ColumnHeader22.Width = 100
+        '
+        'ColumnHeader23
+        '
+        Me.ColumnHeader23.Text = "WiFi"
+        '
+        'ColumnHeader24
+        '
+        Me.ColumnHeader24.Text = "First Seen"
+        Me.ColumnHeader24.Width = 120
+        '
+        'ColumnHeader25
+        '
+        Me.ColumnHeader25.Text = "Last Seen"
+        Me.ColumnHeader25.Width = 120
+        '
+        'lblDevicedetail
+        '
+        Me.lblDevicedetail.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.lblDevicedetail.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.lblDevicedetail.Location = New System.Drawing.Point(3, 228)
+        Me.lblDevicedetail.Multiline = True
+        Me.lblDevicedetail.Name = "lblDevicedetail"
+        Me.lblDevicedetail.ReadOnly = True
+        Me.lblDevicedetail.ScrollBars = System.Windows.Forms.ScrollBars.Both
+        Me.lblDevicedetail.Size = New System.Drawing.Size(1106, 106)
+        Me.lblDevicedetail.TabIndex = 8
+        '
+        'ColumnHeader26
+        '
+        Me.ColumnHeader26.Text = "Fixed IP"
+        '
+        'ColumnHeader27
+        '
+        Me.ColumnHeader27.Text = "Fixed IP"
+        '
         'frmMain
         '
         Me.AcceptButton = Me.btnAddIP
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1120, 468)
-        Me.Controls.Add(Me.lstIP)
-        Me.Controls.Add(Me.Splitter1)
-        Me.Controls.Add(Me.pnlChart)
+        Me.Controls.Add(Me.TabMain)
         Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.MenuStrip1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MainMenuStrip = Me.MenuStrip1
-        Me.Margin = New System.Windows.Forms.Padding(1, 1, 1, 1)
+        Me.Margin = New System.Windows.Forms.Padding(1)
         Me.Name = "frmMain"
         Me.Text = "Ping Explorer"
         Me.lstContextMenu.ResumeLayout(False)
@@ -514,6 +738,11 @@ Partial Class frmMain
         Me.StatusStrip1.PerformLayout()
         CType(Me.Chart1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pnlChart.ResumeLayout(False)
+        Me.TabMain.ResumeLayout(False)
+        Me.TabPage1.ResumeLayout(False)
+        Me.TabUnifiDevices.ResumeLayout(False)
+        Me.TabUnifiDevices.PerformLayout()
+        Me.TabUnifiClients.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -558,7 +787,6 @@ Partial Class frmMain
     Friend WithEvents mnuGroups As ToolStripMenuItem
     Friend WithEvents RemoveToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents Chart1 As DataVisualization.Charting.Chart
-    Friend WithEvents Splitter1 As Splitter
     Friend WithEvents ViewToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ShowChartToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents btnResetGraph As Button
@@ -566,4 +794,32 @@ Partial Class frmMain
     Friend WithEvents ToolStripSeparator1 As ToolStripSeparator
     Friend WithEvents pnlChart As Panel
     Friend WithEvents mnuUnifi As ToolStripMenuItem
+    Friend WithEvents TabMain As TabControl
+    Friend WithEvents TabPage1 As TabPage
+    Friend WithEvents Splitter1 As Splitter
+    Friend WithEvents TabUnifiDevices As TabPage
+    Friend WithEvents TabUnifiClients As TabPage
+    Friend WithEvents lstUnifiDevices As ListView
+    Friend WithEvents ColumnHeader11 As ColumnHeader
+    Friend WithEvents ColumnHeader12 As ColumnHeader
+    Friend WithEvents ColumnHeader13 As ColumnHeader
+    Friend WithEvents ColumnHeader15 As ColumnHeader
+    Friend WithEvents ColumnHeader14 As ColumnHeader
+    Friend WithEvents ColumnHeader16 As ColumnHeader
+    Friend WithEvents ColumnHeader17 As ColumnHeader
+    Friend WithEvents ColumnHeader18 As ColumnHeader
+    Friend WithEvents lstClient As ListViewX
+    Friend WithEvents ColumnHeader19 As ColumnHeader
+    Friend WithEvents ColumnHeader20 As ColumnHeader
+    Friend WithEvents ColumnHeader21 As ColumnHeader
+    Friend WithEvents ColumnHeader22 As ColumnHeader
+    Friend WithEvents ColumnHeader23 As ColumnHeader
+    Friend WithEvents ColumnHeader24 As ColumnHeader
+    Friend WithEvents ColumnHeader25 As ColumnHeader
+    Friend WithEvents lblFullDetails As Label
+    Friend WithEvents Splitter2 As Splitter
+    Friend WithEvents Splitter3 As Splitter
+    Friend WithEvents lblDevicedetail As TextBox
+    Friend WithEvents ColumnHeader26 As ColumnHeader
+    Friend WithEvents ColumnHeader27 As ColumnHeader
 End Class

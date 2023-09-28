@@ -7,7 +7,6 @@ Public Class frmUnifi
 
     Private Sub frmUnifi_Load(sender As Object, e As EventArgs) Handles Me.Load
         Controller.Load(My.Computer.FileSystem.SpecialDirectories.CurrentUserApplicationData & "\UnifiController.bin")
-        'AddHandler lstClient.ColumnClick, AddressOf lstClient.sortingcolumnclick
         Me.txtPassword.Text = Controller.Password
         Me.txtSite.Text = Controller.Site
         Me.txtURLBase.Text = Controller.URLBase

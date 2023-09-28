@@ -57,7 +57,11 @@ Imports RestSharp
             fs.Close()
         End Using
     End Sub
-    Public Sub Load(Filename As String)
+    Public Function LoadDefaults() As Boolean
+        Return Me.Load(My.Computer.FileSystem.SpecialDirectories.CurrentUserApplicationData & "\UnifiController.bin")
+    End Function
+    Public Function Load(Filename As String) As Boolean
+        Dim Retval As Boolean
         Try
 
             If File.Exists(Filename) Then
@@ -69,13 +73,14 @@ Imports RestSharp
                     Me.Password = MyC.Password
                     Me.Site = MyC.Site
                     Me.URLBase = MyC.URLBase
+                    Retval = True
                 End Using
             End If
         Catch ex As Exception
             ' Ignore bad files
         End Try
-
-    End Sub
+        Return Retval
+    End Function
     Public Function Login() As Boolean
         Dim JSONString = "{" & String.Format(LoginFormat, UserName, Password) & "}"
         Dim Result As Boolean = False
@@ -170,6 +175,8 @@ Imports RestSharp
                             thisCLient.FirstSeen = UnixToDateTime(dataelement.value)
                         Case "last_seen"
                             thisCLient.LastSeen = UnixToDateTime(dataelement.value)
+                        Case "use_fixedip"
+                            If dataelement.value.ToString <> "false" Then thisCLient.FixedIP = True
                         Case Else
                             'Debug.Print("Name: " & dataelement.name & " Value: " & dataelement.value)
                     End Select
@@ -199,6 +206,7 @@ Imports RestSharp
             For Each Device In JSONDeviceList.Children()
                 Dim UNIFIDevice As New UnifiDevice
                 DeviceList.Add(UNIFIDevice)
+                UNIFIDevice.FullDetails = Device.ToString
                 For Each dataelement As Object In Device.Children
                     Select Case dataelement.Name
                         Case "model" : UNIFIDevice.Model = dataelement.value
@@ -207,6 +215,10 @@ Imports RestSharp
                         Case "name" : UNIFIDevice.Name = dataelement.value
                         Case "displayable_version" : UNIFIDevice.Version = dataelement.value
                         Case "ip" : UNIFIDevice.IP = dataelement.value
+                        Case "use_fixedip"
+                            If dataelement.value.ToString = "true" Then
+                                UNIFIDevice.FixedIP = True
+                            End If
                         Case "config_network"
                             For Each child In dataelement.children
                                 For Each grandchild In child.children
