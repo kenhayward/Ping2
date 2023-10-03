@@ -188,8 +188,7 @@ Public Class frmMain
         Dim NewPing = Nothing
         SyncLock (Blocking)
             If Not PingList.ContainsKey(IPAddress) Then
-                NewPing = New PingIP(IPAddress, FriendlyName)
-                NewPing.group = Group
+                NewPing = New PingIP(IPAddress, FriendlyName) With {.Group = Group}
                 PingList.Add(IPAddress, NewPing)
                 UpdateListView(NewPing)
             Else
@@ -276,11 +275,12 @@ Public Class frmMain
     End Sub
 
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles SaveIPListToolStripMenuItem.Click
-        Dim MySave As New SaveFileDialog
-        MySave.Title = "Save IP List"
-        MySave.FileName = "PingTest.csv"
-        MySave.AddExtension = True
-        MySave.Filter = "*.csv|csv"
+        Dim MySave As New SaveFileDialog With {
+            .Title = "Save IP List",
+            .FileName = "PingTest.csv",
+            .AddExtension = True,
+            .Filter = "*.csv|csv"
+        }
         Dim Result = MySave.ShowDialog
         If Result = DialogResult.OK Then
             Me.Cursor = Cursors.WaitCursor
@@ -288,12 +288,13 @@ Public Class frmMain
             Me.Cursor = Cursors.Default
         End If
     End Sub
-    Private Sub btnOpen_Click(sender As Object, e As EventArgs) Handles OpenIPListToolStripMenuItem.Click
-        Dim MySave As New OpenFileDialog
-        MySave.Title = "Open IP List"
-        MySave.FileName = "PingTest.csv"
-        MySave.AddExtension = True
-        MySave.Filter = "*.csv|csv"
+    Private Sub BtnOpen_Click(sender As Object, e As EventArgs) Handles OpenIPListToolStripMenuItem.Click
+        Dim MySave As New OpenFileDialog With {
+            .Title = "Open IP List",
+            .FileName = "PingTest.csv",
+            .AddExtension = True,
+            .Filter = "*.csv|csv"
+        }
         Dim Result = MySave.ShowDialog
         If Result = DialogResult.OK Then
             Me.Cursor = Cursors.WaitCursor
@@ -379,15 +380,12 @@ Public Class frmMain
         LoadUnifi()
     End Sub
 
-    Private Sub mnuUnifi_Click(sender As Object, e As EventArgs) Handles mnuUnifi.Click
-        Dim MyForm As New frmUnifi
-        MyForm.Controller = Me.UnifiController
-
+    Private Sub MnuUnifi_Click(sender As Object, e As EventArgs) Handles mnuUnifi.Click
+        Dim MyForm As New frmUnifi With {.Controller = Me.UnifiController}
         If MyForm.ShowDialog() = DialogResult.OK Then
-            ' Try to load the controller
-            Me.Cursor = Cursors.WaitCursor
+            Cursor = Cursors.WaitCursor
             LoadUnifi()
-            Me.Cursor = Cursors.Default
+            Cursor = Cursors.Default
         End If
 
     End Sub
@@ -484,8 +482,7 @@ Public Class frmMain
                     Dim FriendlyName = client.Value
                     Dim NewPing As PingIP
                     If Not PingList.ContainsKey(IpAddress) Then
-                        NewPing = New PingIP(IpAddress, FriendlyName)
-                        NewPing.Group = "Client"
+                        NewPing = New PingIP(IpAddress, FriendlyName) With {.Group = "Client"}
                         PingList.Add(IpAddress, NewPing)
                         UpdateListView(NewPing)
                     End If
@@ -516,8 +513,7 @@ Public Class frmMain
             End If
         End If
         For Each device In UnifiController.DeviceList
-            Dim MyItem As New ListViewItem
-            MyItem.Text = device.Name
+            Dim MyItem As New ListViewItem With {.Text = device.Name}
             MyItem.SubItems.Add(device.DeviceType)
             MyItem.SubItems.Add(device.Model)
             Dim Model = UnifiController.DeviceTypes(device.Model)
@@ -535,8 +531,7 @@ Public Class frmMain
             MyItem.Tag = device
         Next
         For Each client In UnifiController.ClientList
-            Dim MyItem As New ListViewItem
-            MyItem.Text = client.Name
+            Dim MyItem As New ListViewItem With {.Text = client.Name}
             If client.HostName IsNot Nothing Then MyItem.Text &= "(" & client.HostName & ")"
             MyItem.SubItems.Add(client.Organisation)
             MyItem.SubItems.Add(client.IP)

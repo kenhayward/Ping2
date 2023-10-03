@@ -105,7 +105,7 @@ Imports RestSharp
         If Client Is Nothing Then
             Client = New RestClient(URLBase)
         End If
-        Dim request As RestRequest = New RestRequest(Endpoint, Method.Get)
+        Dim request As New RestRequest(Endpoint, Method.Get)
         If ApplyHeaders Then
             ApplyRequestHeaders(request)
         End If
@@ -127,7 +127,7 @@ Imports RestSharp
         If Client Is Nothing Then
             Client = New RestClient(URLBase)
         End If
-        Dim request As RestRequest = New RestRequest(Endpoint, Method.Post)
+        Dim request As New RestRequest(Endpoint, Method.Post)
         ServicePointManager.ServerCertificateValidationCallback =
             New RemoteCertificateValidationCallback(AddressOf AcceptAllCertifications)
         ServicePointManager.Expect100Continue = True
@@ -199,7 +199,7 @@ Imports RestSharp
     Public Function UnixToDateTime(ByVal strUnixTime As String) As DateTime
 
         Dim nTimestamp As Double = strUnixTime
-        Dim nDateTime As System.DateTime = New System.DateTime(1970, 1, 1, 0, 0, 0, 0)
+        Dim nDateTime As New DateTime(1970, 1, 1, 0, 0, 0, 0)
         nDateTime = nDateTime.AddSeconds(nTimestamp)
         Return nDateTime
 

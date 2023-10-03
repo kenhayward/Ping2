@@ -78,11 +78,12 @@ Public Class ListViewX
     End Sub
 
     Private Function GetWindowRECT() As RECT
-        Dim rect As RECT = New RECT()
-        rect.left = Me.Left
-        rect.right = Me.Right
-        rect.top = Me.Top
-        rect.bottom = Me.Bottom
+        Dim rect As New RECT With {
+            .left = Me.Left,
+            .right = Me.Right,
+            .top = Me.Top,
+            .bottom = Me.Bottom
+        }
         Return rect
     End Function
 
@@ -99,7 +100,7 @@ End Class
 Public Class ListViewItemComparer
     Implements IComparer
 
-    Private col As Integer
+    Private ReadOnly col As Integer
 
     Public Sub New()
         col = 0
