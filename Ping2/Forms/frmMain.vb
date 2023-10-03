@@ -1,29 +1,26 @@
-﻿Imports System.Net.NetworkInformation
-Imports System.Text
-Imports System
-Imports System.Net
-Imports System.Threading
+﻿Imports System.Threading
 Imports System.ComponentModel
 Imports System.Windows.Forms.DataVisualization.Charting
 Imports Newtonsoft.Json.Linq
 Imports Newtonsoft.Json
 
 Public Class frmMain
-    Public Event PingResult(Ping As PingIP)
-    Dim PingList As New Dictionary(Of String, PingIP)
-    Private Blocking = New Object
-    Private RefreshNow As Boolean ' Refresh the ping list immediately then revert to refreshinterval
-    Private RefreshInterval As Integer = 1
-    Private WithEvents RefreshWorker As BackgroundWorker
-    Private PingStep As Long
-    Public UnifiController As New UnifiController
+#Region "Class Variables"
+    Private PingList As New Dictionary(Of String, PingIP) ' All the IP Addresses we will ping
+    Private Blocking = New Object  ' Used to Synclock the PingList with the background task
+    Public UnifiController As New UnifiController ' The Unifi Controller Details
+    Private ChartIPs As New List(Of PingIP)  ' The subset of the pinglist that are included in the current chart
+    Private RefreshNow As Boolean  ' Refresh the ping list immediately then revert to refreshinterval
+    Private RefreshInterval As Integer = 5 ' (Seconds) how long to wait between Ping cycles
+    Private WithEvents RefreshWorker As BackgroundWorker ' The Ping Worker
+    Private PingStep As Long  ' How many cycles have we run in this session - used for Graph x Axis
+#End Region
+#Region "Ping ListView Support Functions"
     Private Sub AddGroup(Pingit As PingIP, Item As ListViewItem)
         If Pingit.Group <> "" Then
             Dim thisGroup As ListViewGroup = Nothing
             For Each group In lstIP.Groups
-                If group.header = Pingit.Group Then
-                    thisGroup = group
-                End If
+                If group.header = Pingit.Group Then thisGroup = group
             Next
             If thisGroup Is Nothing Then
                 thisGroup = New ListViewGroup(Pingit.Group)
@@ -33,16 +30,12 @@ Public Class frmMain
         End If
     End Sub
     Private Sub UpdateListView(PIngit As PingIP)
-
-
-        ' Update the Chart if needed
         For Each ip In ChartIPs
             If ip.Equals(PIngit) Then
                 For Each series In Chart1.Series
                     If series.Tag.Equals(PIngit) Then
                         If series.Points.Count = 0 Then
-                            Dim MyPoint As New DataPoint(PingStep, PIngit.RoundtripTime)
-                            MyPoint.Label = PIngit.FriendlyName
+                            Dim MyPoint As New DataPoint(PingStep, PIngit.RoundtripTime) With {.Label = PIngit.FriendlyName}
                             series.Points.Add(MyPoint)
                         Else
                             series.Points.AddXY(PingStep, PIngit.RoundtripTime)
@@ -52,7 +45,6 @@ Public Class frmMain
                 Next
             End If
         Next
-
 
         Dim MyItem As ListViewItem = Nothing
         For Each item In lstIP.Items
@@ -80,6 +72,7 @@ Public Class frmMain
                 Exit For
             End If
         Next
+        ' Constants for Subitem Positioning
         Const SIRequestedAddress = 1
         Const SIIPAddress = 2
         Const SIHostName = 3
@@ -97,7 +90,6 @@ Public Class frmMain
         If PIngit.PingCount > 0 Then
             If PIngit.Success Then
                 PCItem.Text = PIngit.RoundtripTime.ToString()
-
                 Select Case PIngit.RoundtripTime
                     Case < 25
                         PCItem.BackColor = Color.Green
@@ -114,7 +106,6 @@ Public Class frmMain
                 PCItem.ForeColor = Color.White
                 PCItem.BackColor = Color.Red
             End If
-
             If PIngit.Average = -1 Then
                 MyItem.SubItems(SIAverage).Text = "N/A"
             Else
@@ -131,7 +122,6 @@ Public Class frmMain
                 MyItem.SubItems(SIWorst).Text = PIngit.Worst.ToString()
             End If
             MyItem.SubItems(SIPingCount).Text = PIngit.PingCount.ToString()
-
             Dim Failitem = MyItem.SubItems(SIFailures)
             Failitem.Text = PIngit.Failures.ToString()
             If PIngit.Failures > 0 Then
@@ -141,19 +131,59 @@ Public Class frmMain
             AddGroup(PIngit, MyItem)
         End If
         lstIP.UpdateItem(MyItemIndex)
-        'lstIP.EndUpdate()
-
         If chkAutosave.Checked Then
             SaveIPList(Me.txtFile.Text)
         End If
         UpdateStatus()
-
+    End Sub
+#End Region
+#Region "Background Ping Worker"
+    ''' <summary>
+    ''' Start the Background Ping Worker or force it to refresh now if already started
+    ''' </summary>
+    Private Sub StartWorker()
+        If RefreshWorker Is Nothing Then
+            RefreshWorker = New BackgroundWorker With {.WorkerReportsProgress = True}
+            RefreshWorker.RunWorkerAsync()
+        Else
+            RefreshNow = True
+        End If
     End Sub
     Private Sub RefreshWorker_ProgressChanged(sender As Object, e As ProgressChangedEventArgs) Handles RefreshWorker.ProgressChanged
         Dim PIngit As PingIP = e.UserState
         UpdateListView(PIngit)
-        RaiseEvent PingResult(PIngit)
     End Sub
+    Private Sub RefreshWorker_DoWork(sender As Object, e As DoWorkEventArgs) Handles RefreshWorker.DoWork
+        Do
+            SyncLock (Blocking)
+                Dim x As Integer = 0
+                PingStep += 1
+                For Each pingit In PingList
+                    x += 1
+                    UpdateStatus("Pinging " & pingit.Value.FriendlyName & " (" & pingit.Value.RequestedAddress & ")")
+                    pingit.Value.ExecutePing()
+                    UpdateStatus()
+                    RefreshWorker.ReportProgress(x, pingit.Value)
+                Next
+            End SyncLock
+            Const Pingwait As Integer = 250  ' How long to wait between each check
+            Const PingWaitCount As Integer = 4 ' How this converts to segments of a second
+            For x As Integer = 1 To (RefreshInterval * PingWaitCount)
+                If RefreshNow Then
+                    RefreshNow = False
+                    Exit For
+                End If
+                Thread.Sleep(Pingwait)
+            Next
+        Loop
+    End Sub
+    Private Sub UpdateRefreshInterval()
+        RefreshInterval = NumInterval.Value
+        StartWorker()
+    End Sub
+
+#End Region
+#Region "Ping List Management"
     Private Function CreatePing(IPAddress As String, FriendlyName As String, Group As String) As PingIP
         Dim NewPing = Nothing
         SyncLock (Blocking)
@@ -170,83 +200,6 @@ Public Class frmMain
         Return NewPing
 
     End Function
-    Private Sub btnAddIP_Click(sender As Object, e As EventArgs) Handles btnAddIP.Click
-        CreatePing(txtIPAddress.Text.Trim, txtFriendly.Text.Trim, "")
-        StartWorker()
-        Me.lstIP.Refresh()
-    End Sub
-
-    Private Sub StartWorker()
-        If RefreshWorker Is Nothing Then
-            RefreshWorker = New BackgroundWorker
-            RefreshWorker.WorkerReportsProgress = True
-            RefreshWorker.RunWorkerAsync()
-        Else
-            RefreshNow = True
-        End If
-    End Sub
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles RemoveSelectedToolStripMenuItem.Click, RemoveToolStripMenuItem.Click
-        If lstIP.SelectedItems.Count > 0 Then
-
-            SyncLock (Blocking)
-                For x As Integer = lstIP.SelectedItems.Count - 1 To 0 Step -1
-                    Dim item = lstIP.SelectedItems(x)
-                    Dim Key As PingIP = item.Tag
-                    PingList.Remove(Key.RequestedAddress)
-                    lstIP.Items.Remove(item)
-                Next
-                StartWorker()
-            End SyncLock
-
-
-        End If
-    End Sub
-
-    Private Sub RefreshWorker_DoWork(sender As Object, e As DoWorkEventArgs) Handles RefreshWorker.DoWork
-        Do
-            SyncLock (Blocking)
-                Dim x As Integer = 0
-                PingStep += 1
-                For Each pingit In PingList
-                    x += 1
-                    UpdateStatus("Pinging " & pingit.Value.FriendlyName & " (" & pingit.Value.RequestedAddress & ")")
-                    pingit.Value.ExecutePing()
-                    UpdateStatus()
-                    RefreshWorker.ReportProgress(x, pingit.Value)
-                Next
-
-            End SyncLock
-            For x As Integer = 1 To (RefreshInterval * 4)
-                If RefreshNow Then
-                    RefreshNow = False
-                    Exit For
-                End If
-                Thread.Sleep(250)
-            Next
-        Loop
-
-    End Sub
-
-
-    Private Sub UpdateRefreshInterval()
-        RefreshInterval = NumInterval.Value
-        StartWorker()
-
-    End Sub
-
-    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles SaveIPListToolStripMenuItem.Click
-        Dim MySave As New SaveFileDialog
-        MySave.Title = "Save IP List"
-        MySave.FileName = "PingTest.csv"
-        MySave.AddExtension = True
-        MySave.Filter = "*.csv|csv"
-        Dim Result = MySave.ShowDialog
-        If Result = DialogResult.OK Then
-            Me.Cursor = Cursors.WaitCursor
-            SaveIPList(MySave.FileName)
-            Me.Cursor = Cursors.Default
-        End If
-    End Sub
     Private Sub SaveIPList(Filename As String)
         UpdateStatus("Writing IP List and Statistics")
         Using Writer = New System.IO.StreamWriter(Filename)
@@ -291,17 +244,50 @@ Public Class frmMain
                 Try
                     currentRow = MyReader.ReadFields()
                     If currentRow.Count > 1 Then
-                        Dim NewIP = CreatePing(currentRow(1), currentRow(0), currentRow(2))
+                        CreatePing(currentRow(1), currentRow(0), currentRow(2))
                     End If
-
                 Catch ex As FileIO.MalformedLineException
-                    MsgBox("Line " & ex.Message &
-                    "is not valid and will be skipped.")
+                    MsgBox("Line " & ex.Message & "is not valid and will be skipped.")
                 End Try
             End While
         End Using
     End Sub
 
+#End Region
+#Region "Form Interactions"
+    Private Sub btnAddIP_Click(sender As Object, e As EventArgs) Handles btnAddIP.Click
+        CreatePing(txtIPAddress.Text.Trim, txtFriendly.Text.Trim, "")
+        StartWorker()
+        Me.lstIP.Refresh()
+    End Sub
+    Private Sub RemoveSelectedToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RemoveSelectedToolStripMenuItem.Click, RemoveToolStripMenuItem.Click
+        If lstIP.SelectedItems.Count > 0 Then
+
+            SyncLock (Blocking)
+                For x As Integer = lstIP.SelectedItems.Count - 1 To 0 Step -1
+                    Dim item = lstIP.SelectedItems(x)
+                    Dim Key As PingIP = item.Tag
+                    PingList.Remove(Key.RequestedAddress)
+                    lstIP.Items.Remove(item)
+                Next
+                StartWorker()
+            End SyncLock
+        End If
+    End Sub
+
+    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles SaveIPListToolStripMenuItem.Click
+        Dim MySave As New SaveFileDialog
+        MySave.Title = "Save IP List"
+        MySave.FileName = "PingTest.csv"
+        MySave.AddExtension = True
+        MySave.Filter = "*.csv|csv"
+        Dim Result = MySave.ShowDialog
+        If Result = DialogResult.OK Then
+            Me.Cursor = Cursors.WaitCursor
+            SaveIPList(MySave.FileName)
+            Me.Cursor = Cursors.Default
+        End If
+    End Sub
     Private Sub btnOpen_Click(sender As Object, e As EventArgs) Handles OpenIPListToolStripMenuItem.Click
         Dim MySave As New OpenFileDialog
         MySave.Title = "Open IP List"
@@ -340,6 +326,40 @@ Public Class frmMain
         Me.StatusStrip1.Refresh()
     End Sub
 
+    Private Sub lstContextMenu_Opening(sender As Object, e As CancelEventArgs) Handles lstContextMenu.Opening
+        mnuGroups.DropDownItems.Clear()
+        If lstIP.SelectedItems.Count > 0 Then
+            For Each group As ListViewGroup In lstIP.Groups
+                Dim newmnu = New ToolStripMenuItem(group.Header) With {.Tag = group}
+                mnuGroups.DropDownItems.Add(newmnu)
+                AddHandler newmnu.Click, AddressOf mnuGroups_Click
+            Next
+            Dim mnuSep = New ToolStripSeparator
+            mnuGroups.DropDownItems.Add(mnuSep)
+            Dim mnuAddNew = New ToolStripMenuItem("Add New...")
+            mnuGroups.DropDownItems.Add(mnuAddNew)
+            AddHandler mnuAddNew.Click, AddressOf mnuAddnew_click
+        End If
+    End Sub
+    Private Sub SetSelectedItemGroup(Group As ListViewGroup)
+        If lstIP.SelectedItems.Count > 0 Then
+            For Each item In lstIP.SelectedItems
+                item.Group = Group
+                CType(item.tag, PingIP).Group = CType(item.group, ListViewGroup).Header
+            Next
+        End If
+    End Sub
+    Private Sub mnuGroups_Click(sender As Object, e As EventArgs)
+        SetSelectedItemGroup(sender.tag)
+    End Sub
+    Private Sub mnuAddnew_click(sender As Object, e As EventArgs)
+        Dim NewGroup As String = InputBox("Enter new Group Name", "IP Groups", "")
+        If NewGroup IsNot Nothing Then
+            Dim group As New ListViewGroup(NewGroup)
+            lstIP.Groups.Add(group)
+            SetSelectedItemGroup(group)
+        End If
+    End Sub
     Private Sub Form1_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
         Control.CheckForIllegalCrossThreadCalls = False
         SetStyle(ControlStyles.OptimizedDoubleBuffer, True)
@@ -358,6 +378,125 @@ Public Class frmMain
         lstIP.Columns(9).Width = 77
         LoadUnifi()
     End Sub
+
+    Private Sub mnuUnifi_Click(sender As Object, e As EventArgs) Handles mnuUnifi.Click
+        Dim MyForm As New frmUnifi
+        MyForm.Controller = Me.UnifiController
+
+        If MyForm.ShowDialog() = DialogResult.OK Then
+            ' Try to load the controller
+            Me.Cursor = Cursors.WaitCursor
+            LoadUnifi()
+            Me.Cursor = Cursors.Default
+        End If
+
+    End Sub
+
+    Private Sub ShowChartToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowChartToolStripMenuItem.Click
+        If isChartVisible() Then
+            HideChart()
+        Else
+            ShowChart()
+        End If
+    End Sub
+
+    Private Sub btnResetGraph_Click(sender As Object, e As EventArgs) Handles btnResetGraph.Click
+        Me.Chart1.Series.Clear()
+        Me.ChartIPs.Clear()
+    End Sub
+
+    Private Sub AddToChartToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AddToChartToolStripMenuItem.Click
+        ' Add this one to the chart as a new series
+        If lstIP.SelectedItems.Count > 0 Then
+            For Each item In lstIP.SelectedItems
+                Dim MyIP As PingIP = item.tag
+                Dim Foundit As Boolean = False
+                For Each ChartPing In ChartIPs
+                    If ChartPing.Equals(MyIP) Then
+                        Foundit = True
+                        Exit For
+                    End If
+                Next
+                If Not Foundit Then
+                    ChartIPs.Add(MyIP)
+                    Chart1.Series.Add(New Series(MyIP.FriendlyName) With {
+                        .Tag = MyIP,
+                        .BorderWidth = 5,
+                        .IsValueShownAsLabel = True,
+                        .ChartType = SeriesChartType.Spline
+                    })
+                    If Not isChartVisible() Then ShowChart()
+                Else
+                    ChartIPs.Remove(MyIP)
+                    For Each series In Chart1.Series
+                        If series.Tag.Equals(MyIP) Then
+                            Chart1.Series.Remove(series)
+                            Exit For
+                        End If
+                    Next
+                End If
+            Next
+        End If
+    End Sub
+
+
+    Private Sub lstClient_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lstClient.SelectedIndexChanged
+        If lstClient.SelectedItems.Count = 1 Then
+            Dim Client As UNIFIClient = lstClient.SelectedItems(0).Tag
+            Try
+                Dim jsonFormatted = JValue.Parse(Client.FullDetails).ToString(Formatting.Indented)
+                Me.lblFullDetails.Text = jsonFormatted
+            Catch ex As Exception
+                Me.lblFullDetails.Text = Client.FullDetails
+            End Try
+        End If
+    End Sub
+
+    Private Sub lstUnifiDevices_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lstUnifiDevices.SelectedIndexChanged
+        If lstUnifiDevices.SelectedItems.Count = 1 Then
+            Dim thisDevice As UnifiDevice = lstUnifiDevices.SelectedItems(0).Tag
+            Try
+                Dim jsonFormatted = JValue.Parse(thisDevice.FullDetails).ToString(Formatting.Indented)
+                Me.lblDevicedetail.Text = jsonFormatted
+            Catch ex As Exception
+                Me.lblDevicedetail.Text = thisDevice.FullDetails
+            End Try
+        End If
+    End Sub
+
+    Private Sub mnuAddClientToPingList_Click(sender As Object, e As EventArgs) Handles mnuAddClientToPingList.Click
+        If lstClient.SelectedItems.Count > 0 Then
+            Dim ClientsToAdd As New Dictionary(Of String, String)
+            For Each Myitem In lstClient.SelectedItems
+                Dim MyClient As UNIFIClient = Myitem.tag
+                If MyClient.Name & MyClient.HostName = "" Then
+                    Dim Hostname = InputBox("Host Name:", "Provide a Host Name for " & MyClient.IP, "")
+                    If Hostname <> "" Then
+                        ClientsToAdd.Add(MyClient.ActualIP, Hostname)
+                    End If
+                Else
+                    ClientsToAdd.Add(MyClient.ActualIP, MyClient.Name & " (" & MyClient.HostName & ")")
+                End If
+            Next
+            SyncLock (Blocking)
+                For Each client In ClientsToAdd
+                    Dim IpAddress = client.Key
+                    Dim FriendlyName = client.Value
+                    Dim NewPing As PingIP
+                    If Not PingList.ContainsKey(IpAddress) Then
+                        NewPing = New PingIP(IpAddress, FriendlyName)
+                        NewPing.Group = "Client"
+                        PingList.Add(IpAddress, NewPing)
+                        UpdateListView(NewPing)
+                    End If
+                Next
+                StartWorker()
+                Me.lstIP.Refresh()
+            End SyncLock
+        End If
+    End Sub
+#End Region
+#Region "UNIFI Controller"
     Private Sub LoadUnifi()
         Me.lstClient.Items.Clear()
         Me.lstUnifiDevices.Items.Clear()
@@ -411,50 +550,11 @@ Public Class frmMain
             Me.lstClient.Items.Add(MyItem)
         Next
     End Sub
-    Private Sub lstContextMenu_Opening(sender As Object, e As CancelEventArgs) Handles lstContextMenu.Opening
-        mnuGroups.DropDownItems.Clear()
-        If lstIP.SelectedItems.Count > 0 Then
-            For Each group As ListViewGroup In lstIP.Groups
-                Dim newmnu = New ToolStripMenuItem(group.Header)
-                newmnu.Tag = group
-                mnuGroups.DropDownItems.Add(newmnu)
-                AddHandler newmnu.Click, AddressOf mnuGroups_Click
-            Next
-            Dim mnuSep = New ToolStripSeparator
-            mnuGroups.DropDownItems.Add(mnuSep)
-            Dim mnuAddNew = New ToolStripMenuItem("Add New...")
-            mnuGroups.DropDownItems.Add(mnuAddNew)
-
-            AddHandler mnuAddNew.Click, AddressOf mnuAddnew_click
-        End If
-
-    End Sub
-    Private Sub SetSelectedItemGroup(Group As ListViewGroup)
-        If lstIP.SelectedItems.Count > 0 Then
-            For Each item In lstIP.SelectedItems
-                item.Group = Group
-                CType(item.tag, PingIP).Group = CType(item.group, ListViewGroup).Header
-            Next
-        End If
-    End Sub
-    Private Sub mnuGroups_Click(sender As Object, e As EventArgs)
-        SetSelectedItemGroup(sender.tag)
-    End Sub
-    Private Sub mnuAddnew_click(sender As Object, e As EventArgs)
-        Dim NewGroup As String = InputBox("Enter new Group Name", "IP Groups", "")
-        If NewGroup IsNot Nothing Then
-            Dim group As New ListViewGroup(NewGroup)
-            lstIP.Groups.Add(group)
-            SetSelectedItemGroup(group)
-        End If
-    End Sub
+#End Region
+#Region "Chart Handling"
     Private Sub ShowChart()
         ShowChartToolStripMenuItem.Text = "Hide Chart"
         pnlChart.Visible = True
-
-        'For Each col In lstIP.Columns
-        ' Debug.Print(col.text & " " & col.width)
-        ' Next
     End Sub
     Private Sub HideChart()
         ShowChartToolStripMenuItem.Text = "Show Chart"
@@ -467,92 +567,5 @@ Public Class frmMain
             Return True
         End If
     End Function
-    Private Sub ShowChartToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowChartToolStripMenuItem.Click
-        If isChartVisible() Then
-            HideChart()
-        Else
-            ShowChart()
-        End If
-    End Sub
-
-    Private Sub btnResetGraph_Click(sender As Object, e As EventArgs) Handles btnResetGraph.Click
-        Me.Chart1.Series.Clear()
-        Me.ChartIPs.Clear()
-    End Sub
-    Private ChartIPs As New List(Of PingIP)
-
-    Private Sub AddToChartToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AddToChartToolStripMenuItem.Click
-        ' Add this one to the chart as a new series
-        If lstIP.SelectedItems.Count > 0 Then
-            For Each item In lstIP.SelectedItems
-                Dim MyIP As PingIP = item.tag
-                Dim Foundit As Boolean = False
-                For Each ChartPing In ChartIPs
-                    If ChartPing.Equals(MyIP) Then
-                        Foundit = True
-                        Exit For
-                    End If
-                Next
-                If Not Foundit Then
-                    ChartIPs.Add(MyIP)
-                    Dim MySeries As New Series(MyIP.FriendlyName)
-                    MySeries.Tag = MyIP
-                    MySeries.BorderWidth = 5
-                    MySeries.IsValueShownAsLabel = True
-                    MySeries.ChartType = SeriesChartType.Spline
-
-                    Me.Chart1.Series.Add(MySeries)
-                    If Not isChartVisible() Then
-                        ShowChart()
-                    End If
-                Else
-                    ChartIPs.Remove(MyIP)
-                    For Each series In Chart1.Series
-                        If series.Tag.Equals(MyIP) Then
-                            Chart1.Series.Remove(series)
-                            Exit For
-                        End If
-                    Next
-                End If
-            Next
-        End If
-    End Sub
-
-    Private Sub mnuUnifi_Click(sender As Object, e As EventArgs) Handles mnuUnifi.Click
-        Dim MyForm As New frmUnifi
-        MyForm.Controller = Me.UnifiController
-
-        If MyForm.ShowDialog() = DialogResult.OK Then
-            ' Try to load the controller
-            Me.Cursor = Cursors.WaitCursor
-            LoadUnifi()
-            Me.Cursor = Cursors.Default
-        End If
-
-    End Sub
-
-
-    Private Sub lstClient_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lstClient.SelectedIndexChanged
-        If lstClient.SelectedItems.Count = 1 Then
-            Dim Client As UNIFIClient = lstClient.SelectedItems(0).Tag
-            Try
-                Dim jsonFormatted = JValue.Parse(Client.FullDetails).ToString(Formatting.Indented)
-                Me.lblFullDetails.Text = jsonFormatted
-            Catch ex As Exception
-                Me.lblFullDetails.Text = Client.FullDetails
-            End Try
-        End If
-    End Sub
-
-    Private Sub lstUnifiDevices_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lstUnifiDevices.SelectedIndexChanged
-        If lstUnifiDevices.SelectedItems.Count = 1 Then
-            Dim thisDevice As UnifiDevice = lstUnifiDevices.SelectedItems(0).Tag
-            Try
-                Dim jsonFormatted = JValue.Parse(thisDevice.FullDetails).ToString(Formatting.Indented)
-                Me.lblDeviceDetail.Text = jsonFormatted
-            Catch ex As Exception
-                Me.lblDeviceDetail.Text = thisDevice.FullDetails
-            End Try
-        End If
-    End Sub
+#End Region
 End Class

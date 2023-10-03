@@ -177,7 +177,7 @@ Imports RestSharp
                             thisCLient.IP = dataelement.value.ToString.Substring(0, lastdot)
                             Dim finalvalue As Integer = Val(dataelement.value.ToString.Substring(lastdot + 1))
                             thisCLient.IP &= "." & finalvalue.ToString("000")
-
+                            thisCLient.ActualIP = dataelement.value
                         Case "first_seen"
                             thisCLient.FirstSeen = UnixToDateTime(dataelement.value)
                         Case "last_seen"

@@ -27,11 +27,11 @@ Partial Class frmMain
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMain))
-        Dim ChartArea3 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend3 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim ListViewGroup1 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Switch", System.Windows.Forms.HorizontalAlignment.Left)
-        Dim ListViewGroup2 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Gateway", System.Windows.Forms.HorizontalAlignment.Left)
-        Dim ListViewGroup3 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Access Point", System.Windows.Forms.HorizontalAlignment.Left)
+        Dim ChartArea2 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend2 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim ListViewGroup4 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Switch", System.Windows.Forms.HorizontalAlignment.Left)
+        Dim ListViewGroup5 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Gateway", System.Windows.Forms.HorizontalAlignment.Left)
+        Dim ListViewGroup6 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Access Point", System.Windows.Forms.HorizontalAlignment.Left)
         Me.PrintPreviewDialog1 = New System.Windows.Forms.PrintPreviewDialog()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.txtIPAddress = New System.Windows.Forms.TextBox()
@@ -105,6 +105,8 @@ Partial Class frmMain
         Me.lblDevicedetail = New System.Windows.Forms.TextBox()
         Me.ColumnHeader26 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader27 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ClientContextStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.mnuAddClientToPingList = New System.Windows.Forms.ToolStripMenuItem()
         Me.lstContextMenu.SuspendLayout()
         CType(Me.NumInterval, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MenuStrip1.SuspendLayout()
@@ -116,6 +118,7 @@ Partial Class frmMain
         Me.TabPage1.SuspendLayout()
         Me.TabUnifiDevices.SuspendLayout()
         Me.TabUnifiClients.SuspendLayout()
+        Me.ClientContextStrip.SuspendLayout()
         Me.SuspendLayout()
         '
         'PrintPreviewDialog1
@@ -381,22 +384,22 @@ Partial Class frmMain
         'Chart1
         '
         Me.Chart1.BorderSkin.BorderColor = System.Drawing.Color.DarkGray
-        ChartArea3.AxisX.LineColor = System.Drawing.Color.Gray
-        ChartArea3.AxisX.MajorGrid.LineColor = System.Drawing.Color.Silver
-        ChartArea3.AxisX.MinorGrid.LineColor = System.Drawing.Color.Silver
-        ChartArea3.AxisY.LineColor = System.Drawing.Color.Gray
-        ChartArea3.AxisY.MajorGrid.LineColor = System.Drawing.Color.Silver
-        ChartArea3.AxisY.Minimum = 0R
-        ChartArea3.AxisY.Title = "Milliseconds"
-        ChartArea3.BorderColor = System.Drawing.Color.Silver
-        ChartArea3.Name = "ChartArea1"
-        Me.Chart1.ChartAreas.Add(ChartArea3)
+        ChartArea2.AxisX.LineColor = System.Drawing.Color.Gray
+        ChartArea2.AxisX.MajorGrid.LineColor = System.Drawing.Color.Silver
+        ChartArea2.AxisX.MinorGrid.LineColor = System.Drawing.Color.Silver
+        ChartArea2.AxisY.LineColor = System.Drawing.Color.Gray
+        ChartArea2.AxisY.MajorGrid.LineColor = System.Drawing.Color.Silver
+        ChartArea2.AxisY.Minimum = 0R
+        ChartArea2.AxisY.Title = "Milliseconds"
+        ChartArea2.BorderColor = System.Drawing.Color.Silver
+        ChartArea2.Name = "ChartArea1"
+        Me.Chart1.ChartAreas.Add(ChartArea2)
         Me.Chart1.Dock = System.Windows.Forms.DockStyle.Fill
-        Legend3.DockedToChartArea = "ChartArea1"
-        Legend3.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom
-        Legend3.IsDockedInsideChartArea = False
-        Legend3.Name = "Legend1"
-        Me.Chart1.Legends.Add(Legend3)
+        Legend2.DockedToChartArea = "ChartArea1"
+        Legend2.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom
+        Legend2.IsDockedInsideChartArea = False
+        Legend2.Name = "Legend1"
+        Me.Chart1.Legends.Add(Legend2)
         Me.Chart1.Location = New System.Drawing.Point(0, 0)
         Me.Chart1.Margin = New System.Windows.Forms.Padding(1)
         Me.Chart1.Name = "Chart1"
@@ -434,13 +437,13 @@ Partial Class frmMain
         Me.lstIP.Dock = System.Windows.Forms.DockStyle.Fill
         Me.lstIP.FullRowSelect = True
         Me.lstIP.GridLines = True
-        ListViewGroup1.Header = "Switch"
-        ListViewGroup1.Name = "ListViewGroup1"
-        ListViewGroup2.Header = "Gateway"
-        ListViewGroup2.Name = "ListViewGroup2"
-        ListViewGroup3.Header = "Access Point"
-        ListViewGroup3.Name = "ListViewGroup3"
-        Me.lstIP.Groups.AddRange(New System.Windows.Forms.ListViewGroup() {ListViewGroup1, ListViewGroup2, ListViewGroup3})
+        ListViewGroup4.Header = "Switch"
+        ListViewGroup4.Name = "ListViewGroup1"
+        ListViewGroup5.Header = "Gateway"
+        ListViewGroup5.Name = "ListViewGroup2"
+        ListViewGroup6.Header = "Access Point"
+        ListViewGroup6.Name = "ListViewGroup3"
+        Me.lstIP.Groups.AddRange(New System.Windows.Forms.ListViewGroup() {ListViewGroup4, ListViewGroup5, ListViewGroup6})
         Me.lstIP.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable
         Me.lstIP.HideSelection = False
         Me.lstIP.Location = New System.Drawing.Point(3, 3)
@@ -648,6 +651,7 @@ Partial Class frmMain
         'lstClient
         '
         Me.lstClient.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader19, Me.ColumnHeader20, Me.ColumnHeader21, Me.ColumnHeader27, Me.ColumnHeader22, Me.ColumnHeader23, Me.ColumnHeader24, Me.ColumnHeader25})
+        Me.lstClient.ContextMenuStrip = Me.ClientContextStrip
         Me.lstClient.Dock = System.Windows.Forms.DockStyle.Top
         Me.lstClient.FullRowSelect = True
         Me.lstClient.HideSelection = False
@@ -713,6 +717,18 @@ Partial Class frmMain
         '
         Me.ColumnHeader27.Text = "Fixed IP"
         '
+        'ClientContextStrip
+        '
+        Me.ClientContextStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuAddClientToPingList})
+        Me.ClientContextStrip.Name = "ClientContextStrip"
+        Me.ClientContextStrip.Size = New System.Drawing.Size(193, 48)
+        '
+        'mnuAddClientToPingList
+        '
+        Me.mnuAddClientToPingList.Name = "mnuAddClientToPingList"
+        Me.mnuAddClientToPingList.Size = New System.Drawing.Size(192, 22)
+        Me.mnuAddClientToPingList.Text = "&Add Client to Ping List"
+        '
         'frmMain
         '
         Me.AcceptButton = Me.btnAddIP
@@ -743,6 +759,7 @@ Partial Class frmMain
         Me.TabUnifiDevices.ResumeLayout(False)
         Me.TabUnifiDevices.PerformLayout()
         Me.TabUnifiClients.ResumeLayout(False)
+        Me.ClientContextStrip.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -822,4 +839,6 @@ Partial Class frmMain
     Friend WithEvents lblDevicedetail As TextBox
     Friend WithEvents ColumnHeader26 As ColumnHeader
     Friend WithEvents ColumnHeader27 As ColumnHeader
+    Friend WithEvents ClientContextStrip As ContextMenuStrip
+    Friend WithEvents mnuAddClientToPingList As ToolStripMenuItem
 End Class
