@@ -7,42 +7,39 @@ Public Class frmUnifi
 
     Private Sub frmUnifi_Load(sender As Object, e As EventArgs) Handles Me.Load
         Controller.LoadDefaults()
-        Me.txtPassword.Text = Controller.Password
-        Me.txtSite.Text = Controller.Site
-        Me.txtURLBase.Text = Controller.URLBase
-        Me.txtUser.Text = Controller.UserName
-
-
+        txtPassword.Text = Controller.Password
+        txtSite.Text = Controller.Site
+        txtURLBase.Text = Controller.URLBase
+        txtUser.Text = Controller.UserName
     End Sub
     Private Sub SaveFields(UC As UnifiController)
-        UC.Password = Me.txtPassword.Text.Trim
-        UC.Site = Me.txtSite.Text.Trim
-        UC.URLBase = Me.txtURLBase.Text.Trim
+        UC.Password = txtPassword.Text.Trim
+        UC.Site = txtSite.Text.Trim
+        UC.URLBase = txtURLBase.Text.Trim
         If Not UC.URLBase.EndsWith("/") Then
             UC.URLBase &= "/"
         End If
         UC.UserName = Me.txtUser.Text.Trim
     End Sub
     Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
-        Me.DialogResult = DialogResult.Cancel
-        Me.Close()
-
+        DialogResult = DialogResult.Cancel
+        Close()
     End Sub
 
     Private Sub btnOK_Click(sender As Object, e As EventArgs) Handles btnOK.Click
-        Me.DialogResult = DialogResult.OK
+        DialogResult = DialogResult.OK
         SaveFields(Controller)
         Controller.SaveDefaults()
-        Me.Close()
+        Close()
     End Sub
 
     Private Sub btnLogin_Click(sender As Object, e As EventArgs) Handles btnLogin.Click
         SaveFields(TestController)
         If TestController.Test() Then
-            Me.pnlTest.Enabled = True
+            pnlTest.Enabled = True
         Else
             MsgBox("Login Failure", MsgBoxStyle.OkOnly, "Unifi Controller Login")
-            Me.pnlTest.Enabled = False
+            pnlTest.Enabled = False
         End If
     End Sub
 
