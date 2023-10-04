@@ -259,6 +259,12 @@ Public Class frmMain
         StartWorker()
         Me.lstIP.Refresh()
     End Sub
+
+    Private Sub btnRefreshUnifi_Click(sender As Object, e As EventArgs) Handles btnRefreshUnifi.Click
+        Cursor = Cursors.WaitCursor
+        LoadUNIFI()
+        Cursor = Cursors.Default
+    End Sub
     Private Sub RemoveSelectedToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RemoveSelectedToolStripMenuItem.Click, RemoveToolStripMenuItem.Click
         If lstIP.SelectedItems.Count > 0 Then
 
@@ -494,57 +500,67 @@ Public Class frmMain
     End Sub
 #End Region
 #Region "UNIFI Controller"
-    Private Sub LoadUnifi()
+    Public Function LoadUNIFI() As Boolean
         Me.lstClient.Items.Clear()
         Me.lstUnifiDevices.Items.Clear()
         Me.lblDevicedetail.Text = ""
         Me.lblFullDetails.Text = ""
-
-        If UnifiController.LoadDefaults() Then
-            UpdateStatus("UNIFI Details Loaded")
-            If UnifiController.Login() Then
-                UpdateStatus("UNIFI Login Successful")
-                If UnifiController.GetDeviceList() Then
-                    UpdateStatus("UNIFI Devices Retrieved")
-                    If UnifiController.GetClientList() Then
-                        UpdateStatus("UNIFI Clients Retrieved")
-                    End If
+        Dim Success As Boolean = False
+        If Not UnifiController.LoggedIn Then
+            If UnifiController.LoadDefaults() Then
+                UpdateStatus("UNIFI Details Loaded")
+                If UnifiController.Login() Then
+                    UpdateStatus("UNIFI Login Successful")
                 End If
             End If
         End If
-        For Each device In UnifiController.DeviceList
-            Dim MyItem As New ListViewItem With {.Text = device.Name}
-            MyItem.SubItems.Add(device.DeviceType)
-            MyItem.SubItems.Add(device.Model)
-            Dim Model = UnifiController.DeviceTypes(device.Model)
-            If Model IsNot Nothing Then
-                MyItem.SubItems.Add(Model.Name)
-            Else
-                MyItem.SubItems.Add("")
+        If UnifiController.LoggedIn Then
+            If UnifiController.GetDeviceList() Then
+                UpdateStatus("UNIFI Devices Retrieved")
+                If UnifiController.GetClientList() Then
+                    UpdateStatus("UNIFI Clients Retrieved")
+                    Success = True
+                End If
             End If
-            MyItem.SubItems.Add(device.IP)
-            MyItem.SubItems.Add(device.FixedIP.ToString)
-            MyItem.SubItems.Add(device.IPType)
-            MyItem.SubItems.Add(device.MacAddress)
-            MyItem.SubItems.Add(device.Version)
-            Me.lstUnifiDevices.Items.Add(MyItem)
-            MyItem.Tag = device
-        Next
-        For Each client In UnifiController.ClientList
-            Dim MyItem As New ListViewItem With {.Text = client.Name}
-            If client.HostName IsNot Nothing Then MyItem.Text &= "(" & client.HostName & ")"
-            MyItem.SubItems.Add(client.Organisation)
-            MyItem.SubItems.Add(client.IP)
-            MyItem.SubItems.Add(client.FixedIP.ToString)
-            MyItem.SubItems.Add(client.MacAddress)
-            MyItem.SubItems.Add(client.Wifi.ToString)
-            MyItem.SubItems.Add(client.FirstSeen.ToString)
-            MyItem.SubItems.Add(client.LastSeen.ToString)
+        End If
+        If Success Then
+            For Each device In UnifiController.DeviceList
+                Dim MyItem As New ListViewItem With {.Text = device.Name}
+                MyItem.SubItems.Add(device.DeviceType)
+                MyItem.SubItems.Add(device.Model)
+                Dim Model = UnifiController.DeviceTypes(device.Model)
+                If Model IsNot Nothing Then
+                    MyItem.SubItems.Add(Model.Name)
+                Else
+                    MyItem.SubItems.Add("")
+                End If
+                MyItem.SubItems.Add(device.IP)
+                MyItem.SubItems.Add(device.FixedIP.ToString)
+                MyItem.SubItems.Add(device.IPType)
+                MyItem.SubItems.Add(device.MacAddress)
+                MyItem.SubItems.Add(device.Version)
+                Me.lstUnifiDevices.Items.Add(MyItem)
+                MyItem.Tag = device
+            Next
+            For Each client In UnifiController.ClientList
+                Dim MyItem As New ListViewItem With {.Text = client.Name}
+                If client.HostName IsNot Nothing Then MyItem.Text &= "(" & client.HostName & ")"
+                MyItem.SubItems.Add(client.Organisation)
+                MyItem.SubItems.Add(client.IP)
+                MyItem.SubItems.Add(client.FixedIP.ToString)
+                MyItem.SubItems.Add(client.MacAddress)
+                MyItem.SubItems.Add(client.Wifi.ToString)
+                MyItem.SubItems.Add(client.FirstSeen.ToString)
+                MyItem.SubItems.Add(client.LastSeen.ToString)
 
-            MyItem.Tag = client
-            Me.lstClient.Items.Add(MyItem)
-        Next
-    End Sub
+                MyItem.Tag = client
+                Me.lstClient.Items.Add(MyItem)
+            Next
+        End If
+        UpdateStatus()
+        Return Success
+    End Function
+
 #End Region
 #Region "Chart Handling"
     Private Sub ShowChart()
@@ -562,5 +578,6 @@ Public Class frmMain
             Return True
         End If
     End Function
+
 #End Region
 End Class

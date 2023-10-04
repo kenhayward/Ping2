@@ -26,7 +26,7 @@ Imports RestSharp
     End Property
 
     <NonSerialized()> Private Token As Cookie
-    <NonSerialized()> Private ReadOnly _LoggedIn As Boolean
+    <NonSerialized()> Private _LoggedIn As Boolean
     <NonSerialized()> Private LastResponse As RestResponse
     <NonSerialized()> Private Client As RestClient
     <NonSerialized()> Private _csrf_token
@@ -75,6 +75,7 @@ Imports RestSharp
             ' Save Cookie with Login Token
             If Response.Cookies.Count > 0 Then
                 Token = Response.Cookies(0)
+                _LoggedIn = True
                 Result = True
             End If
         End If
@@ -185,7 +186,28 @@ Imports RestSharp
         End If
         Return LogResult
     End Function
+    Public Function ExecuteGET(Endpoint As String, Optional ApplyHeaders As Boolean = True) As RestResponse
+        If Client Is Nothing Then
+            Client = New RestClient(URLBase)
+        End If
+        Dim request As New RestRequest(Endpoint, Method.Get)
+        If ApplyHeaders Then
+            ApplyRequestHeaders(request)
+        End If
 
+        ServicePointManager.ServerCertificateValidationCallback =
+            New RemoteCertificateValidationCallback(AddressOf AcceptAllCertifications)
+        ServicePointManager.Expect100Continue = True
+        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
+        If Token IsNot Nothing Then
+            request.CookieContainer = New CookieContainer
+            request.CookieContainer.Add(Token)
+        End If
+        Dim response As RestResponse = Client.Execute(request)
+        LastResponse = response
+        Return response
+
+    End Function
 #End Region
 
 #Region "Private Functions"
@@ -222,28 +244,7 @@ Imports RestSharp
         End Using
         Return retval
     End Function
-    Private Function ExecuteGET(Endpoint As String, Optional ApplyHeaders As Boolean = True) As RestResponse
-        If Client Is Nothing Then
-            Client = New RestClient(URLBase)
-        End If
-        Dim request As New RestRequest(Endpoint, Method.Get)
-        If ApplyHeaders Then
-            ApplyRequestHeaders(request)
-        End If
 
-        ServicePointManager.ServerCertificateValidationCallback =
-            New RemoteCertificateValidationCallback(AddressOf AcceptAllCertifications)
-        ServicePointManager.Expect100Continue = True
-        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
-        If Token IsNot Nothing Then
-            request.CookieContainer = New CookieContainer
-            request.CookieContainer.Add(Token)
-        End If
-        Dim response As RestResponse = Client.Execute(request)
-        LastResponse = response
-        Return response
-
-    End Function
     Private Function ExecutePOST(Endpoint As String, Payload As String) As RestResponse
         If Client Is Nothing Then
             Client = New RestClient(URLBase)
