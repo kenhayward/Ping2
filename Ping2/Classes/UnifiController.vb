@@ -49,53 +49,28 @@ Imports RestSharp
             Return _Clientlist
         End Get
     End Property
-    Const LoginFormat = """username"": ""{0}"", ""password"": ""{1}"""
+    Private Const LoginFormat = """username"": ""{0}"", ""password"": ""{1}"""
+    Private ReadOnly BinaryFile As String = My.Computer.FileSystem.SpecialDirectories.CurrentUserApplicationData & "\UnifiController.bin"
+    Private Const APIPrefix As String = "/proxy/network/api/s/"
+    Private Const APIClientList As String = "/rest/user"
+    Private Const APIDeviceList As String = "/stat/device"
+    Private Const APILogin As String = "api/auth/login"
+
 #End Region
 
 #Region "Public Functions"
     Public Function SaveDefaults() As Boolean
-        Return Me.Save(My.Computer.FileSystem.SpecialDirectories.CurrentUserApplicationData & "\UnifiController.bin")
+        Return Me.Save(BinaryFile)
     End Function
-    Public Function Save(Filename As String) As Boolean
-        Dim retval As Boolean
-        Using fs As New FileStream(Filename, FileMode.Create)
-            Dim MyFormat As New BinaryFormatter()
-            MyFormat.Serialize(fs, Me)
-            fs.Close()
-            retval = True
-        End Using
-        Return retval
-    End Function
+
     Public Function LoadDefaults() As Boolean
-        Return Me.Load(My.Computer.FileSystem.SpecialDirectories.CurrentUserApplicationData & "\UnifiController.bin")
+        Return Me.Load(BinaryFile)
     End Function
-    Public Function Load(Filename As String) As Boolean
-        Dim Retval As Boolean
-        Try
-            Me.ClientList.Clear()
-            Me.DeviceList.Clear()
-            Me.Token = Nothing
-            If File.Exists(Filename) Then
-                Using fs As New FileStream(Filename, FileMode.Open, FileAccess.Read)
-                    Dim formatter As New BinaryFormatter
-                    Dim MyC As New UnifiController
-                    MyC = DirectCast(formatter.Deserialize(fs), UnifiController)
-                    Me.UserName = MyC.UserName
-                    Me.Password = MyC.Password
-                    Me.Site = MyC.Site
-                    Me.URLBase = MyC.URLBase
-                    Retval = True
-                End Using
-            End If
-        Catch ex As Exception
-            ' Ignore bad files
-        End Try
-        Return Retval
-    End Function
+
     Public Function Login() As Boolean
         Dim JSONString = "{" & String.Format(LoginFormat, UserName, Password) & "}"
         Dim Result As Boolean = False
-        Dim Response = ExecutePOST("api/auth/login", JSONString)
+        Dim Response = ExecutePOST(APILogin, JSONString)
         If Response.StatusCode = Net.HttpStatusCode.OK Then
             ' Save Cookie with Login Token
             If Response.Cookies.Count > 0 Then
@@ -105,54 +80,10 @@ Imports RestSharp
         End If
         Return Result
     End Function
-    Public Function ExecuteGET(Endpoint As String, Optional ApplyHeaders As Boolean = True) As RestResponse
-        If Client Is Nothing Then
-            Client = New RestClient(URLBase)
-        End If
-        Dim request As New RestRequest(Endpoint, Method.Get)
-        If ApplyHeaders Then
-            ApplyRequestHeaders(request)
-        End If
 
-        ServicePointManager.ServerCertificateValidationCallback =
-            New RemoteCertificateValidationCallback(AddressOf AcceptAllCertifications)
-        ServicePointManager.Expect100Continue = True
-        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
-        If Token IsNot Nothing Then
-            request.CookieContainer = New CookieContainer
-            request.CookieContainer.Add(Token)
-        End If
-        Dim response As RestResponse = Client.Execute(request)
-        LastResponse = response
-        Return response
-
-    End Function
-    Public Function ExecutePOST(Endpoint As String, Payload As String) As RestResponse
-        If Client Is Nothing Then
-            Client = New RestClient(URLBase)
-        End If
-        Dim request As New RestRequest(Endpoint, Method.Post)
-        ServicePointManager.ServerCertificateValidationCallback =
-            New RemoteCertificateValidationCallback(AddressOf AcceptAllCertifications)
-        ServicePointManager.Expect100Continue = True
-        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
-
-        request.AddHeader("content-type", "application/json")
-        Dim JSONString = "{" & String.Format(LoginFormat, UserName, Password) & "}"
-        request.AddParameter("application/json", Payload, ParameterType.RequestBody)
-        If Token IsNot Nothing Then
-            request.CookieContainer = New CookieContainer
-            request.CookieContainer.Add(Token)
-        End If
-
-        Dim response As RestResponse = Client.Execute(request)
-        LastResponse = response
-        Return response
-
-    End Function
     Public Function GetClientList() As Boolean
         Me.ClientList.Clear()
-        Dim Response = ExecuteGET("/proxy/network/api/s/" & Site & "/rest/user")
+        Dim Response = ExecuteGET(APIPrefix & Site & APIClientList)
         If Response.StatusCode = HttpStatusCode.OK Then
             Dim jsonData As JObject = JsonConvert.DeserializeObject(Of Object)(Response.Content)
             Dim JSONDeviceList As JArray = jsonData("data")
@@ -200,17 +131,10 @@ Imports RestSharp
         End If
         Return True
     End Function
-    Public Function UnixToDateTime(ByVal strUnixTime As String) As DateTime
 
-        Dim nTimestamp As Double = strUnixTime
-        Dim nDateTime As New DateTime(1970, 1, 1, 0, 0, 0, 0)
-        nDateTime = nDateTime.AddSeconds(nTimestamp)
-        Return nDateTime
-
-    End Function
     Public Function GetDeviceList() As Boolean
         Me.DeviceList.Clear()
-        Dim Response = ExecuteGET("/proxy/network/api/s/" & Site & "/stat/device")
+        Dim Response = ExecuteGET(APIPrefix & Site & APIDeviceList)
         If Response.StatusCode = HttpStatusCode.OK Then
             Dim jsonData As JObject = JsonConvert.DeserializeObject(Of Object)(Response.Content)
             Dim JSONDeviceList As JArray = jsonData("data")
@@ -261,13 +185,92 @@ Imports RestSharp
         End If
         Return LogResult
     End Function
-    Public Function AcceptAllCertifications(sender As Object, certification As X509Certificate,
-                    chain As X509Chain, sslPolicyErrors As SslPolicyErrors) As Boolean
-        Return True
-    End Function
+
 #End Region
 
 #Region "Private Functions"
+    Private Function Load(Filename As String) As Boolean
+        Dim Retval As Boolean
+        Try
+            Me.ClientList.Clear()
+            Me.DeviceList.Clear()
+            Me.Token = Nothing
+            If File.Exists(Filename) Then
+                Using fs As New FileStream(Filename, FileMode.Open, FileAccess.Read)
+                    Dim formatter As New BinaryFormatter
+                    Dim MyC As New UnifiController
+                    MyC = DirectCast(formatter.Deserialize(fs), UnifiController)
+                    Me.UserName = MyC.UserName
+                    Me.Password = MyC.Password
+                    Me.Site = MyC.Site
+                    Me.URLBase = MyC.URLBase
+                    Retval = True
+                End Using
+            End If
+        Catch ex As Exception
+            ' Ignore bad files
+        End Try
+        Return Retval
+    End Function
+    Private Function Save(Filename As String) As Boolean
+        Dim retval As Boolean
+        Using fs As New FileStream(Filename, FileMode.Create)
+            Dim MyFormat As New BinaryFormatter()
+            MyFormat.Serialize(fs, Me)
+            fs.Close()
+            retval = True
+        End Using
+        Return retval
+    End Function
+    Private Function ExecuteGET(Endpoint As String, Optional ApplyHeaders As Boolean = True) As RestResponse
+        If Client Is Nothing Then
+            Client = New RestClient(URLBase)
+        End If
+        Dim request As New RestRequest(Endpoint, Method.Get)
+        If ApplyHeaders Then
+            ApplyRequestHeaders(request)
+        End If
+
+        ServicePointManager.ServerCertificateValidationCallback =
+            New RemoteCertificateValidationCallback(AddressOf AcceptAllCertifications)
+        ServicePointManager.Expect100Continue = True
+        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
+        If Token IsNot Nothing Then
+            request.CookieContainer = New CookieContainer
+            request.CookieContainer.Add(Token)
+        End If
+        Dim response As RestResponse = Client.Execute(request)
+        LastResponse = response
+        Return response
+
+    End Function
+    Private Function ExecutePOST(Endpoint As String, Payload As String) As RestResponse
+        If Client Is Nothing Then
+            Client = New RestClient(URLBase)
+        End If
+        Dim request As New RestRequest(Endpoint, Method.Post)
+        ServicePointManager.ServerCertificateValidationCallback =
+            New RemoteCertificateValidationCallback(AddressOf AcceptAllCertifications)
+        ServicePointManager.Expect100Continue = True
+        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
+
+        request.AddHeader("content-type", "application/json")
+        Dim JSONString = "{" & String.Format(LoginFormat, UserName, Password) & "}"
+        request.AddParameter("application/json", Payload, ParameterType.RequestBody)
+        If Token IsNot Nothing Then
+            request.CookieContainer = New CookieContainer
+            request.CookieContainer.Add(Token)
+        End If
+
+        Dim response As RestResponse = Client.Execute(request)
+        LastResponse = response
+        Return response
+
+    End Function
+    Private Function AcceptAllCertifications(sender As Object, certification As X509Certificate,
+                    chain As X509Chain, sslPolicyErrors As SslPolicyErrors) As Boolean
+        Return True
+    End Function
     Private Sub ApplyRequestHeaders(ByVal request As RestRequest)
         request.AddHeader("Referrer", URLBase.ToString())
 
@@ -280,6 +283,14 @@ Imports RestSharp
             request.AddHeader(CSRF_HEADER, _csrf_token)
         End If
     End Sub
+    Private Function UnixToDateTime(ByVal strUnixTime As String) As DateTime
+
+        Dim nTimestamp As Double = strUnixTime
+        Dim nDateTime As New DateTime(1970, 1, 1, 0, 0, 0, 0)
+        nDateTime = nDateTime.AddSeconds(nTimestamp)
+        Return nDateTime
+
+    End Function
 #End Region
 
 End Class

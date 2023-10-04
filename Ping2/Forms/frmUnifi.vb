@@ -2,24 +2,29 @@
 Imports Newtonsoft.Json.Linq
 
 Public Class frmUnifi
+    ''' <summary>
+    ''' Details of the UNIFI Controller, Devices and Clients
+    ''' </summary>
     Public Property Controller As UnifiController
+#Region "Private Properties"
     Private TestController As New UnifiController
+    Private Const ForwardSlash = "/"
+#End Region
 
     Private Sub frmUnifi_Load(sender As Object, e As EventArgs) Handles Me.Load
-        Controller.LoadDefaults()
-        txtPassword.Text = Controller.Password
-        txtSite.Text = Controller.Site
-        txtURLBase.Text = Controller.URLBase
-        txtUser.Text = Controller.UserName
+        If Controller.LoadDefaults() Then
+            txtPassword.Text = Controller.Password
+            txtSite.Text = Controller.Site
+            txtURLBase.Text = Controller.URLBase
+            txtUser.Text = Controller.UserName
+        End If
     End Sub
     Private Sub SaveFields(UC As UnifiController)
         UC.Password = txtPassword.Text.Trim
         UC.Site = txtSite.Text.Trim
         UC.URLBase = txtURLBase.Text.Trim
-        If Not UC.URLBase.EndsWith("/") Then
-            UC.URLBase &= "/"
-        End If
         UC.UserName = Me.txtUser.Text.Trim
+        If Not UC.URLBase.EndsWith(ForwardSlash) Then UC.URLBase &= ForwardSlash
     End Sub
     Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
         DialogResult = DialogResult.Cancel
@@ -44,21 +49,21 @@ Public Class frmUnifi
     End Sub
 
     Private Sub btnTest_Click_1(sender As Object, e As EventArgs) Handles btnTest.Click
-        Me.txtResponse.Text = ""
-        Me.lblCode.Text = ""
+        txtResponse.Text = ""
+        lblCode.Text = ""
 
-        Me.Cursor = Cursors.WaitCursor
+        Cursor = Cursors.WaitCursor
         Dim Response = TestController.ExecuteGET(Me.txtEndPoint.Text)
-        Me.Cursor = Cursors.Default
+        Cursor = Cursors.Default
 
-        Me.lblCode.Text = "Status: " & Response.StatusCode
-        Me.lblRequest.Text = TestController.URLBase & txtEndPoint.Text
+        lblCode.Text = "Status: " & Response.StatusCode
+        lblRequest.Text = TestController.URLBase & txtEndPoint.Text
 
         Try
-            Dim jsonFormatted = JValue.Parse(Response.Content).ToString(Formatting.Indented)
-            Me.txtResponse.Text = jsonFormatted
+            Dim jsonFormatted = JToken.Parse(Response.Content).ToString(Formatting.Indented)
+            txtResponse.Text = jsonFormatted
         Catch ex As Exception
-            Me.txtResponse.Text = Response.Content
+            txtResponse.Text = Response.Content
         End Try
     End Sub
 

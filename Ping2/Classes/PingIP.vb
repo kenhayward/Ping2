@@ -1,6 +1,5 @@
 ﻿Imports System.Net.NetworkInformation
 Imports System.Text
-Imports System
 Imports System.Net
 Imports System.Net.Sockets
 
@@ -27,7 +26,6 @@ Public Class PingIP
             _Timeout = value
         End Set
     End Property
-
     Public Sub New(ByVal IPAddressToPing As String, Friendly As String)
         Me.IPAddress = IPAddressToPing
         Me.RequestedAddress = IPAddressToPing
@@ -45,13 +43,11 @@ Public Class PingIP
         Dim reply As PingReply = pingSender.Send(IPAddress, timeout, buffer, options)
 
         If reply.Status = IPStatus.Success Then
+            Me.Success = True
             Me.IPAddress = reply.Address.ToString()
             Me.RoundtripTime = reply.RoundtripTime
             Me.ttl = reply.Options.Ttl
-            If Me.HostName Is Nothing Then
-                Me.HostName = GetHostName(IPAddress)
-            End If
-            Me.Success = True
+            If Me.HostName Is Nothing Then Me.HostName = GetHostName(IPAddress)
             If RoundtripTime > Worst Then Worst = RoundtripTime
             If Best = -1 Then
                 Best = RoundtripTime
@@ -63,25 +59,19 @@ Public Class PingIP
             Else
                 Average = (((PingCount - 1) * Average) + RoundtripTime) / (PingCount)
             End If
-
         Else
             Me.Success = False
             Failures += 1
         End If
     End Sub
     Private Function GetHostName(ByVal ipAddress As String) As String
+        Dim ReturnValue As String = ""
         Try
             Dim entry As IPHostEntry = Dns.GetHostEntry(ipAddress)
-
-            If entry IsNot Nothing Then
-                Return entry.HostName
-            End If
-
+            If entry IsNot Nothing Then ReturnValue = entry.HostName
         Catch ex As SocketException
-            Return ipAddress
+            ReturnValue = ipAddress
         End Try
-
-        Return ipAddress
+        Return ReturnValue
     End Function
-
 End Class
