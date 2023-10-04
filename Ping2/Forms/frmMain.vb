@@ -259,12 +259,14 @@ Public Class frmMain
         Me.lstIP.Refresh()
     End Sub
 
-    Private Sub btnRefreshUnifi_Click(sender As Object, e As EventArgs) Handles btnRefreshUnifi.Click, toolRefreshUNIFI.Click
-        btnRefreshUnifi.Enabled = False
+    Private Sub btnRefreshUnifi_Click(sender As Object, e As EventArgs) Handles toolRefreshUNIFI.Click, RefreshUNIFITool.Click
+        toolRefreshUNIFI.Enabled = False
+        RefreshUNIFITool.Enabled = False
         Cursor = Cursors.WaitCursor
         LoadUNIFI()
         Cursor = Cursors.Default
-        btnRefreshUnifi.Enabled = True
+        RefreshUNIFITool.Enabled = True
+        toolRefreshUNIFI.Enabled = True
     End Sub
     Private Sub RemoveSelectedToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RemoveSelectedToolStripMenuItem.Click, RemoveToolStripMenuItem.Click
         If lstIP.SelectedItems.Count > 0 Then
@@ -281,7 +283,7 @@ Public Class frmMain
         End If
     End Sub
 
-    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles SaveIPListToolStripMenuItem.Click
+    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles SaveIPListToolStripMenuItem.Click, SaveToolStripButton.Click
         Dim MySave As New SaveFileDialog With {
             .Title = "Save IP List",
             .FileName = "PingTest.csv",
@@ -295,7 +297,7 @@ Public Class frmMain
             Me.Cursor = Cursors.Default
         End If
     End Sub
-    Private Sub BtnOpen_Click(sender As Object, e As EventArgs) Handles OpenIPListToolStripMenuItem.Click
+    Private Sub BtnOpen_Click(sender As Object, e As EventArgs) Handles OpenIPListToolStripMenuItem.Click, OpenToolStripButton.Click
         Dim MySave As New OpenFileDialog With {
             .Title = "Open IP List",
             .FileName = "PingTest.csv",
@@ -597,18 +599,21 @@ Public Class frmMain
         End If
         btnPlayStop.Enabled = False
     End Sub
-    Private Sub ResetIPListToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ResetIPListToolStripMenuItem.Click
+    Private Sub ResetIPListToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ResetIPListToolStripMenuItem.Click, ResetIPListToolStripButton.Click
         ' Clear List, Chart and IP List
         Me.Cursor = Cursors.WaitCursor
         StopPingWorker()
+        Thread.Sleep(2000)
         Me.PingList.Clear()
         Me.ChartIPs.Clear()
         Me.Chart1.Series.Clear()
+        Me.lstIP.Items.Clear()
+        Me.lstIP.Refresh()
         Me.Cursor = Cursors.Default
 
     End Sub
 
-    Private Sub btnPlayStop_Click(sender As Object, e As EventArgs) Handles btnPlayStop.Click
+    Private Sub btnPlayStop_Click(sender As Object, e As EventArgs) Handles btnPlayStop.Click, PlayStopbtn.Click
         If RefreshWorker Is Nothing Then
             btnPlayStop.Text = "Play"
             Exit Sub

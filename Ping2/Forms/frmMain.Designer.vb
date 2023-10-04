@@ -59,12 +59,11 @@ Partial Class frmMain
         Me.ShowChartToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.toolRefreshUNIFI = New System.Windows.Forms.ToolStripMenuItem()
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.btnPlayStop = New System.Windows.Forms.Button()
-        Me.btnRefreshUnifi = New System.Windows.Forms.Button()
         Me.chkAutosave = New System.Windows.Forms.CheckBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.txtFile = New System.Windows.Forms.TextBox()
         Me.btnAddIP = New System.Windows.Forms.Button()
+        Me.btnPlayStop = New System.Windows.Forms.Button()
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
         Me.lblStatus = New System.Windows.Forms.ToolStripStatusLabel()
         Me.Chart1 = New System.Windows.Forms.DataVisualization.Charting.Chart()
@@ -114,6 +113,13 @@ Partial Class frmMain
         Me.ClientContextStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.mnuAddClientToPingList = New System.Windows.Forms.ToolStripMenuItem()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.ToolStrip1 = New System.Windows.Forms.ToolStrip()
+        Me.ResetIPListToolStripButton = New System.Windows.Forms.ToolStripButton()
+        Me.OpenToolStripButton = New System.Windows.Forms.ToolStripButton()
+        Me.SaveToolStripButton = New System.Windows.Forms.ToolStripButton()
+        Me.toolStripSeparator = New System.Windows.Forms.ToolStripSeparator()
+        Me.PlayStopbtn = New System.Windows.Forms.ToolStripButton()
+        Me.RefreshUNIFITool = New System.Windows.Forms.ToolStripButton()
         Me.lstContextMenu.SuspendLayout()
         CType(Me.NumInterval, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MenuStrip1.SuspendLayout()
@@ -128,6 +134,7 @@ Partial Class frmMain
         Me.TabUnifiClients.SuspendLayout()
         Me.ClientContextStrip.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
+        Me.ToolStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'PrintPreviewDialog1
@@ -326,7 +333,6 @@ Partial Class frmMain
         '
         'Panel1
         '
-        Me.Panel1.Controls.Add(Me.btnRefreshUnifi)
         Me.Panel1.Controls.Add(Me.chkAutosave)
         Me.Panel1.Controls.Add(Me.Label4)
         Me.Panel1.Controls.Add(Me.txtFile)
@@ -336,29 +342,10 @@ Partial Class frmMain
         Me.Panel1.Controls.Add(Me.txtIPAddress)
         Me.Panel1.Controls.Add(Me.btnAddIP)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Panel1.Location = New System.Drawing.Point(0, 24)
+        Me.Panel1.Location = New System.Drawing.Point(0, 49)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(1120, 59)
         Me.Panel1.TabIndex = 15
-        '
-        'btnPlayStop
-        '
-        Me.btnPlayStop.Location = New System.Drawing.Point(104, 33)
-        Me.btnPlayStop.Name = "btnPlayStop"
-        Me.btnPlayStop.Size = New System.Drawing.Size(75, 23)
-        Me.btnPlayStop.TabIndex = 16
-        Me.btnPlayStop.Text = "Play"
-        Me.btnPlayStop.UseVisualStyleBackColor = True
-        '
-        'btnRefreshUnifi
-        '
-        Me.btnRefreshUnifi.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnRefreshUnifi.Location = New System.Drawing.Point(1027, 3)
-        Me.btnRefreshUnifi.Name = "btnRefreshUnifi"
-        Me.btnRefreshUnifi.Size = New System.Drawing.Size(81, 23)
-        Me.btnRefreshUnifi.TabIndex = 15
-        Me.btnRefreshUnifi.Text = "Refresh Unifi"
-        Me.btnRefreshUnifi.UseVisualStyleBackColor = True
         '
         'chkAutosave
         '
@@ -403,6 +390,15 @@ Partial Class frmMain
         Me.btnAddIP.TabIndex = 2
         Me.btnAddIP.UseVisualStyleBackColor = True
         '
+        'btnPlayStop
+        '
+        Me.btnPlayStop.Location = New System.Drawing.Point(104, 33)
+        Me.btnPlayStop.Name = "btnPlayStop"
+        Me.btnPlayStop.Size = New System.Drawing.Size(75, 23)
+        Me.btnPlayStop.TabIndex = 16
+        Me.btnPlayStop.Text = "Play"
+        Me.btnPlayStop.UseVisualStyleBackColor = True
+        '
         'StatusStrip1
         '
         Me.StatusStrip1.ImageScalingSize = New System.Drawing.Size(36, 36)
@@ -442,14 +438,14 @@ Partial Class frmMain
         Me.Chart1.Location = New System.Drawing.Point(0, 0)
         Me.Chart1.Margin = New System.Windows.Forms.Padding(1)
         Me.Chart1.Name = "Chart1"
-        Me.Chart1.Size = New System.Drawing.Size(384, 331)
+        Me.Chart1.Size = New System.Drawing.Size(384, 306)
         Me.Chart1.TabIndex = 17
         Me.Chart1.Text = "Chart1"
         '
         'btnResetGraph
         '
         Me.btnResetGraph.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnResetGraph.Location = New System.Drawing.Point(331, 306)
+        Me.btnResetGraph.Location = New System.Drawing.Point(331, 281)
         Me.btnResetGraph.Margin = New System.Windows.Forms.Padding(1)
         Me.btnResetGraph.Name = "btnResetGraph"
         Me.btnResetGraph.Size = New System.Drawing.Size(52, 24)
@@ -465,7 +461,7 @@ Partial Class frmMain
         Me.pnlChart.Location = New System.Drawing.Point(725, 3)
         Me.pnlChart.Margin = New System.Windows.Forms.Padding(1)
         Me.pnlChart.Name = "pnlChart"
-        Me.pnlChart.Size = New System.Drawing.Size(384, 331)
+        Me.pnlChart.Size = New System.Drawing.Size(384, 306)
         Me.pnlChart.TabIndex = 20
         Me.pnlChart.Visible = False
         '
@@ -475,10 +471,10 @@ Partial Class frmMain
         Me.TabMain.Controls.Add(Me.TabUnifiDevices)
         Me.TabMain.Controls.Add(Me.TabUnifiClients)
         Me.TabMain.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TabMain.Location = New System.Drawing.Point(0, 83)
+        Me.TabMain.Location = New System.Drawing.Point(0, 108)
         Me.TabMain.Name = "TabMain"
         Me.TabMain.SelectedIndex = 0
-        Me.TabMain.Size = New System.Drawing.Size(1120, 363)
+        Me.TabMain.Size = New System.Drawing.Size(1120, 338)
         Me.TabMain.TabIndex = 21
         '
         'TabPage1
@@ -489,7 +485,7 @@ Partial Class frmMain
         Me.TabPage1.Location = New System.Drawing.Point(4, 22)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(1112, 337)
+        Me.TabPage1.Size = New System.Drawing.Size(1112, 312)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Ping"
         Me.TabPage1.UseVisualStyleBackColor = True
@@ -513,7 +509,7 @@ Partial Class frmMain
         Me.lstIP.Location = New System.Drawing.Point(3, 3)
         Me.lstIP.Margin = New System.Windows.Forms.Padding(1)
         Me.lstIP.Name = "lstIP"
-        Me.lstIP.Size = New System.Drawing.Size(712, 331)
+        Me.lstIP.Size = New System.Drawing.Size(712, 306)
         Me.lstIP.TabIndex = 4
         Me.lstIP.UseCompatibleStateImageBehavior = False
         Me.lstIP.View = System.Windows.Forms.View.Details
@@ -581,7 +577,7 @@ Partial Class frmMain
         Me.Splitter1.Location = New System.Drawing.Point(715, 3)
         Me.Splitter1.Margin = New System.Windows.Forms.Padding(1)
         Me.Splitter1.Name = "Splitter1"
-        Me.Splitter1.Size = New System.Drawing.Size(10, 331)
+        Me.Splitter1.Size = New System.Drawing.Size(10, 306)
         Me.Splitter1.TabIndex = 21
         Me.Splitter1.TabStop = False
         '
@@ -593,7 +589,7 @@ Partial Class frmMain
         Me.TabUnifiDevices.Location = New System.Drawing.Point(4, 22)
         Me.TabUnifiDevices.Name = "TabUnifiDevices"
         Me.TabUnifiDevices.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabUnifiDevices.Size = New System.Drawing.Size(1112, 337)
+        Me.TabUnifiDevices.Size = New System.Drawing.Size(1112, 312)
         Me.TabUnifiDevices.TabIndex = 1
         Me.TabUnifiDevices.Text = "Unifi Devices"
         Me.TabUnifiDevices.UseVisualStyleBackColor = True
@@ -607,7 +603,7 @@ Partial Class frmMain
         Me.lblDevicedetail.Name = "lblDevicedetail"
         Me.lblDevicedetail.ReadOnly = True
         Me.lblDevicedetail.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        Me.lblDevicedetail.Size = New System.Drawing.Size(1106, 106)
+        Me.lblDevicedetail.Size = New System.Drawing.Size(1106, 81)
         Me.lblDevicedetail.TabIndex = 8
         '
         'Splitter3
@@ -694,7 +690,7 @@ Partial Class frmMain
         Me.TabUnifiClients.Controls.Add(Me.lstClient)
         Me.TabUnifiClients.Location = New System.Drawing.Point(4, 22)
         Me.TabUnifiClients.Name = "TabUnifiClients"
-        Me.TabUnifiClients.Size = New System.Drawing.Size(1112, 337)
+        Me.TabUnifiClients.Size = New System.Drawing.Size(1112, 312)
         Me.TabUnifiClients.TabIndex = 2
         Me.TabUnifiClients.Text = "Unifi Clients"
         Me.TabUnifiClients.UseVisualStyleBackColor = True
@@ -704,7 +700,7 @@ Partial Class frmMain
         Me.lblFullDetails.Dock = System.Windows.Forms.DockStyle.Fill
         Me.lblFullDetails.Location = New System.Drawing.Point(0, 282)
         Me.lblFullDetails.Name = "lblFullDetails"
-        Me.lblFullDetails.Size = New System.Drawing.Size(1112, 55)
+        Me.lblFullDetails.Size = New System.Drawing.Size(1112, 30)
         Me.lblFullDetails.TabIndex = 4
         '
         'Splitter2
@@ -793,16 +789,78 @@ Partial Class frmMain
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Active Ping"
         '
+        'ToolStrip1
+        '
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ResetIPListToolStripButton, Me.OpenToolStripButton, Me.SaveToolStripButton, Me.toolStripSeparator, Me.PlayStopbtn, Me.RefreshUNIFITool})
+        Me.ToolStrip1.Location = New System.Drawing.Point(0, 24)
+        Me.ToolStrip1.Name = "ToolStrip1"
+        Me.ToolStrip1.Size = New System.Drawing.Size(1120, 25)
+        Me.ToolStrip1.TabIndex = 22
+        Me.ToolStrip1.Text = "ToolStrip1"
+        '
+        'ResetIPListToolStripButton
+        '
+        Me.ResetIPListToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ResetIPListToolStripButton.Image = CType(resources.GetObject("ResetIPListToolStripButton.Image"), System.Drawing.Image)
+        Me.ResetIPListToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ResetIPListToolStripButton.Name = "ResetIPListToolStripButton"
+        Me.ResetIPListToolStripButton.Size = New System.Drawing.Size(23, 22)
+        Me.ResetIPListToolStripButton.Text = "&Reset"
+        Me.ResetIPListToolStripButton.ToolTipText = "Reset List"
+        '
+        'OpenToolStripButton
+        '
+        Me.OpenToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.OpenToolStripButton.Image = CType(resources.GetObject("OpenToolStripButton.Image"), System.Drawing.Image)
+        Me.OpenToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.OpenToolStripButton.Name = "OpenToolStripButton"
+        Me.OpenToolStripButton.Size = New System.Drawing.Size(23, 22)
+        Me.OpenToolStripButton.Text = "&Open"
+        '
+        'SaveToolStripButton
+        '
+        Me.SaveToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.SaveToolStripButton.Image = CType(resources.GetObject("SaveToolStripButton.Image"), System.Drawing.Image)
+        Me.SaveToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.SaveToolStripButton.Name = "SaveToolStripButton"
+        Me.SaveToolStripButton.Size = New System.Drawing.Size(23, 22)
+        Me.SaveToolStripButton.Text = "&Save"
+        '
+        'toolStripSeparator
+        '
+        Me.toolStripSeparator.Name = "toolStripSeparator"
+        Me.toolStripSeparator.Size = New System.Drawing.Size(6, 25)
+        '
+        'PlayStopbtn
+        '
+        Me.PlayStopbtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.PlayStopbtn.Image = CType(resources.GetObject("PlayStopbtn.Image"), System.Drawing.Image)
+        Me.PlayStopbtn.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.PlayStopbtn.Name = "PlayStopbtn"
+        Me.PlayStopbtn.Size = New System.Drawing.Size(23, 22)
+        Me.PlayStopbtn.Text = "C&ut"
+        '
+        'RefreshUNIFITool
+        '
+        Me.RefreshUNIFITool.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.RefreshUNIFITool.Image = CType(resources.GetObject("RefreshUNIFITool.Image"), System.Drawing.Image)
+        Me.RefreshUNIFITool.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.RefreshUNIFITool.Name = "RefreshUNIFITool"
+        Me.RefreshUNIFITool.Size = New System.Drawing.Size(23, 22)
+        Me.RefreshUNIFITool.Text = "&Refresh Unifi"
+        Me.RefreshUNIFITool.ToolTipText = "Refresh Unifi Clients and Devices"
+        '
         'frmMain
         '
         Me.AcceptButton = Me.btnAddIP
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1120, 468)
-        Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.TabMain)
-        Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.Panel1)
+        Me.Controls.Add(Me.ToolStrip1)
+        Me.Controls.Add(Me.GroupBox1)
+        Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.MenuStrip1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MainMenuStrip = Me.MenuStrip1
@@ -828,6 +886,8 @@ Partial Class frmMain
         Me.ClientContextStrip.ResumeLayout(False)
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
+        Me.ToolStrip1.ResumeLayout(False)
+        Me.ToolStrip1.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -909,11 +969,17 @@ Partial Class frmMain
     Friend WithEvents ColumnHeader27 As ColumnHeader
     Friend WithEvents ClientContextStrip As ContextMenuStrip
     Friend WithEvents mnuAddClientToPingList As ToolStripMenuItem
-    Friend WithEvents btnRefreshUnifi As Button
     Friend WithEvents toolRefreshUNIFI As ToolStripMenuItem
     Friend WithEvents DeviceContextStrip As ContextMenuStrip
     Friend WithEvents AddRemoveFromPingListToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ResetIPListToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents btnPlayStop As Button
     Friend WithEvents GroupBox1 As GroupBox
+    Friend WithEvents ToolStrip1 As ToolStrip
+    Friend WithEvents ResetIPListToolStripButton As ToolStripButton
+    Friend WithEvents OpenToolStripButton As ToolStripButton
+    Friend WithEvents SaveToolStripButton As ToolStripButton
+    Friend WithEvents toolStripSeparator As ToolStripSeparator
+    Friend WithEvents PlayStopbtn As ToolStripButton
+    Friend WithEvents RefreshUNIFITool As ToolStripButton
 End Class
