@@ -1,27 +1,30 @@
 ﻿Imports System.IO
 Imports System.Net
-Imports System.Net.NetworkInformation
 Imports System.Net.Security
 Imports System.Runtime.Serialization.Formatters.Binary
 Imports System.Security.Cryptography.X509Certificates
-Imports System.Windows.Forms.VisualStyles
 Imports Newtonsoft.Json
-Imports Newtonsoft.Json.Converters
 Imports Newtonsoft.Json.Linq
 Imports RestSharp
 
 <Serializable()> Public Class UnifiController
 
+#Region "Serialised Properties"
     Public Property URLBase As String
     Public Property UserName As String
     Public Property Password As String
+    Public Property Site As String
+#End Region
+
+#Region "Non Serialised Properties"
+
     <NonSerialized()> Private ReadOnly _DeviceTypes As New UNIFIDeviceTypes
     Public ReadOnly Property DeviceTypes As UNIFIDeviceTypes
         Get
             Return _DeviceTypes
         End Get
     End Property
-    Public Property Site As String
+
     <NonSerialized()> Private Token As Cookie
     <NonSerialized()> Private ReadOnly _LoggedIn As Boolean
     <NonSerialized()> Private LastResponse As RestResponse
@@ -46,9 +49,10 @@ Imports RestSharp
             Return _Clientlist
         End Get
     End Property
-
-
     Const LoginFormat = """username"": ""{0}"", ""password"": ""{1}"""
+#End Region
+
+#Region "Public Functions"
     Public Function SaveDefaults() As Boolean
         Return Me.Save(My.Computer.FileSystem.SpecialDirectories.CurrentUserApplicationData & "\UnifiController.bin")
     End Function
@@ -261,6 +265,9 @@ Imports RestSharp
                     chain As X509Chain, sslPolicyErrors As SslPolicyErrors) As Boolean
         Return True
     End Function
+#End Region
+
+#Region "Private Functions"
     Private Sub ApplyRequestHeaders(ByVal request As RestRequest)
         request.AddHeader("Referrer", URLBase.ToString())
 
@@ -273,5 +280,6 @@ Imports RestSharp
             request.AddHeader(CSRF_HEADER, _csrf_token)
         End If
     End Sub
+#End Region
 
 End Class

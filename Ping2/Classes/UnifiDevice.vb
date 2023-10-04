@@ -15,6 +15,4 @@ End Class
 
 Public Class UnifiDeviceList
     Inherits List(Of UnifiDevice)
-
-
 End Class

@@ -46,12 +46,14 @@ Public Class frmUnifi
     Private Sub btnTest_Click_1(sender As Object, e As EventArgs) Handles btnTest.Click
         Me.txtResponse.Text = ""
         Me.lblCode.Text = ""
+
         Me.Cursor = Cursors.WaitCursor
         Dim Response = TestController.ExecuteGET(Me.txtEndPoint.Text)
         Me.Cursor = Cursors.Default
 
         Me.lblCode.Text = "Status: " & Response.StatusCode
         Me.lblRequest.Text = TestController.URLBase & txtEndPoint.Text
+
         Try
             Dim jsonFormatted = JValue.Parse(Response.Content).ToString(Formatting.Indented)
             Me.txtResponse.Text = jsonFormatted
