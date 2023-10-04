@@ -66,17 +66,6 @@ Partial Class frmMain
         Me.Chart1 = New System.Windows.Forms.DataVisualization.Charting.Chart()
         Me.btnResetGraph = New System.Windows.Forms.Button()
         Me.pnlChart = New System.Windows.Forms.Panel()
-        Me.lstIP = New Ping.ListViewX()
-        Me.ColumnHeader7 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader10 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader3 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader4 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader5 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader6 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader8 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader9 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.TabMain = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.Splitter1 = New System.Windows.Forms.Splitter()
@@ -96,6 +85,20 @@ Partial Class frmMain
         Me.TabUnifiClients = New System.Windows.Forms.TabPage()
         Me.lblFullDetails = New System.Windows.Forms.Label()
         Me.Splitter2 = New System.Windows.Forms.Splitter()
+        Me.ClientContextStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.mnuAddClientToPingList = New System.Windows.Forms.ToolStripMenuItem()
+        Me.btnRefreshUnifi = New System.Windows.Forms.Button()
+        Me.lstIP = New Ping.ListViewX()
+        Me.ColumnHeader7 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader10 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader3 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader4 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader5 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader6 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader8 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader9 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.lstClient = New Ping.ListViewX()
         Me.ColumnHeader19 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader20 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
@@ -105,9 +108,7 @@ Partial Class frmMain
         Me.ColumnHeader23 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader24 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader25 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ClientContextStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.mnuAddClientToPingList = New System.Windows.Forms.ToolStripMenuItem()
-        Me.btnRefreshUnifi = New System.Windows.Forms.Button()
+        Me.toolRefreshUNIFI = New System.Windows.Forms.ToolStripMenuItem()
         Me.lstContextMenu.SuspendLayout()
         CType(Me.NumInterval, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MenuStrip1.SuspendLayout()
@@ -292,7 +293,7 @@ Partial Class frmMain
         '
         'ViewToolStripMenuItem
         '
-        Me.ViewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowChartToolStripMenuItem})
+        Me.ViewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowChartToolStripMenuItem, Me.toolRefreshUNIFI})
         Me.ViewToolStripMenuItem.Name = "ViewToolStripMenuItem"
         Me.ViewToolStripMenuItem.Size = New System.Drawing.Size(44, 20)
         Me.ViewToolStripMenuItem.Text = "View"
@@ -301,7 +302,7 @@ Partial Class frmMain
         '
         Me.ShowChartToolStripMenuItem.Name = "ShowChartToolStripMenuItem"
         Me.ShowChartToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.T), System.Windows.Forms.Keys)
-        Me.ShowChartToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
+        Me.ShowChartToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.ShowChartToolStripMenuItem.Text = "Show Chart"
         '
         'Panel1
@@ -431,86 +432,6 @@ Partial Class frmMain
         Me.pnlChart.Size = New System.Drawing.Size(384, 331)
         Me.pnlChart.TabIndex = 20
         Me.pnlChart.Visible = False
-        '
-        'lstIP
-        '
-        Me.lstIP.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader7, Me.ColumnHeader10, Me.ColumnHeader1, Me.ColumnHeader2, Me.ColumnHeader3, Me.ColumnHeader4, Me.ColumnHeader5, Me.ColumnHeader6, Me.ColumnHeader8, Me.ColumnHeader9})
-        Me.lstIP.ContextMenuStrip = Me.lstContextMenu
-        Me.lstIP.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.lstIP.FullRowSelect = True
-        Me.lstIP.GridLines = True
-        ListViewGroup1.Header = "Switch"
-        ListViewGroup1.Name = "ListViewGroup1"
-        ListViewGroup2.Header = "Gateway"
-        ListViewGroup2.Name = "ListViewGroup2"
-        ListViewGroup3.Header = "Access Point"
-        ListViewGroup3.Name = "ListViewGroup3"
-        Me.lstIP.Groups.AddRange(New System.Windows.Forms.ListViewGroup() {ListViewGroup1, ListViewGroup2, ListViewGroup3})
-        Me.lstIP.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable
-        Me.lstIP.HideSelection = False
-        Me.lstIP.Location = New System.Drawing.Point(3, 3)
-        Me.lstIP.Margin = New System.Windows.Forms.Padding(1)
-        Me.lstIP.Name = "lstIP"
-        Me.lstIP.Size = New System.Drawing.Size(712, 331)
-        Me.lstIP.TabIndex = 4
-        Me.lstIP.UseCompatibleStateImageBehavior = False
-        Me.lstIP.View = System.Windows.Forms.View.Details
-        '
-        'ColumnHeader7
-        '
-        Me.ColumnHeader7.Text = "Name"
-        Me.ColumnHeader7.Width = 200
-        '
-        'ColumnHeader10
-        '
-        Me.ColumnHeader10.Text = "Requested"
-        Me.ColumnHeader10.Width = 200
-        '
-        'ColumnHeader1
-        '
-        Me.ColumnHeader1.Text = "IP Address"
-        Me.ColumnHeader1.Width = 200
-        '
-        'ColumnHeader2
-        '
-        Me.ColumnHeader2.Text = "DNS Name"
-        Me.ColumnHeader2.Width = 200
-        '
-        'ColumnHeader3
-        '
-        Me.ColumnHeader3.Text = "Recent"
-        Me.ColumnHeader3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.ColumnHeader3.Width = 150
-        '
-        'ColumnHeader4
-        '
-        Me.ColumnHeader4.Text = "Average"
-        Me.ColumnHeader4.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.ColumnHeader4.Width = 150
-        '
-        'ColumnHeader5
-        '
-        Me.ColumnHeader5.Text = "Best"
-        Me.ColumnHeader5.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.ColumnHeader5.Width = 150
-        '
-        'ColumnHeader6
-        '
-        Me.ColumnHeader6.Text = "Worst"
-        Me.ColumnHeader6.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.ColumnHeader6.Width = 150
-        '
-        'ColumnHeader8
-        '
-        Me.ColumnHeader8.Text = "Count"
-        Me.ColumnHeader8.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.ColumnHeader8.Width = 150
-        '
-        'ColumnHeader9
-        '
-        Me.ColumnHeader9.Text = "Failures"
-        Me.ColumnHeader9.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.ColumnHeader9.Width = 150
         '
         'TabMain
         '
@@ -666,6 +587,108 @@ Partial Class frmMain
         Me.Splitter2.TabIndex = 5
         Me.Splitter2.TabStop = False
         '
+        'ClientContextStrip
+        '
+        Me.ClientContextStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuAddClientToPingList})
+        Me.ClientContextStrip.Name = "ClientContextStrip"
+        Me.ClientContextStrip.Size = New System.Drawing.Size(193, 26)
+        '
+        'mnuAddClientToPingList
+        '
+        Me.mnuAddClientToPingList.Name = "mnuAddClientToPingList"
+        Me.mnuAddClientToPingList.Size = New System.Drawing.Size(192, 22)
+        Me.mnuAddClientToPingList.Text = "&Add Client to Ping List"
+        '
+        'btnRefreshUnifi
+        '
+        Me.btnRefreshUnifi.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnRefreshUnifi.Location = New System.Drawing.Point(1027, 3)
+        Me.btnRefreshUnifi.Name = "btnRefreshUnifi"
+        Me.btnRefreshUnifi.Size = New System.Drawing.Size(81, 23)
+        Me.btnRefreshUnifi.TabIndex = 15
+        Me.btnRefreshUnifi.Text = "Refresh Unifi"
+        Me.btnRefreshUnifi.UseVisualStyleBackColor = True
+        '
+        'lstIP
+        '
+        Me.lstIP.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader7, Me.ColumnHeader10, Me.ColumnHeader1, Me.ColumnHeader2, Me.ColumnHeader3, Me.ColumnHeader4, Me.ColumnHeader5, Me.ColumnHeader6, Me.ColumnHeader8, Me.ColumnHeader9})
+        Me.lstIP.ContextMenuStrip = Me.lstContextMenu
+        Me.lstIP.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.lstIP.FullRowSelect = True
+        Me.lstIP.GridLines = True
+        ListViewGroup1.Header = "Switch"
+        ListViewGroup1.Name = "ListViewGroup1"
+        ListViewGroup2.Header = "Gateway"
+        ListViewGroup2.Name = "ListViewGroup2"
+        ListViewGroup3.Header = "Access Point"
+        ListViewGroup3.Name = "ListViewGroup3"
+        Me.lstIP.Groups.AddRange(New System.Windows.Forms.ListViewGroup() {ListViewGroup1, ListViewGroup2, ListViewGroup3})
+        Me.lstIP.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable
+        Me.lstIP.HideSelection = False
+        Me.lstIP.Location = New System.Drawing.Point(3, 3)
+        Me.lstIP.Margin = New System.Windows.Forms.Padding(1)
+        Me.lstIP.Name = "lstIP"
+        Me.lstIP.Size = New System.Drawing.Size(712, 331)
+        Me.lstIP.TabIndex = 4
+        Me.lstIP.UseCompatibleStateImageBehavior = False
+        Me.lstIP.View = System.Windows.Forms.View.Details
+        '
+        'ColumnHeader7
+        '
+        Me.ColumnHeader7.Text = "Name"
+        Me.ColumnHeader7.Width = 200
+        '
+        'ColumnHeader10
+        '
+        Me.ColumnHeader10.Text = "Requested"
+        Me.ColumnHeader10.Width = 200
+        '
+        'ColumnHeader1
+        '
+        Me.ColumnHeader1.Text = "IP Address"
+        Me.ColumnHeader1.Width = 200
+        '
+        'ColumnHeader2
+        '
+        Me.ColumnHeader2.Text = "DNS Name"
+        Me.ColumnHeader2.Width = 200
+        '
+        'ColumnHeader3
+        '
+        Me.ColumnHeader3.Text = "Recent"
+        Me.ColumnHeader3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.ColumnHeader3.Width = 150
+        '
+        'ColumnHeader4
+        '
+        Me.ColumnHeader4.Text = "Average"
+        Me.ColumnHeader4.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.ColumnHeader4.Width = 150
+        '
+        'ColumnHeader5
+        '
+        Me.ColumnHeader5.Text = "Best"
+        Me.ColumnHeader5.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.ColumnHeader5.Width = 150
+        '
+        'ColumnHeader6
+        '
+        Me.ColumnHeader6.Text = "Worst"
+        Me.ColumnHeader6.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.ColumnHeader6.Width = 150
+        '
+        'ColumnHeader8
+        '
+        Me.ColumnHeader8.Text = "Count"
+        Me.ColumnHeader8.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.ColumnHeader8.Width = 150
+        '
+        'ColumnHeader9
+        '
+        Me.ColumnHeader9.Text = "Failures"
+        Me.ColumnHeader9.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.ColumnHeader9.Width = 150
+        '
         'lstClient
         '
         Me.lstClient.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader19, Me.ColumnHeader20, Me.ColumnHeader21, Me.ColumnHeader27, Me.ColumnHeader22, Me.ColumnHeader23, Me.ColumnHeader24, Me.ColumnHeader25})
@@ -719,27 +742,11 @@ Partial Class frmMain
         Me.ColumnHeader25.Text = "Last Seen"
         Me.ColumnHeader25.Width = 120
         '
-        'ClientContextStrip
+        'toolRefreshUNIFI
         '
-        Me.ClientContextStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuAddClientToPingList})
-        Me.ClientContextStrip.Name = "ClientContextStrip"
-        Me.ClientContextStrip.Size = New System.Drawing.Size(193, 26)
-        '
-        'mnuAddClientToPingList
-        '
-        Me.mnuAddClientToPingList.Name = "mnuAddClientToPingList"
-        Me.mnuAddClientToPingList.Size = New System.Drawing.Size(192, 22)
-        Me.mnuAddClientToPingList.Text = "&Add Client to Ping List"
-        '
-        'btnRefreshUnifi
-        '
-        Me.btnRefreshUnifi.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnRefreshUnifi.Location = New System.Drawing.Point(1027, 3)
-        Me.btnRefreshUnifi.Name = "btnRefreshUnifi"
-        Me.btnRefreshUnifi.Size = New System.Drawing.Size(81, 23)
-        Me.btnRefreshUnifi.TabIndex = 15
-        Me.btnRefreshUnifi.Text = "Refresh Unifi"
-        Me.btnRefreshUnifi.UseVisualStyleBackColor = True
+        Me.toolRefreshUNIFI.Name = "toolRefreshUNIFI"
+        Me.toolRefreshUNIFI.Size = New System.Drawing.Size(180, 22)
+        Me.toolRefreshUNIFI.Text = "Refresh UNIFI"
         '
         'frmMain
         '
@@ -854,4 +861,5 @@ Partial Class frmMain
     Friend WithEvents ClientContextStrip As ContextMenuStrip
     Friend WithEvents mnuAddClientToPingList As ToolStripMenuItem
     Friend WithEvents btnRefreshUnifi As Button
+    Friend WithEvents toolRefreshUNIFI As ToolStripMenuItem
 End Class

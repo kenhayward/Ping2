@@ -260,7 +260,7 @@ Public Class frmMain
         Me.lstIP.Refresh()
     End Sub
 
-    Private Sub btnRefreshUnifi_Click(sender As Object, e As EventArgs) Handles btnRefreshUnifi.Click
+    Private Sub btnRefreshUnifi_Click(sender As Object, e As EventArgs) Handles btnRefreshUnifi.Click, toolRefreshUNIFI.Click
         Cursor = Cursors.WaitCursor
         LoadUNIFI()
         Cursor = Cursors.Default
