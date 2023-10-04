@@ -48,6 +48,7 @@ Partial Class frmMain
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OpenIPListToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SaveIPListToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ResetIPListToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripSeparator()
         Me.ExitToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.EditToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -58,6 +59,7 @@ Partial Class frmMain
         Me.ShowChartToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.toolRefreshUNIFI = New System.Windows.Forms.ToolStripMenuItem()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.btnPlayStop = New System.Windows.Forms.Button()
         Me.btnRefreshUnifi = New System.Windows.Forms.Button()
         Me.chkAutosave = New System.Windows.Forms.CheckBox()
         Me.Label4 = New System.Windows.Forms.Label()
@@ -95,6 +97,8 @@ Partial Class frmMain
         Me.ColumnHeader16 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader17 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader18 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.DeviceContextStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.AddRemoveFromPingListToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TabUnifiClients = New System.Windows.Forms.TabPage()
         Me.lblFullDetails = New System.Windows.Forms.Label()
         Me.Splitter2 = New System.Windows.Forms.Splitter()
@@ -109,8 +113,7 @@ Partial Class frmMain
         Me.ColumnHeader25 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ClientContextStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.mnuAddClientToPingList = New System.Windows.Forms.ToolStripMenuItem()
-        Me.DeviceContextStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.AddRemoveFromPingListToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.lstContextMenu.SuspendLayout()
         CType(Me.NumInterval, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MenuStrip1.SuspendLayout()
@@ -121,9 +124,10 @@ Partial Class frmMain
         Me.TabMain.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.TabUnifiDevices.SuspendLayout()
+        Me.DeviceContextStrip.SuspendLayout()
         Me.TabUnifiClients.SuspendLayout()
         Me.ClientContextStrip.SuspendLayout()
-        Me.DeviceContextStrip.SuspendLayout()
+        Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
         'PrintPreviewDialog1
@@ -188,7 +192,7 @@ Partial Class frmMain
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(313, 11)
+        Me.Label2.Location = New System.Drawing.Point(4, 19)
         Me.Label2.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(95, 13)
@@ -197,14 +201,14 @@ Partial Class frmMain
         '
         'NumInterval
         '
-        Me.NumInterval.Location = New System.Drawing.Point(313, 28)
+        Me.NumInterval.Location = New System.Drawing.Point(4, 36)
         Me.NumInterval.Margin = New System.Windows.Forms.Padding(1)
         Me.NumInterval.Maximum = New Decimal(New Integer() {60, 0, 0, 0})
         Me.NumInterval.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
         Me.NumInterval.Name = "NumInterval"
         Me.NumInterval.Size = New System.Drawing.Size(96, 20)
         Me.NumInterval.TabIndex = 9
-        Me.NumInterval.Value = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.NumInterval.Value = New Decimal(New Integer() {5, 0, 0, 0})
         '
         'txtFriendly
         '
@@ -238,7 +242,7 @@ Partial Class frmMain
         '
         'FileToolStripMenuItem
         '
-        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OpenIPListToolStripMenuItem, Me.SaveIPListToolStripMenuItem, Me.ExitToolStripMenuItem, Me.ExitToolStripMenuItem1})
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.OpenIPListToolStripMenuItem, Me.SaveIPListToolStripMenuItem, Me.ResetIPListToolStripMenuItem, Me.ExitToolStripMenuItem, Me.ExitToolStripMenuItem1})
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
         Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
         Me.FileToolStripMenuItem.Text = "&File"
@@ -256,6 +260,12 @@ Partial Class frmMain
         Me.SaveIPListToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.S), System.Windows.Forms.Keys)
         Me.SaveIPListToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.SaveIPListToolStripMenuItem.Text = "&Save IP List"
+        '
+        'ResetIPListToolStripMenuItem
+        '
+        Me.ResetIPListToolStripMenuItem.Name = "ResetIPListToolStripMenuItem"
+        Me.ResetIPListToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ResetIPListToolStripMenuItem.Text = "&Reset IP List"
         '
         'ExitToolStripMenuItem
         '
@@ -305,13 +315,13 @@ Partial Class frmMain
         '
         Me.ShowChartToolStripMenuItem.Name = "ShowChartToolStripMenuItem"
         Me.ShowChartToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.T), System.Windows.Forms.Keys)
-        Me.ShowChartToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ShowChartToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
         Me.ShowChartToolStripMenuItem.Text = "Show Chart"
         '
         'toolRefreshUNIFI
         '
         Me.toolRefreshUNIFI.Name = "toolRefreshUNIFI"
-        Me.toolRefreshUNIFI.Size = New System.Drawing.Size(180, 22)
+        Me.toolRefreshUNIFI.Size = New System.Drawing.Size(175, 22)
         Me.toolRefreshUNIFI.Text = "Refresh UNIFI"
         '
         'Panel1
@@ -324,14 +334,21 @@ Partial Class frmMain
         Me.Panel1.Controls.Add(Me.Label1)
         Me.Panel1.Controls.Add(Me.txtFriendly)
         Me.Panel1.Controls.Add(Me.txtIPAddress)
-        Me.Panel1.Controls.Add(Me.NumInterval)
         Me.Panel1.Controls.Add(Me.btnAddIP)
-        Me.Panel1.Controls.Add(Me.Label2)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Top
         Me.Panel1.Location = New System.Drawing.Point(0, 24)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(1120, 59)
         Me.Panel1.TabIndex = 15
+        '
+        'btnPlayStop
+        '
+        Me.btnPlayStop.Location = New System.Drawing.Point(104, 33)
+        Me.btnPlayStop.Name = "btnPlayStop"
+        Me.btnPlayStop.Size = New System.Drawing.Size(75, 23)
+        Me.btnPlayStop.TabIndex = 16
+        Me.btnPlayStop.Text = "Play"
+        Me.btnPlayStop.UseVisualStyleBackColor = True
         '
         'btnRefreshUnifi
         '
@@ -347,7 +364,7 @@ Partial Class frmMain
         '
         Me.chkAutosave.AutoSize = True
         Me.chkAutosave.Enabled = False
-        Me.chkAutosave.Location = New System.Drawing.Point(528, 10)
+        Me.chkAutosave.Location = New System.Drawing.Point(662, 10)
         Me.chkAutosave.Name = "chkAutosave"
         Me.chkAutosave.Size = New System.Drawing.Size(71, 17)
         Me.chkAutosave.TabIndex = 14
@@ -357,7 +374,7 @@ Partial Class frmMain
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(419, 11)
+        Me.Label4.Location = New System.Drawing.Point(542, 10)
         Me.Label4.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(92, 13)
@@ -368,11 +385,11 @@ Partial Class frmMain
         '
         Me.txtFile.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtFile.Location = New System.Drawing.Point(419, 28)
+        Me.txtFile.Location = New System.Drawing.Point(540, 28)
         Me.txtFile.Margin = New System.Windows.Forms.Padding(1)
         Me.txtFile.Name = "txtFile"
         Me.txtFile.ReadOnly = True
-        Me.txtFile.Size = New System.Drawing.Size(692, 20)
+        Me.txtFile.Size = New System.Drawing.Size(571, 20)
         Me.txtFile.TabIndex = 12
         Me.txtFile.Text = "PingList.csv"
         '
@@ -658,6 +675,18 @@ Partial Class frmMain
         Me.ColumnHeader18.Text = "Version"
         Me.ColumnHeader18.Width = 100
         '
+        'DeviceContextStrip
+        '
+        Me.DeviceContextStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AddRemoveFromPingListToolStripMenuItem})
+        Me.DeviceContextStrip.Name = "DeviceContextStrip"
+        Me.DeviceContextStrip.Size = New System.Drawing.Size(197, 26)
+        '
+        'AddRemoveFromPingListToolStripMenuItem
+        '
+        Me.AddRemoveFromPingListToolStripMenuItem.Name = "AddRemoveFromPingListToolStripMenuItem"
+        Me.AddRemoveFromPingListToolStripMenuItem.Size = New System.Drawing.Size(196, 22)
+        Me.AddRemoveFromPingListToolStripMenuItem.Text = "&Add Device to Ping List"
+        '
         'TabUnifiClients
         '
         Me.TabUnifiClients.Controls.Add(Me.lblFullDetails)
@@ -752,17 +781,17 @@ Partial Class frmMain
         Me.mnuAddClientToPingList.Size = New System.Drawing.Size(192, 22)
         Me.mnuAddClientToPingList.Text = "&Add Client to Ping List"
         '
-        'DeviceContextStrip
+        'GroupBox1
         '
-        Me.DeviceContextStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AddRemoveFromPingListToolStripMenuItem})
-        Me.DeviceContextStrip.Name = "DeviceContextStrip"
-        Me.DeviceContextStrip.Size = New System.Drawing.Size(197, 26)
-        '
-        'AddRemoveFromPingListToolStripMenuItem
-        '
-        Me.AddRemoveFromPingListToolStripMenuItem.Name = "AddRemoveFromPingListToolStripMenuItem"
-        Me.AddRemoveFromPingListToolStripMenuItem.Size = New System.Drawing.Size(196, 22)
-        Me.AddRemoveFromPingListToolStripMenuItem.Text = "&Add Device to Ping List"
+        Me.GroupBox1.Controls.Add(Me.btnPlayStop)
+        Me.GroupBox1.Controls.Add(Me.Label2)
+        Me.GroupBox1.Controls.Add(Me.NumInterval)
+        Me.GroupBox1.Location = New System.Drawing.Point(293, 24)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(200, 59)
+        Me.GroupBox1.TabIndex = 17
+        Me.GroupBox1.TabStop = False
+        Me.GroupBox1.Text = "Active Ping"
         '
         'frmMain
         '
@@ -770,6 +799,7 @@ Partial Class frmMain
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1120, 468)
+        Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.TabMain)
         Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.Panel1)
@@ -793,9 +823,11 @@ Partial Class frmMain
         Me.TabPage1.ResumeLayout(False)
         Me.TabUnifiDevices.ResumeLayout(False)
         Me.TabUnifiDevices.PerformLayout()
+        Me.DeviceContextStrip.ResumeLayout(False)
         Me.TabUnifiClients.ResumeLayout(False)
         Me.ClientContextStrip.ResumeLayout(False)
-        Me.DeviceContextStrip.ResumeLayout(False)
+        Me.GroupBox1.ResumeLayout(False)
+        Me.GroupBox1.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -881,4 +913,7 @@ Partial Class frmMain
     Friend WithEvents toolRefreshUNIFI As ToolStripMenuItem
     Friend WithEvents DeviceContextStrip As ContextMenuStrip
     Friend WithEvents AddRemoveFromPingListToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ResetIPListToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents btnPlayStop As Button
+    Friend WithEvents GroupBox1 As GroupBox
 End Class

@@ -14,64 +14,31 @@ Public Class frmMain
     Private RefreshInterval As Integer = 5 ' (Seconds) how long to wait between Ping cycles
     Private WithEvents RefreshWorker As BackgroundWorker ' The Ping Worker
     Private PingStep As Long  ' How many cycles have we run in this session - used for Graph x Axis
+
 #End Region
 #Region "Ping ListView Support Functions"
-    Private Sub AddGroup(Pingit As PingIP, Item As ListViewItem)
-        If Pingit.Group <> "" Then
-            Dim thisGroup As ListViewGroup = Nothing
-            For Each group In lstIP.Groups
-                If group.header = Pingit.Group Then thisGroup = group
-            Next
-            If thisGroup Is Nothing Then
-                thisGroup = New ListViewGroup(Pingit.Group)
-                lstIP.Groups.Add(thisGroup)
-            End If
-            Item.Group = thisGroup
-        End If
-    End Sub
-    Private Sub UpdateListView(PIngit As PingIP)
-        For Each ip In ChartIPs
-            If ip.Equals(PIngit) Then
-                For Each series In Chart1.Series
-                    If series.Tag.Equals(PIngit) Then
-                        If series.Points.Count = 0 Then
-                            Dim MyPoint As New DataPoint(PingStep, PIngit.RoundtripTime) With {.Label = PIngit.FriendlyName}
-                            series.Points.Add(MyPoint)
-                        Else
-                            series.Points.AddXY(PingStep, PIngit.RoundtripTime)
-                        End If
+    Private Function CreateItemForListView(Pingit As PingIP)
 
-                    End If
-                Next
-            End If
-        Next
-
-        Dim MyItem As ListViewItem = Nothing
-        For Each item In lstIP.Items
-            If item.tag.Equals(PIngit) Then
-                MyItem = item
-            End If
-        Next
-
+        Dim MyItem As ListViewItem = lstIP.GetItemByTag(Pingit)
         If MyItem Is Nothing Then
             MyItem = New ListViewItem With {
-                .Text = PIngit.FriendlyName,
-                .Tag = PIngit,
+                .Text = Pingit.FriendlyName,
+                .Tag = Pingit,
                 .UseItemStyleForSubItems = False
             }
             For x As Integer = 1 To 9
                 MyItem.SubItems.Add("")
             Next
-            AddGroup(PIngit, MyItem)
+            lstIP.ApplyGroup(Pingit.Group, MyItem)
             lstIP.Items.Add(MyItem)
         End If
-        Dim MyItemIndex As Integer = 0
-        For Index = 0 To lstIP.Items.Count - 1
-            If lstIP.Items(Index).Equals(MyItem) Then
-                MyItemIndex = Index
-                Exit For
-            End If
-        Next
+
+        Return MyItem
+    End Function
+    Private Sub UpdateListView(PIngit As PingIP)
+        AddPointToChart(PIngit)
+        Dim MyItem = CreateItemForListView(PIngit)
+
         ' Constants for Subitem Positioning
         Const SIRequestedAddress = 1
         Const SIIPAddress = 2
@@ -128,12 +95,10 @@ Public Class frmMain
                 Failitem.BackColor = Color.Red
                 Failitem.ForeColor = Color.White
             End If
-            AddGroup(PIngit, MyItem)
+            lstIP.ApplyGroup(PIngit.Group, MyItem)
         End If
-        lstIP.UpdateItem(MyItemIndex)
-        If chkAutosave.Checked Then
-            SaveIPList(Me.txtFile.Text)
-        End If
+        lstIP.UpdateItem(MyItem)
+        If chkAutosave.Checked Then SaveIPList(Me.txtFile.Text)
         UpdateStatus()
     End Sub
 #End Region
@@ -142,28 +107,53 @@ Public Class frmMain
     ''' Start the Background Ping Worker or force it to refresh now if already started
     ''' </summary>
     Private Sub StartWorker()
+        If PingList.Count = 0 Then
+            btnPlayStop.Text = "Play"
+            Exit Sub
+        End If
         If RefreshWorker Is Nothing Then
-            RefreshWorker = New BackgroundWorker With {.WorkerReportsProgress = True}
+            RefreshWorker = New BackgroundWorker With {.WorkerReportsProgress = True, .WorkerSupportsCancellation = True}
             RefreshWorker.RunWorkerAsync()
+            btnPlayStop.Text = "Stop"
         Else
-            RefreshNow = True
+            If btnPlayStop.Text = "Play" Then
+                RefreshWorker.RunWorkerAsync()
+            Else
+                RefreshNow = True
+            End If
         End If
     End Sub
     Private Sub RefreshWorker_ProgressChanged(sender As Object, e As ProgressChangedEventArgs) Handles RefreshWorker.ProgressChanged
-        Dim PIngit As PingIP = e.UserState
-        UpdateListView(PIngit)
+        If TypeOf e.UserState Is String Then
+            UpdateStatus(e.UserState.ToString)
+        Else
+            Dim PIngit As PingIP = e.UserState
+            UpdateListView(PIngit)
+        End If
+    End Sub
+    Private Sub RefreshWorker_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles RefreshWorker.RunWorkerCompleted
+        Me.btnPlayStop.Text = "Play"
+        Me.btnPlayStop.Enabled = True
     End Sub
     Private Sub RefreshWorker_DoWork(sender As Object, e As DoWorkEventArgs) Handles RefreshWorker.DoWork
         Do
+
             SyncLock (Blocking)
                 Dim x As Integer = 0
+                If RefreshWorker.CancellationPending Then
+                    e.Cancel = True
+                    Exit Do
+                End If
                 PingStep += 1
                 For Each pingit In PingList
                     x += 1
-                    UpdateStatus("Pinging " & pingit.Value.FriendlyName & " (" & pingit.Value.RequestedAddress & ")")
-                    pingit.Value.ExecutePing()
-                    UpdateStatus()
+                    RefreshWorker.ReportProgress(x, "Pinging " & pingit.Value.FriendlyName & " (" & pingit.Value.RequestedAddress & ")")
+                    pingit.Value.ExecutePing(RefreshWorker)
                     RefreshWorker.ReportProgress(x, pingit.Value)
+                    If RefreshWorker.CancellationPending Then
+                        e.Cancel = True
+                        Exit Do
+                    End If
                 Next
             End SyncLock
             Const PingWait As Integer = 250  ' How long to wait between each check
@@ -173,13 +163,22 @@ Public Class frmMain
                     RefreshNow = False
                     Exit For
                 End If
-                Thread.Sleep(Pingwait)
+                If RefreshWorker.CancellationPending Then
+                    e.Cancel = True
+                    Exit Do
+                End If
+                Thread.Sleep(PingWait)
+                RefreshWorker.ReportProgress(x, "")
             Next
         Loop
+        RefreshWorker.ReportProgress(100, "Active Ping Stopped")
+
     End Sub
     Private Sub UpdateRefreshInterval()
         RefreshInterval = NumInterval.Value
-        StartWorker()
+        If PingList.Count > 0 Then
+            StartWorker()
+        End If
     End Sub
 
 #End Region
@@ -261,9 +260,11 @@ Public Class frmMain
     End Sub
 
     Private Sub btnRefreshUnifi_Click(sender As Object, e As EventArgs) Handles btnRefreshUnifi.Click, toolRefreshUNIFI.Click
+        btnRefreshUnifi.Enabled = False
         Cursor = Cursors.WaitCursor
         LoadUNIFI()
         Cursor = Cursors.Default
+        btnRefreshUnifi.Enabled = True
     End Sub
     Private Sub RemoveSelectedToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RemoveSelectedToolStripMenuItem.Click, RemoveToolStripMenuItem.Click
         If lstIP.SelectedItems.Count > 0 Then
@@ -319,7 +320,9 @@ Public Class frmMain
     End Sub
 
     Private Sub ExitToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem1.Click
-        End
+        StopPingWorker()
+        Me.Close()
+
     End Sub
 
     Private Sub RefreshToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NumInterval.ValueChanged
@@ -571,6 +574,65 @@ Public Class frmMain
             Return True
         End If
     End Function
+    Private Sub AddPointToChart(Pingit As PingIP)
+        For Each ip In ChartIPs
+            If ip.Equals(Pingit) Then
+                For Each series In Chart1.Series
+                    If series.Tag.Equals(Pingit) Then
+                        If series.Points.Count = 0 Then
+                            Dim MyPoint As New DataPoint(PingStep, Pingit.RoundtripTime) With {.Label = Pingit.FriendlyName}
+                            series.Points.Add(MyPoint)
+                        Else
+                            series.Points.AddXY(PingStep, Pingit.RoundtripTime)
+                        End If
+
+                    End If
+                Next
+            End If
+        Next
+    End Sub
+    Private Sub StopPingWorker()
+        If RefreshWorker IsNot Nothing Then
+            Me.RefreshWorker.CancelAsync()
+        End If
+        btnPlayStop.Enabled = False
+    End Sub
+    Private Sub ResetIPListToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ResetIPListToolStripMenuItem.Click
+        ' Clear List, Chart and IP List
+        Me.Cursor = Cursors.WaitCursor
+        StopPingWorker()
+        Me.PingList.Clear()
+        Me.ChartIPs.Clear()
+        Me.Chart1.Series.Clear()
+        Me.Cursor = Cursors.Default
+
+    End Sub
+
+    Private Sub btnPlayStop_Click(sender As Object, e As EventArgs) Handles btnPlayStop.Click
+        If RefreshWorker Is Nothing Then
+            btnPlayStop.Text = "Play"
+            Exit Sub
+        End If
+        If RefreshWorker.IsBusy Then
+            Me.Cursor = Cursors.WaitCursor
+            btnPlayStop.Enabled = False
+            StopPingWorker()
+            btnPlayStop.Text = "Play"
+            Me.Cursor = Cursors.Default
+        Else
+            btnPlayStop.Enabled = False
+            Me.Cursor = Cursors.WaitCursor
+            StartWorker()
+            btnPlayStop.Text = "Stop"
+            btnPlayStop.Enabled = True
+            Me.Cursor = Cursors.Default
+        End If
+    End Sub
+
+    Private Sub frmMain_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+        StopPingWorker()
+    End Sub
+
 
 #End Region
 End Class

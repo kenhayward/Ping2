@@ -4,6 +4,7 @@ Imports System.ComponentModel
 Imports System.Windows.Forms
 Imports System.Runtime.InteropServices
 Imports RestSharp
+Imports System.Net.NetworkInformation
 
 
 Public Enum WM
@@ -54,13 +55,49 @@ Public Class ListViewX
     <DllImport("user32.dll", CharSet:=CharSet.Auto)>
     Public Shared Function ValidateRect(ByVal handle As IntPtr, ByRef rect As RECT) As Boolean
     End Function
-
+    Public Sub UpdateItem(item As ListViewItem)
+        Dim index = GetItemIndex(item)
+        UpdateItem(index)
+    End Sub
     Public Sub UpdateItem(ByVal iIndex As Integer)
         updating = True
         itemnumber = iIndex
         Me.Update()
         updating = False
     End Sub
+
+    Public Sub ApplyGroup(NewGroup As String, Item As ListViewItem)
+        If NewGroup <> "" Then
+            Dim thisGroup As ListViewGroup = Nothing
+            For Each group In Me.Groups
+                If group.header = NewGroup Then thisGroup = group
+            Next
+            If thisGroup Is Nothing Then
+                thisGroup = New ListViewGroup(NewGroup)
+                Groups.Add(thisGroup)
+            End If
+            Item.Group = thisGroup
+        End If
+    End Sub
+    Public Function GetItemIndex(item As ListViewItem) As Integer
+        Dim MyItemIndex As Integer = 0
+        For Index = 0 To Items.Count - 1
+            If Items(Index).Equals(item) Then
+                MyItemIndex = Index
+                Exit For
+            End If
+        Next
+        Return MyItemIndex
+    End Function
+    Public Function GetItemByTag(Tag As Object) As ListViewItem
+        Dim MyItem As ListViewItem = Nothing
+        For Each item In Items
+            If item.tag.Equals(Tag) Then
+                MyItem = item
+            End If
+        Next
+        Return MyItem
+    End Function
 
     Protected Overrides Sub WndProc(ByRef messg As Message)
         If updating Then

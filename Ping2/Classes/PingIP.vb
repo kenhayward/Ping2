@@ -2,6 +2,7 @@
 Imports System.Text
 Imports System.Net
 Imports System.Net.Sockets
+Imports System.ComponentModel
 
 Public Class PingIP
     Public Property RequestedAddress As String
@@ -31,7 +32,7 @@ Public Class PingIP
         Me.RequestedAddress = IPAddressToPing
         Me.FriendlyName = Friendly
     End Sub
-    Public Sub ExecutePing()
+    Public Sub ExecutePing(RefreshWorker As BackgroundWorker)
         PingCount += 1
         Dim pingSender As New NetworkInformation.Ping()
         Dim options As New PingOptions With {
@@ -41,13 +42,16 @@ Public Class PingIP
         Dim buffer As Byte() = Encoding.ASCII.GetBytes(data)
         Dim timeout As Integer = 120
         Dim reply As PingReply = pingSender.Send(IPAddress, timeout, buffer, options)
-
+        If Me.HostName Is Nothing Then
+            RefreshWorker.ReportProgress(1, "Resolving Hostname for " & FriendlyName & " (" & IPAddress & ")")
+            Me.HostName = GetHostName()
+        End If
         If reply.Status = IPStatus.Success Then
             Me.Success = True
             Me.IPAddress = reply.Address.ToString()
             Me.RoundtripTime = reply.RoundtripTime
-            Me.ttl = reply.Options.Ttl
-            If Me.HostName Is Nothing Then Me.HostName = GetHostName(IPAddress)
+            Me.TTL = reply.Options.Ttl
+
             If RoundtripTime > Worst Then Worst = RoundtripTime
             If Best = -1 Then
                 Best = RoundtripTime
@@ -64,13 +68,13 @@ Public Class PingIP
             Failures += 1
         End If
     End Sub
-    Private Function GetHostName(ByVal ipAddress As String) As String
+    Private Function GetHostName() As String
         Dim ReturnValue As String = ""
         Try
-            Dim entry As IPHostEntry = Dns.GetHostEntry(ipAddress)
+            Dim entry As IPHostEntry = Dns.GetHostEntry(IPAddress)
             If entry IsNot Nothing Then ReturnValue = entry.HostName
         Catch ex As SocketException
-            ReturnValue = ipAddress
+            ReturnValue = "<Error>"
         End Try
         Return ReturnValue
     End Function
