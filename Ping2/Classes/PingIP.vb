@@ -75,3 +75,31 @@ Public Class PingIP
         Return ReturnValue
     End Function
 End Class
+
+Public Class Pinglist
+    Inherits Dictionary(Of String, PingIP)
+
+    Public Sub AddPing(Ping As PingIP)
+        Me.Add(Ping.IPAddress, Ping)
+    End Sub
+
+    ''' <summary>
+    ''' Adds a new Ping to the list
+    ''' </summary>
+    ''' <param name="Ping">The Ping to add</param>
+    ''' <returns>True if it was added to the list, false if it already existed</returns>
+    Public Function AddifNew(Ping As PingIP) As Boolean
+        If Not ContainsKey(Ping.IPAddress) Then
+            Dim NewPing = New PingIP(Ping.IPAddress, Ping.FriendlyName) With {.Group = "Client"}
+            AddPing(NewPing)
+            Return True
+        Else
+            Return False
+        End If
+    End Function
+    Public Function AddifNew(IPAddress As String, FriendlyName As String, Group As String) As Boolean
+        Dim NewPing As New PingIP(IPAddress, FriendlyName) With {.Group = Group}
+        Return AddifNew(NewPing)
+    End Function
+
+End Class

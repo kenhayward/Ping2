@@ -14,6 +14,18 @@
     Public Property LastSeen As DateTime
     Public Property FullDetails As String
 
+
+    Public Overrides Function Tostring() As String
+        If Name = "" Then
+            If HostName = "" Then
+                Return "<None>"
+            Else
+                Return "(" & HostName & ")"
+            End If
+        Else
+            Return Name & " (" & HostName & ")"
+        End If
+    End Function
 End Class
 
 

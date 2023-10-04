@@ -6,7 +6,7 @@ Imports Newtonsoft.Json
 
 Public Class frmMain
 #Region "Class Variables"
-    Private PingList As New Dictionary(Of String, PingIP) ' All the IP Addresses we will ping
+    Private PingList As New Pinglist ' All the IP Addresses we will ping
     Private Blocking = New Object  ' Used to Synclock the PingList with the background task
     Public UnifiController As New UnifiController ' The Unifi Controller Details
     Private ChartIPs As New List(Of PingIP)  ' The subset of the pinglist that are included in the current chart
@@ -166,7 +166,7 @@ Public Class frmMain
                     RefreshWorker.ReportProgress(x, pingit.Value)
                 Next
             End SyncLock
-            Const Pingwait As Integer = 250  ' How long to wait between each check
+            Const PingWait As Integer = 250  ' How long to wait between each check
             Const PingWaitCount As Integer = 4 ' How this converts to segments of a second
             For x As Integer = 1 To (RefreshInterval * PingWaitCount)
                 If RefreshNow Then
@@ -189,7 +189,7 @@ Public Class frmMain
         SyncLock (Blocking)
             If Not PingList.ContainsKey(IPAddress) Then
                 NewPing = New PingIP(IPAddress, FriendlyName) With {.Group = Group}
-                PingList.Add(IPAddress, NewPing)
+                PingList.AddPing(NewPing)
                 UpdateListView(NewPing)
             Else
                 NewPing = PingList.Item(IPAddress)
@@ -476,25 +476,19 @@ Public Class frmMain
                 If MyClient.Name & MyClient.HostName = "" Then
                     Dim Hostname = InputBox("Host Name:", "Provide a Host Name for " & MyClient.IP, "")
                     If Hostname <> "" Then
-                        ClientsToAdd.Add(MyClient.ActualIP, Hostname)
+                        ClientsToAdd.Add(MyClient.ActualIP, MyClient.Tostring)
                     End If
                 Else
-                    ClientsToAdd.Add(MyClient.ActualIP, MyClient.Name & " (" & MyClient.HostName & ")")
+                    ClientsToAdd.Add(MyClient.ActualIP, MyClient.Tostring)
                 End If
             Next
             SyncLock (Blocking)
                 For Each client In ClientsToAdd
-                    Dim IpAddress = client.Key
-                    Dim FriendlyName = client.Value
-                    Dim NewPing As PingIP
-                    If Not PingList.ContainsKey(IpAddress) Then
-                        NewPing = New PingIP(IpAddress, FriendlyName) With {.Group = "Client"}
-                        PingList.Add(IpAddress, NewPing)
-                        UpdateListView(NewPing)
-                    End If
+                    Dim NewPing = New PingIP(client.Key, client.Value) With {.Group = "Client"}
+                    If PingList.AddifNew(NewPing) Then UpdateListView(NewPing)
                 Next
                 StartWorker()
-                Me.lstIP.Refresh()
+                lstIP.Refresh()
             End SyncLock
         End If
     End Sub
@@ -543,8 +537,7 @@ Public Class frmMain
                 MyItem.Tag = device
             Next
             For Each client In UnifiController.ClientList
-                Dim MyItem As New ListViewItem With {.Text = client.Name}
-                If client.HostName IsNot Nothing Then MyItem.Text &= "(" & client.HostName & ")"
+                Dim MyItem As New ListViewItem With {.Text = client.Tostring}
                 MyItem.SubItems.Add(client.Organisation)
                 MyItem.SubItems.Add(client.IP)
                 MyItem.SubItems.Add(client.FixedIP.ToString)
