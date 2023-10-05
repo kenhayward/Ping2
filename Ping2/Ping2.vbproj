@@ -119,6 +119,12 @@
   <ItemGroup>
     <Compile Include="Classes\UNIFIClient.vb" />
     <Compile Include="Classes\UNIFIDeviceType.vb" />
+    <Compile Include="Forms\frmAddIP.Designer.vb">
+      <DependentUpon>frmAddIP.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmAddIP.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\frmUnifi.Designer.vb">
       <DependentUpon>frmUnifi.vb</DependentUpon>
     </Compile>
@@ -159,6 +165,9 @@
     <Compile Include="Classes\UnifiDevice.vb" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Forms\frmAddIP.resx">
+      <DependentUpon>frmAddIP.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmUnifi.resx">
       <DependentUpon>frmUnifi.vb</DependentUpon>
     </EmbeddedResource>
@@ -192,6 +201,8 @@
     <None Include="Resources\add1.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Chart1.png" />
+    <None Include="Resources\Chart.png" />
     <Content Include="Resources\Google-Noto-Emoji-Activities-52744-ping-pong.ico" />
     <None Include="Resources\Play.png" />
     <None Include="Resources\Stop.png" />

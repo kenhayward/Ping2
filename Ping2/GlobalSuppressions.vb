@@ -24,3 +24,6 @@ Imports System.Diagnostics.CodeAnalysis
 <Assembly: SuppressMessage("Style", "IDE1006:Naming Styles", Justification:="<Pending>", Scope:="member", Target:="~M:Ping.frmMain.btnRefreshUnifi_Click(System.Object,System.EventArgs)")>
 <Assembly: SuppressMessage("Style", "IDE1006:Naming Styles", Justification:="<Pending>", Scope:="member", Target:="~M:Ping.frmMain.btnPlayStop_Click(System.Object,System.EventArgs)")>
 <Assembly: SuppressMessage("Style", "IDE1006:Naming Styles", Justification:="<Pending>", Scope:="member", Target:="~M:Ping.frmMain.frmMain_Closing(System.Object,System.ComponentModel.CancelEventArgs)")>
+<Assembly: SuppressMessage("Style", "IDE1006:Naming Styles", Justification:="<Pending>", Scope:="member", Target:="~M:Ping.frmMain.isBtnPlay~System.Boolean")>
+<Assembly: SuppressMessage("Style", "IDE1006:Naming Styles", Justification:="<Pending>", Scope:="member", Target:="~M:Ping.frmAddIP.btnOK_Click(System.Object,System.EventArgs)")>
+<Assembly: SuppressMessage("Style", "IDE1006:Naming Styles", Justification:="<Pending>", Scope:="member", Target:="~M:Ping.frmAddIP.txtFriendly_TextChanged(System.Object,System.EventArgs)")>

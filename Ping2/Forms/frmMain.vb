@@ -16,6 +16,8 @@ Public Class frmMain
     Private PingStep As Long  ' How many cycles have we run in this session - used for Graph x Axis
     Private Const imgPlay = 0  ' Imagelist entry for play button
     Private Const imgStop = 1  ' Imagelist entry for stop button
+    Private IPListFile As String ' The current persisted IP List File
+
 #End Region
 #Region "Ping ListView Support Functions"
     Private Function CreateItemForListView(Pingit As PingIP)
@@ -99,7 +101,7 @@ Public Class frmMain
             lstIP.ApplyGroup(PIngit.Group, MyItem)
         End If
         lstIP.UpdateItem(MyItem)
-        If chkAutosave.Checked Then SaveIPList(Me.txtFile.Text)
+        If chkAutosave.Checked Then SaveIPList(IPListFile)
         UpdateStatus()
     End Sub
 #End Region
@@ -247,11 +249,14 @@ Public Class frmMain
             Next
 
         End Using
-        Me.txtFile.Text = Filename
-        chkAutosave.Enabled = True
+        SetIPListFile(Filename)
         UpdateStatus()
     End Sub
-
+    Private Sub SetIPListFile(Filename As String)
+        IPListFile = Filename
+        Me.LblCurrentFile.Text = "Current IP List: " & IPListFile
+        chkAutosave.Enabled = True
+    End Sub
     Private Sub ReadSavedList(Filename As String)
         Using MyReader As New FileIO.TextFieldParser(Filename)
             MyReader.TextFieldType = FileIO.FieldType.Delimited
@@ -273,11 +278,7 @@ Public Class frmMain
 
 #End Region
 #Region "Form Interactions"
-    Private Sub btnAddIP_Click(sender As Object, e As EventArgs) Handles btnAddIP.Click
-        CreatePing(txtIPAddress.Text.Trim, txtFriendly.Text.Trim, "")
-        StartWorker()
-        Me.lstIP.Refresh()
-    End Sub
+
 
     Private Sub btnRefreshUnifi_Click(sender As Object, e As EventArgs) Handles toolRefreshUNIFI.Click, RefreshUNIFITool.Click
         toolRefreshUNIFI.Enabled = False
@@ -333,8 +334,8 @@ Public Class frmMain
                 lstIP.Items.Clear()
                 ReadSavedList(MySave.FileName)
                 StartWorker()
-                chkAutosave.Enabled = True
-                Me.txtFile.Text = MySave.FileName
+
+                SetIPListFile(MySave.FileName)
                 UpdateStatus()
             End SyncLock
             Me.Cursor = Cursors.Default
@@ -422,7 +423,7 @@ Public Class frmMain
 
     End Sub
 
-    Private Sub ShowChartToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowChartToolStripMenuItem.Click
+    Private Sub ShowChartToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowChartToolStripMenuItem.Click, btnShowChart.Click
         If isChartVisible() Then
             HideChart()
         Else
@@ -657,6 +658,17 @@ Public Class frmMain
 
     Private Sub frmMain_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
         StopPingWorker()
+    End Sub
+
+    Private Sub AddIpMenu_Click(sender As Object, e As EventArgs) Handles ToolStripButton2.Click
+        Dim MyForm As New frmAddIP
+        If MyForm.ShowDialog = DialogResult.OK Then
+            Cursor = Cursors.WaitCursor
+            CreatePing(MyForm.IPAddress, MyForm.Friendlyname, "")
+            StartWorker()
+            Me.lstIP.Refresh()
+            Cursor = Cursors.Default
+        End If
     End Sub
 
 

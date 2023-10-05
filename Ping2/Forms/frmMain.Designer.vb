@@ -27,14 +27,12 @@ Partial Class frmMain
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMain))
-        Dim ChartArea2 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend2 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim ListViewGroup4 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Switch", System.Windows.Forms.HorizontalAlignment.Left)
-        Dim ListViewGroup5 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Gateway", System.Windows.Forms.HorizontalAlignment.Left)
-        Dim ListViewGroup6 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Access Point", System.Windows.Forms.HorizontalAlignment.Left)
+        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim ListViewGroup1 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Switch", System.Windows.Forms.HorizontalAlignment.Left)
+        Dim ListViewGroup2 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Gateway", System.Windows.Forms.HorizontalAlignment.Left)
+        Dim ListViewGroup3 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Access Point", System.Windows.Forms.HorizontalAlignment.Left)
         Me.PrintPreviewDialog1 = New System.Windows.Forms.PrintPreviewDialog()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.txtIPAddress = New System.Windows.Forms.TextBox()
         Me.lstContextMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.mnuGroups = New System.Windows.Forms.ToolStripMenuItem()
         Me.AddToChartToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -42,8 +40,6 @@ Partial Class frmMain
         Me.RemoveToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.NumInterval = New System.Windows.Forms.NumericUpDown()
-        Me.txtFriendly = New System.Windows.Forms.TextBox()
-        Me.Label3 = New System.Windows.Forms.Label()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.OpenIPListToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -58,11 +54,6 @@ Partial Class frmMain
         Me.ViewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ShowChartToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.toolRefreshUNIFI = New System.Windows.Forms.ToolStripMenuItem()
-        Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.chkAutosave = New System.Windows.Forms.CheckBox()
-        Me.Label4 = New System.Windows.Forms.Label()
-        Me.txtFile = New System.Windows.Forms.TextBox()
-        Me.btnAddIP = New System.Windows.Forms.Button()
         Me.btnPlayStop = New System.Windows.Forms.Button()
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
         Me.lblStatus = New System.Windows.Forms.ToolStripStatusLabel()
@@ -118,13 +109,18 @@ Partial Class frmMain
         Me.OpenToolStripButton = New System.Windows.Forms.ToolStripButton()
         Me.SaveToolStripButton = New System.Windows.Forms.ToolStripButton()
         Me.toolStripSeparator = New System.Windows.Forms.ToolStripSeparator()
+        Me.ToolStripButton2 = New System.Windows.Forms.ToolStripButton()
         Me.PlayStopbtn = New System.Windows.Forms.ToolStripButton()
+        Me.btnShowChart = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
         Me.RefreshUNIFITool = New System.Windows.Forms.ToolStripButton()
+        Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
+        Me.chkAutosave = New System.Windows.Forms.ToolStripButton()
         Me.imgListPlayStop = New System.Windows.Forms.ImageList(Me.components)
+        Me.LblCurrentFile = New System.Windows.Forms.ToolStripStatusLabel()
         Me.lstContextMenu.SuspendLayout()
         CType(Me.NumInterval, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MenuStrip1.SuspendLayout()
-        Me.Panel1.SuspendLayout()
         Me.StatusStrip1.SuspendLayout()
         CType(Me.Chart1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnlChart.SuspendLayout()
@@ -147,25 +143,6 @@ Partial Class frmMain
         Me.PrintPreviewDialog1.Icon = CType(resources.GetObject("PrintPreviewDialog1.Icon"), System.Drawing.Icon)
         Me.PrintPreviewDialog1.Name = "PrintPreviewDialog1"
         Me.PrintPreviewDialog1.Visible = False
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(9, 11)
-        Me.Label1.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(45, 13)
-        Me.Label1.TabIndex = 0
-        Me.Label1.Text = "Address"
-        '
-        'txtIPAddress
-        '
-        Me.txtIPAddress.Location = New System.Drawing.Point(91, 9)
-        Me.txtIPAddress.Margin = New System.Windows.Forms.Padding(1)
-        Me.txtIPAddress.Name = "txtIPAddress"
-        Me.txtIPAddress.Size = New System.Drawing.Size(154, 20)
-        Me.txtIPAddress.TabIndex = 1
-        Me.txtIPAddress.Text = "192.168.1.1"
         '
         'lstContextMenu
         '
@@ -217,25 +194,6 @@ Partial Class frmMain
         Me.NumInterval.Size = New System.Drawing.Size(96, 20)
         Me.NumInterval.TabIndex = 9
         Me.NumInterval.Value = New Decimal(New Integer() {5, 0, 0, 0})
-        '
-        'txtFriendly
-        '
-        Me.txtFriendly.Location = New System.Drawing.Point(91, 27)
-        Me.txtFriendly.Margin = New System.Windows.Forms.Padding(1)
-        Me.txtFriendly.Name = "txtFriendly"
-        Me.txtFriendly.Size = New System.Drawing.Size(154, 20)
-        Me.txtFriendly.TabIndex = 10
-        Me.txtFriendly.Text = "Gateway"
-        '
-        'Label3
-        '
-        Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(9, 30)
-        Me.Label3.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(74, 13)
-        Me.Label3.TabIndex = 11
-        Me.Label3.Text = "Friendly Name"
         '
         'MenuStrip1
         '
@@ -332,65 +290,6 @@ Partial Class frmMain
         Me.toolRefreshUNIFI.Size = New System.Drawing.Size(175, 22)
         Me.toolRefreshUNIFI.Text = "Refresh UNIFI"
         '
-        'Panel1
-        '
-        Me.Panel1.Controls.Add(Me.chkAutosave)
-        Me.Panel1.Controls.Add(Me.Label4)
-        Me.Panel1.Controls.Add(Me.txtFile)
-        Me.Panel1.Controls.Add(Me.Label3)
-        Me.Panel1.Controls.Add(Me.Label1)
-        Me.Panel1.Controls.Add(Me.txtFriendly)
-        Me.Panel1.Controls.Add(Me.txtIPAddress)
-        Me.Panel1.Controls.Add(Me.btnAddIP)
-        Me.Panel1.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Panel1.Location = New System.Drawing.Point(0, 49)
-        Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(1120, 59)
-        Me.Panel1.TabIndex = 15
-        '
-        'chkAutosave
-        '
-        Me.chkAutosave.AutoSize = True
-        Me.chkAutosave.Enabled = False
-        Me.chkAutosave.Location = New System.Drawing.Point(662, 10)
-        Me.chkAutosave.Name = "chkAutosave"
-        Me.chkAutosave.Size = New System.Drawing.Size(71, 17)
-        Me.chkAutosave.TabIndex = 14
-        Me.chkAutosave.Text = "Autosave"
-        Me.chkAutosave.UseVisualStyleBackColor = True
-        '
-        'Label4
-        '
-        Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(542, 10)
-        Me.Label4.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(92, 13)
-        Me.Label4.TabIndex = 13
-        Me.Label4.Text = "Current IP List File"
-        '
-        'txtFile
-        '
-        Me.txtFile.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtFile.Location = New System.Drawing.Point(540, 28)
-        Me.txtFile.Margin = New System.Windows.Forms.Padding(1)
-        Me.txtFile.Name = "txtFile"
-        Me.txtFile.ReadOnly = True
-        Me.txtFile.Size = New System.Drawing.Size(571, 20)
-        Me.txtFile.TabIndex = 12
-        Me.txtFile.Text = "PingList.csv"
-        '
-        'btnAddIP
-        '
-        Me.btnAddIP.Image = Global.Ping.My.Resources.Resources.add1
-        Me.btnAddIP.Location = New System.Drawing.Point(245, 9)
-        Me.btnAddIP.Margin = New System.Windows.Forms.Padding(1)
-        Me.btnAddIP.Name = "btnAddIP"
-        Me.btnAddIP.Size = New System.Drawing.Size(35, 33)
-        Me.btnAddIP.TabIndex = 2
-        Me.btnAddIP.UseVisualStyleBackColor = True
-        '
         'btnPlayStop
         '
         Me.btnPlayStop.Location = New System.Drawing.Point(104, 33)
@@ -402,7 +301,7 @@ Partial Class frmMain
         'StatusStrip1
         '
         Me.StatusStrip1.ImageScalingSize = New System.Drawing.Size(36, 36)
-        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.lblStatus})
+        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.lblStatus, Me.LblCurrentFile})
         Me.StatusStrip1.Location = New System.Drawing.Point(0, 446)
         Me.StatusStrip1.Name = "StatusStrip1"
         Me.StatusStrip1.Padding = New System.Windows.Forms.Padding(1, 0, 12, 0)
@@ -419,33 +318,33 @@ Partial Class frmMain
         'Chart1
         '
         Me.Chart1.BorderSkin.BorderColor = System.Drawing.Color.DarkGray
-        ChartArea2.AxisX.LineColor = System.Drawing.Color.Gray
-        ChartArea2.AxisX.MajorGrid.LineColor = System.Drawing.Color.Silver
-        ChartArea2.AxisX.MinorGrid.LineColor = System.Drawing.Color.Silver
-        ChartArea2.AxisY.LineColor = System.Drawing.Color.Gray
-        ChartArea2.AxisY.MajorGrid.LineColor = System.Drawing.Color.Silver
-        ChartArea2.AxisY.Minimum = 0R
-        ChartArea2.AxisY.Title = "Milliseconds"
-        ChartArea2.BorderColor = System.Drawing.Color.Silver
-        ChartArea2.Name = "ChartArea1"
-        Me.Chart1.ChartAreas.Add(ChartArea2)
+        ChartArea1.AxisX.LineColor = System.Drawing.Color.Gray
+        ChartArea1.AxisX.MajorGrid.LineColor = System.Drawing.Color.Silver
+        ChartArea1.AxisX.MinorGrid.LineColor = System.Drawing.Color.Silver
+        ChartArea1.AxisY.LineColor = System.Drawing.Color.Gray
+        ChartArea1.AxisY.MajorGrid.LineColor = System.Drawing.Color.Silver
+        ChartArea1.AxisY.Minimum = 0R
+        ChartArea1.AxisY.Title = "Milliseconds"
+        ChartArea1.BorderColor = System.Drawing.Color.Silver
+        ChartArea1.Name = "ChartArea1"
+        Me.Chart1.ChartAreas.Add(ChartArea1)
         Me.Chart1.Dock = System.Windows.Forms.DockStyle.Fill
-        Legend2.DockedToChartArea = "ChartArea1"
-        Legend2.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom
-        Legend2.IsDockedInsideChartArea = False
-        Legend2.Name = "Legend1"
-        Me.Chart1.Legends.Add(Legend2)
+        Legend1.DockedToChartArea = "ChartArea1"
+        Legend1.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom
+        Legend1.IsDockedInsideChartArea = False
+        Legend1.Name = "Legend1"
+        Me.Chart1.Legends.Add(Legend1)
         Me.Chart1.Location = New System.Drawing.Point(0, 0)
         Me.Chart1.Margin = New System.Windows.Forms.Padding(1)
         Me.Chart1.Name = "Chart1"
-        Me.Chart1.Size = New System.Drawing.Size(384, 306)
+        Me.Chart1.Size = New System.Drawing.Size(384, 365)
         Me.Chart1.TabIndex = 17
         Me.Chart1.Text = "Chart1"
         '
         'btnResetGraph
         '
         Me.btnResetGraph.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnResetGraph.Location = New System.Drawing.Point(331, 281)
+        Me.btnResetGraph.Location = New System.Drawing.Point(331, 340)
         Me.btnResetGraph.Margin = New System.Windows.Forms.Padding(1)
         Me.btnResetGraph.Name = "btnResetGraph"
         Me.btnResetGraph.Size = New System.Drawing.Size(52, 24)
@@ -461,7 +360,7 @@ Partial Class frmMain
         Me.pnlChart.Location = New System.Drawing.Point(725, 3)
         Me.pnlChart.Margin = New System.Windows.Forms.Padding(1)
         Me.pnlChart.Name = "pnlChart"
-        Me.pnlChart.Size = New System.Drawing.Size(384, 306)
+        Me.pnlChart.Size = New System.Drawing.Size(384, 365)
         Me.pnlChart.TabIndex = 20
         Me.pnlChart.Visible = False
         '
@@ -471,10 +370,10 @@ Partial Class frmMain
         Me.TabMain.Controls.Add(Me.TabUnifiDevices)
         Me.TabMain.Controls.Add(Me.TabUnifiClients)
         Me.TabMain.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TabMain.Location = New System.Drawing.Point(0, 108)
+        Me.TabMain.Location = New System.Drawing.Point(0, 49)
         Me.TabMain.Name = "TabMain"
         Me.TabMain.SelectedIndex = 0
-        Me.TabMain.Size = New System.Drawing.Size(1120, 338)
+        Me.TabMain.Size = New System.Drawing.Size(1120, 397)
         Me.TabMain.TabIndex = 21
         '
         'TabPage1
@@ -485,7 +384,7 @@ Partial Class frmMain
         Me.TabPage1.Location = New System.Drawing.Point(4, 22)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(1112, 312)
+        Me.TabPage1.Size = New System.Drawing.Size(1112, 371)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Ping"
         Me.TabPage1.UseVisualStyleBackColor = True
@@ -497,19 +396,19 @@ Partial Class frmMain
         Me.lstIP.Dock = System.Windows.Forms.DockStyle.Fill
         Me.lstIP.FullRowSelect = True
         Me.lstIP.GridLines = True
-        ListViewGroup4.Header = "Switch"
-        ListViewGroup4.Name = "ListViewGroup1"
-        ListViewGroup5.Header = "Gateway"
-        ListViewGroup5.Name = "ListViewGroup2"
-        ListViewGroup6.Header = "Access Point"
-        ListViewGroup6.Name = "ListViewGroup3"
-        Me.lstIP.Groups.AddRange(New System.Windows.Forms.ListViewGroup() {ListViewGroup4, ListViewGroup5, ListViewGroup6})
+        ListViewGroup1.Header = "Switch"
+        ListViewGroup1.Name = "ListViewGroup1"
+        ListViewGroup2.Header = "Gateway"
+        ListViewGroup2.Name = "ListViewGroup2"
+        ListViewGroup3.Header = "Access Point"
+        ListViewGroup3.Name = "ListViewGroup3"
+        Me.lstIP.Groups.AddRange(New System.Windows.Forms.ListViewGroup() {ListViewGroup1, ListViewGroup2, ListViewGroup3})
         Me.lstIP.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable
         Me.lstIP.HideSelection = False
         Me.lstIP.Location = New System.Drawing.Point(3, 3)
         Me.lstIP.Margin = New System.Windows.Forms.Padding(1)
         Me.lstIP.Name = "lstIP"
-        Me.lstIP.Size = New System.Drawing.Size(712, 306)
+        Me.lstIP.Size = New System.Drawing.Size(712, 365)
         Me.lstIP.TabIndex = 4
         Me.lstIP.UseCompatibleStateImageBehavior = False
         Me.lstIP.View = System.Windows.Forms.View.Details
@@ -577,7 +476,7 @@ Partial Class frmMain
         Me.Splitter1.Location = New System.Drawing.Point(715, 3)
         Me.Splitter1.Margin = New System.Windows.Forms.Padding(1)
         Me.Splitter1.Name = "Splitter1"
-        Me.Splitter1.Size = New System.Drawing.Size(10, 306)
+        Me.Splitter1.Size = New System.Drawing.Size(10, 365)
         Me.Splitter1.TabIndex = 21
         Me.Splitter1.TabStop = False
         '
@@ -791,7 +690,7 @@ Partial Class frmMain
         '
         'ToolStrip1
         '
-        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ResetIPListToolStripButton, Me.OpenToolStripButton, Me.SaveToolStripButton, Me.toolStripSeparator, Me.PlayStopbtn, Me.RefreshUNIFITool})
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ResetIPListToolStripButton, Me.OpenToolStripButton, Me.SaveToolStripButton, Me.toolStripSeparator, Me.ToolStripButton2, Me.PlayStopbtn, Me.btnShowChart, Me.ToolStripSeparator2, Me.RefreshUNIFITool, Me.ToolStripSeparator3, Me.chkAutosave})
         Me.ToolStrip1.Location = New System.Drawing.Point(0, 24)
         Me.ToolStrip1.Name = "ToolStrip1"
         Me.ToolStrip1.Size = New System.Drawing.Size(1120, 25)
@@ -831,6 +730,15 @@ Partial Class frmMain
         Me.toolStripSeparator.Name = "toolStripSeparator"
         Me.toolStripSeparator.Size = New System.Drawing.Size(6, 25)
         '
+        'ToolStripButton2
+        '
+        Me.ToolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButton2.Image = Global.Ping.My.Resources.Resources.add1
+        Me.ToolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripButton2.Name = "ToolStripButton2"
+        Me.ToolStripButton2.Size = New System.Drawing.Size(23, 22)
+        Me.ToolStripButton2.Text = "Add New IP Adress"
+        '
         'PlayStopbtn
         '
         Me.PlayStopbtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
@@ -839,6 +747,20 @@ Partial Class frmMain
         Me.PlayStopbtn.Name = "PlayStopbtn"
         Me.PlayStopbtn.Size = New System.Drawing.Size(23, 22)
         Me.PlayStopbtn.Text = "Play"
+        '
+        'btnShowChart
+        '
+        Me.btnShowChart.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.btnShowChart.Image = CType(resources.GetObject("btnShowChart.Image"), System.Drawing.Image)
+        Me.btnShowChart.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.btnShowChart.Name = "btnShowChart"
+        Me.btnShowChart.Size = New System.Drawing.Size(23, 22)
+        Me.btnShowChart.Text = "Show Chart"
+        '
+        'ToolStripSeparator2
+        '
+        Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
+        Me.ToolStripSeparator2.Size = New System.Drawing.Size(6, 25)
         '
         'RefreshUNIFITool
         '
@@ -850,6 +772,22 @@ Partial Class frmMain
         Me.RefreshUNIFITool.Text = "&Refresh Unifi"
         Me.RefreshUNIFITool.ToolTipText = "Refresh Unifi Clients and Devices"
         '
+        'ToolStripSeparator3
+        '
+        Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
+        Me.ToolStripSeparator3.Size = New System.Drawing.Size(6, 25)
+        '
+        'chkAutosave
+        '
+        Me.chkAutosave.CheckOnClick = True
+        Me.chkAutosave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.chkAutosave.Enabled = False
+        Me.chkAutosave.Image = CType(resources.GetObject("chkAutosave.Image"), System.Drawing.Image)
+        Me.chkAutosave.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.chkAutosave.Name = "chkAutosave"
+        Me.chkAutosave.Size = New System.Drawing.Size(60, 22)
+        Me.chkAutosave.Text = "Autosave"
+        '
         'imgListPlayStop
         '
         Me.imgListPlayStop.ImageStream = CType(resources.GetObject("imgListPlayStop.ImageStream"), System.Windows.Forms.ImageListStreamer)
@@ -857,14 +795,19 @@ Partial Class frmMain
         Me.imgListPlayStop.Images.SetKeyName(0, "Play")
         Me.imgListPlayStop.Images.SetKeyName(1, "Stop")
         '
+        'LblCurrentFile
+        '
+        Me.LblCurrentFile.Name = "LblCurrentFile"
+        Me.LblCurrentFile.Size = New System.Drawing.Size(1068, 17)
+        Me.LblCurrentFile.Spring = True
+        Me.LblCurrentFile.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
         'frmMain
         '
-        Me.AcceptButton = Me.btnAddIP
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1120, 468)
         Me.Controls.Add(Me.TabMain)
-        Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.ToolStrip1)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.StatusStrip1)
@@ -878,8 +821,6 @@ Partial Class frmMain
         CType(Me.NumInterval, System.ComponentModel.ISupportInitialize).EndInit()
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
-        Me.Panel1.ResumeLayout(False)
-        Me.Panel1.PerformLayout()
         Me.StatusStrip1.ResumeLayout(False)
         Me.StatusStrip1.PerformLayout()
         CType(Me.Chart1, System.ComponentModel.ISupportInitialize).EndInit()
@@ -901,12 +842,6 @@ Partial Class frmMain
     End Sub
 
     Friend WithEvents PrintPreviewDialog1 As PrintPreviewDialog
-    Friend WithEvents Label1 As Label
-    Friend WithEvents Label3 As Label
-
-    Friend WithEvents txtIPAddress As TextBox
-    Friend WithEvents txtFriendly As TextBox
-    Friend WithEvents btnAddIP As Button
     Friend WithEvents lstIP As ListViewX
     Friend WithEvents ColumnHeader1 As ColumnHeader
     Friend WithEvents ColumnHeader2 As ColumnHeader
@@ -928,10 +863,6 @@ Partial Class frmMain
     Friend WithEvents ExitToolStripMenuItem1 As ToolStripMenuItem
     Friend WithEvents EditToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents RemoveSelectedToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents Panel1 As Panel
-    Friend WithEvents Label4 As Label
-    Friend WithEvents txtFile As TextBox
-    Friend WithEvents chkAutosave As CheckBox
     Friend WithEvents StatusStrip1 As StatusStrip
     Friend WithEvents lblStatus As ToolStripStatusLabel
     Friend WithEvents EditGroupingToolStripMenuItem As ToolStripMenuItem
@@ -990,4 +921,10 @@ Partial Class frmMain
     Friend WithEvents PlayStopbtn As ToolStripButton
     Friend WithEvents RefreshUNIFITool As ToolStripButton
     Friend WithEvents imgListPlayStop As ImageList
+    Friend WithEvents btnShowChart As ToolStripButton
+    Friend WithEvents ToolStripSeparator2 As ToolStripSeparator
+    Friend WithEvents ToolStripSeparator3 As ToolStripSeparator
+    Friend WithEvents chkAutosave As ToolStripButton
+    Friend WithEvents ToolStripButton2 As ToolStripButton
+    Friend WithEvents LblCurrentFile As ToolStripStatusLabel
 End Class

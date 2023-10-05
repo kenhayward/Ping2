@@ -260,6 +260,7 @@ Partial Class frmUnifi
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "frmUnifi"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Setup Unifi Controller"
         Me.pnlTest.ResumeLayout(False)
         Me.TabPage2.ResumeLayout(False)
