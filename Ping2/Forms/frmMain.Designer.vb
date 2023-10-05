@@ -27,11 +27,11 @@ Partial Class frmMain
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMain))
-        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim ListViewGroup1 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Switch", System.Windows.Forms.HorizontalAlignment.Left)
-        Dim ListViewGroup2 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Gateway", System.Windows.Forms.HorizontalAlignment.Left)
-        Dim ListViewGroup3 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Access Point", System.Windows.Forms.HorizontalAlignment.Left)
+        Dim ChartArea2 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend2 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim ListViewGroup4 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Switch", System.Windows.Forms.HorizontalAlignment.Left)
+        Dim ListViewGroup5 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Gateway", System.Windows.Forms.HorizontalAlignment.Left)
+        Dim ListViewGroup6 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Access Point", System.Windows.Forms.HorizontalAlignment.Left)
         Me.PrintPreviewDialog1 = New System.Windows.Forms.PrintPreviewDialog()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.txtIPAddress = New System.Windows.Forms.TextBox()
@@ -120,6 +120,7 @@ Partial Class frmMain
         Me.toolStripSeparator = New System.Windows.Forms.ToolStripSeparator()
         Me.PlayStopbtn = New System.Windows.Forms.ToolStripButton()
         Me.RefreshUNIFITool = New System.Windows.Forms.ToolStripButton()
+        Me.imgListPlayStop = New System.Windows.Forms.ImageList(Me.components)
         Me.lstContextMenu.SuspendLayout()
         CType(Me.NumInterval, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MenuStrip1.SuspendLayout()
@@ -396,7 +397,6 @@ Partial Class frmMain
         Me.btnPlayStop.Name = "btnPlayStop"
         Me.btnPlayStop.Size = New System.Drawing.Size(75, 23)
         Me.btnPlayStop.TabIndex = 16
-        Me.btnPlayStop.Text = "Play"
         Me.btnPlayStop.UseVisualStyleBackColor = True
         '
         'StatusStrip1
@@ -419,22 +419,22 @@ Partial Class frmMain
         'Chart1
         '
         Me.Chart1.BorderSkin.BorderColor = System.Drawing.Color.DarkGray
-        ChartArea1.AxisX.LineColor = System.Drawing.Color.Gray
-        ChartArea1.AxisX.MajorGrid.LineColor = System.Drawing.Color.Silver
-        ChartArea1.AxisX.MinorGrid.LineColor = System.Drawing.Color.Silver
-        ChartArea1.AxisY.LineColor = System.Drawing.Color.Gray
-        ChartArea1.AxisY.MajorGrid.LineColor = System.Drawing.Color.Silver
-        ChartArea1.AxisY.Minimum = 0R
-        ChartArea1.AxisY.Title = "Milliseconds"
-        ChartArea1.BorderColor = System.Drawing.Color.Silver
-        ChartArea1.Name = "ChartArea1"
-        Me.Chart1.ChartAreas.Add(ChartArea1)
+        ChartArea2.AxisX.LineColor = System.Drawing.Color.Gray
+        ChartArea2.AxisX.MajorGrid.LineColor = System.Drawing.Color.Silver
+        ChartArea2.AxisX.MinorGrid.LineColor = System.Drawing.Color.Silver
+        ChartArea2.AxisY.LineColor = System.Drawing.Color.Gray
+        ChartArea2.AxisY.MajorGrid.LineColor = System.Drawing.Color.Silver
+        ChartArea2.AxisY.Minimum = 0R
+        ChartArea2.AxisY.Title = "Milliseconds"
+        ChartArea2.BorderColor = System.Drawing.Color.Silver
+        ChartArea2.Name = "ChartArea1"
+        Me.Chart1.ChartAreas.Add(ChartArea2)
         Me.Chart1.Dock = System.Windows.Forms.DockStyle.Fill
-        Legend1.DockedToChartArea = "ChartArea1"
-        Legend1.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom
-        Legend1.IsDockedInsideChartArea = False
-        Legend1.Name = "Legend1"
-        Me.Chart1.Legends.Add(Legend1)
+        Legend2.DockedToChartArea = "ChartArea1"
+        Legend2.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom
+        Legend2.IsDockedInsideChartArea = False
+        Legend2.Name = "Legend1"
+        Me.Chart1.Legends.Add(Legend2)
         Me.Chart1.Location = New System.Drawing.Point(0, 0)
         Me.Chart1.Margin = New System.Windows.Forms.Padding(1)
         Me.Chart1.Name = "Chart1"
@@ -497,13 +497,13 @@ Partial Class frmMain
         Me.lstIP.Dock = System.Windows.Forms.DockStyle.Fill
         Me.lstIP.FullRowSelect = True
         Me.lstIP.GridLines = True
-        ListViewGroup1.Header = "Switch"
-        ListViewGroup1.Name = "ListViewGroup1"
-        ListViewGroup2.Header = "Gateway"
-        ListViewGroup2.Name = "ListViewGroup2"
-        ListViewGroup3.Header = "Access Point"
-        ListViewGroup3.Name = "ListViewGroup3"
-        Me.lstIP.Groups.AddRange(New System.Windows.Forms.ListViewGroup() {ListViewGroup1, ListViewGroup2, ListViewGroup3})
+        ListViewGroup4.Header = "Switch"
+        ListViewGroup4.Name = "ListViewGroup1"
+        ListViewGroup5.Header = "Gateway"
+        ListViewGroup5.Name = "ListViewGroup2"
+        ListViewGroup6.Header = "Access Point"
+        ListViewGroup6.Name = "ListViewGroup3"
+        Me.lstIP.Groups.AddRange(New System.Windows.Forms.ListViewGroup() {ListViewGroup4, ListViewGroup5, ListViewGroup6})
         Me.lstIP.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable
         Me.lstIP.HideSelection = False
         Me.lstIP.Location = New System.Drawing.Point(3, 3)
@@ -834,11 +834,11 @@ Partial Class frmMain
         'PlayStopbtn
         '
         Me.PlayStopbtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.PlayStopbtn.Image = CType(resources.GetObject("PlayStopbtn.Image"), System.Drawing.Image)
+        Me.PlayStopbtn.Image = Global.Ping.My.Resources.Resources.Play
         Me.PlayStopbtn.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.PlayStopbtn.Name = "PlayStopbtn"
         Me.PlayStopbtn.Size = New System.Drawing.Size(23, 22)
-        Me.PlayStopbtn.Text = "C&ut"
+        Me.PlayStopbtn.Text = "Play"
         '
         'RefreshUNIFITool
         '
@@ -849,6 +849,13 @@ Partial Class frmMain
         Me.RefreshUNIFITool.Size = New System.Drawing.Size(23, 22)
         Me.RefreshUNIFITool.Text = "&Refresh Unifi"
         Me.RefreshUNIFITool.ToolTipText = "Refresh Unifi Clients and Devices"
+        '
+        'imgListPlayStop
+        '
+        Me.imgListPlayStop.ImageStream = CType(resources.GetObject("imgListPlayStop.ImageStream"), System.Windows.Forms.ImageListStreamer)
+        Me.imgListPlayStop.TransparentColor = System.Drawing.Color.Transparent
+        Me.imgListPlayStop.Images.SetKeyName(0, "Play")
+        Me.imgListPlayStop.Images.SetKeyName(1, "Stop")
         '
         'frmMain
         '
@@ -982,4 +989,5 @@ Partial Class frmMain
     Friend WithEvents toolStripSeparator As ToolStripSeparator
     Friend WithEvents PlayStopbtn As ToolStripButton
     Friend WithEvents RefreshUNIFITool As ToolStripButton
+    Friend WithEvents imgListPlayStop As ImageList
 End Class

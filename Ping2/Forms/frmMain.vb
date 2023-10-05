@@ -14,7 +14,8 @@ Public Class frmMain
     Private RefreshInterval As Integer = 5 ' (Seconds) how long to wait between Ping cycles
     Private WithEvents RefreshWorker As BackgroundWorker ' The Ping Worker
     Private PingStep As Long  ' How many cycles have we run in this session - used for Graph x Axis
-
+    Private Const imgPlay = 0  ' Imagelist entry for play button
+    Private Const imgStop = 1  ' Imagelist entry for stop button
 #End Region
 #Region "Ping ListView Support Functions"
     Private Function CreateItemForListView(Pingit As PingIP)
@@ -108,21 +109,40 @@ Public Class frmMain
     ''' </summary>
     Private Sub StartWorker()
         If PingList.Count = 0 Then
-            btnPlayStop.Text = "Play"
+            SetbtnToPlay()
             Exit Sub
         End If
         If RefreshWorker Is Nothing Then
             RefreshWorker = New BackgroundWorker With {.WorkerReportsProgress = True, .WorkerSupportsCancellation = True}
             RefreshWorker.RunWorkerAsync()
-            btnPlayStop.Text = "Stop"
+            SetbtnToStop()
         Else
-            If btnPlayStop.Text = "Play" Then
+            If isBtnPlay() Then
                 RefreshWorker.RunWorkerAsync()
+                SetbtnToStop()
             Else
                 RefreshNow = True
             End If
         End If
     End Sub
+    Private Sub SetbtnToPlay()
+        PlayStopbtn.Image = My.Resources.Play
+        PlayStopbtn.Text = "Play"
+        PlayStopbtn.ToolTipText = "Start a new active ping session"
+    End Sub
+    Private Sub SetbtnToStop()
+        PlayStopbtn.Image = My.Resources._Stop
+        PlayStopbtn.Text = "Stop"
+        PlayStopbtn.ToolTipText = "Stop the active ping session"
+    End Sub
+    Private Function isBtnPlay() As Boolean
+        If PlayStopbtn.Text = "Play" Then
+            Return True
+        Else
+            Return False
+        End If
+    End Function
+
     Private Sub RefreshWorker_ProgressChanged(sender As Object, e As ProgressChangedEventArgs) Handles RefreshWorker.ProgressChanged
         If TypeOf e.UserState Is String Then
             UpdateStatus(e.UserState.ToString)
@@ -132,8 +152,8 @@ Public Class frmMain
         End If
     End Sub
     Private Sub RefreshWorker_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles RefreshWorker.RunWorkerCompleted
-        Me.btnPlayStop.Text = "Play"
-        Me.btnPlayStop.Enabled = True
+        SetbtnToPlay()
+        Me.PlayStopbtn.Enabled = True
     End Sub
     Private Sub RefreshWorker_DoWork(sender As Object, e As DoWorkEventArgs) Handles RefreshWorker.DoWork
         Do
@@ -373,6 +393,7 @@ Public Class frmMain
         End If
     End Sub
     Private Sub Form1_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
+        SetbtnToPlay()
         Control.CheckForIllegalCrossThreadCalls = False
         SetStyle(ControlStyles.OptimizedDoubleBuffer, True)
         SetStyle(ControlStyles.AllPaintingInWmPaint, True)
@@ -388,7 +409,7 @@ Public Class frmMain
         lstIP.Columns(7).Width = 77
         lstIP.Columns(8).Width = 77
         lstIP.Columns(9).Width = 77
-        LoadUnifi()
+        LoadUNIFI()
     End Sub
 
     Private Sub MnuUnifi_Click(sender As Object, e As EventArgs) Handles mnuUnifi.Click
@@ -597,7 +618,7 @@ Public Class frmMain
         If RefreshWorker IsNot Nothing Then
             Me.RefreshWorker.CancelAsync()
         End If
-        btnPlayStop.Enabled = False
+        PlayStopbtn.Enabled = False
     End Sub
     Private Sub ResetIPListToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ResetIPListToolStripMenuItem.Click, ResetIPListToolStripButton.Click
         ' Clear List, Chart and IP List
@@ -615,21 +636,21 @@ Public Class frmMain
 
     Private Sub btnPlayStop_Click(sender As Object, e As EventArgs) Handles btnPlayStop.Click, PlayStopbtn.Click
         If RefreshWorker Is Nothing Then
-            btnPlayStop.Text = "Play"
+            SetbtnToPlay()
             Exit Sub
         End If
         If RefreshWorker.IsBusy Then
             Me.Cursor = Cursors.WaitCursor
-            btnPlayStop.Enabled = False
+            PlayStopbtn.Enabled = False
             StopPingWorker()
-            btnPlayStop.Text = "Play"
+            SetbtnToPlay()
             Me.Cursor = Cursors.Default
         Else
-            btnPlayStop.Enabled = False
+            PlayStopbtn.Enabled = False
             Me.Cursor = Cursors.WaitCursor
             StartWorker()
-            btnPlayStop.Text = "Stop"
-            btnPlayStop.Enabled = True
+            SetbtnToStop()
+            PlayStopbtn.Enabled = True
             Me.Cursor = Cursors.Default
         End If
     End Sub
