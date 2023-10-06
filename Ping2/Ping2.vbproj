@@ -117,6 +117,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\NetworkDiscovery.vb" />
     <Compile Include="Classes\UNIFIClient.vb" />
     <Compile Include="Classes\UNIFIDeviceType.vb" />
     <Compile Include="Forms\frmAddIP.Designer.vb">

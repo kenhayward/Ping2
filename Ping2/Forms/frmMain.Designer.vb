@@ -27,11 +27,11 @@ Partial Class frmMain
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMain))
-        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim ListViewGroup1 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Switch", System.Windows.Forms.HorizontalAlignment.Left)
-        Dim ListViewGroup2 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Gateway", System.Windows.Forms.HorizontalAlignment.Left)
-        Dim ListViewGroup3 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Access Point", System.Windows.Forms.HorizontalAlignment.Left)
+        Dim ChartArea2 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend2 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim ListViewGroup4 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Switch", System.Windows.Forms.HorizontalAlignment.Left)
+        Dim ListViewGroup5 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Gateway", System.Windows.Forms.HorizontalAlignment.Left)
+        Dim ListViewGroup6 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Access Point", System.Windows.Forms.HorizontalAlignment.Left)
         Me.PrintPreviewDialog1 = New System.Windows.Forms.PrintPreviewDialog()
         Me.lstContextMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.mnuGroups = New System.Windows.Forms.ToolStripMenuItem()
@@ -120,6 +120,8 @@ Partial Class frmMain
         Me.btnShowChart = New System.Windows.Forms.ToolStripButton()
         Me.mnuAddToChart = New System.Windows.Forms.ToolStripButton()
         Me.imgListPlayStop = New System.Windows.Forms.ImageList(Me.components)
+        Me.ToolStripSeparator5 = New System.Windows.Forms.ToolStripSeparator()
+        Me.NetworkDiscoveryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.lstContextMenu.SuspendLayout()
         CType(Me.NumInterval, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MenuStrip1.SuspendLayout()
@@ -248,7 +250,7 @@ Partial Class frmMain
         '
         'EditToolStripMenuItem
         '
-        Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RemoveSelectedToolStripMenuItem, Me.EditGroupingToolStripMenuItem, Me.mnuUnifi})
+        Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RemoveSelectedToolStripMenuItem, Me.EditGroupingToolStripMenuItem, Me.mnuUnifi, Me.ToolStripSeparator5, Me.NetworkDiscoveryToolStripMenuItem})
         Me.EditToolStripMenuItem.Name = "EditToolStripMenuItem"
         Me.EditToolStripMenuItem.Size = New System.Drawing.Size(39, 20)
         Me.EditToolStripMenuItem.Text = "&Edit"
@@ -327,22 +329,22 @@ Partial Class frmMain
         'Chart1
         '
         Me.Chart1.BorderSkin.BorderColor = System.Drawing.Color.DarkGray
-        ChartArea1.AxisX.LineColor = System.Drawing.Color.Gray
-        ChartArea1.AxisX.MajorGrid.LineColor = System.Drawing.Color.Silver
-        ChartArea1.AxisX.MinorGrid.LineColor = System.Drawing.Color.Silver
-        ChartArea1.AxisY.LineColor = System.Drawing.Color.Gray
-        ChartArea1.AxisY.MajorGrid.LineColor = System.Drawing.Color.Silver
-        ChartArea1.AxisY.Minimum = 0R
-        ChartArea1.AxisY.Title = "Milliseconds"
-        ChartArea1.BorderColor = System.Drawing.Color.Silver
-        ChartArea1.Name = "ChartArea1"
-        Me.Chart1.ChartAreas.Add(ChartArea1)
+        ChartArea2.AxisX.LineColor = System.Drawing.Color.Gray
+        ChartArea2.AxisX.MajorGrid.LineColor = System.Drawing.Color.Silver
+        ChartArea2.AxisX.MinorGrid.LineColor = System.Drawing.Color.Silver
+        ChartArea2.AxisY.LineColor = System.Drawing.Color.Gray
+        ChartArea2.AxisY.MajorGrid.LineColor = System.Drawing.Color.Silver
+        ChartArea2.AxisY.Minimum = 0R
+        ChartArea2.AxisY.Title = "Milliseconds"
+        ChartArea2.BorderColor = System.Drawing.Color.Silver
+        ChartArea2.Name = "ChartArea1"
+        Me.Chart1.ChartAreas.Add(ChartArea2)
         Me.Chart1.Dock = System.Windows.Forms.DockStyle.Fill
-        Legend1.DockedToChartArea = "ChartArea1"
-        Legend1.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom
-        Legend1.IsDockedInsideChartArea = False
-        Legend1.Name = "Legend1"
-        Me.Chart1.Legends.Add(Legend1)
+        Legend2.DockedToChartArea = "ChartArea1"
+        Legend2.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom
+        Legend2.IsDockedInsideChartArea = False
+        Legend2.Name = "Legend1"
+        Me.Chart1.Legends.Add(Legend2)
         Me.Chart1.Location = New System.Drawing.Point(0, 0)
         Me.Chart1.Margin = New System.Windows.Forms.Padding(1)
         Me.Chart1.Name = "Chart1"
@@ -405,13 +407,13 @@ Partial Class frmMain
         Me.lstIP.Dock = System.Windows.Forms.DockStyle.Fill
         Me.lstIP.FullRowSelect = True
         Me.lstIP.GridLines = True
-        ListViewGroup1.Header = "Switch"
-        ListViewGroup1.Name = "ListViewGroup1"
-        ListViewGroup2.Header = "Gateway"
-        ListViewGroup2.Name = "ListViewGroup2"
-        ListViewGroup3.Header = "Access Point"
-        ListViewGroup3.Name = "ListViewGroup3"
-        Me.lstIP.Groups.AddRange(New System.Windows.Forms.ListViewGroup() {ListViewGroup1, ListViewGroup2, ListViewGroup3})
+        ListViewGroup4.Header = "Switch"
+        ListViewGroup4.Name = "ListViewGroup1"
+        ListViewGroup5.Header = "Gateway"
+        ListViewGroup5.Name = "ListViewGroup2"
+        ListViewGroup6.Header = "Access Point"
+        ListViewGroup6.Name = "ListViewGroup3"
+        Me.lstIP.Groups.AddRange(New System.Windows.Forms.ListViewGroup() {ListViewGroup4, ListViewGroup5, ListViewGroup6})
         Me.lstIP.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable
         Me.lstIP.HideSelection = False
         Me.lstIP.Location = New System.Drawing.Point(3, 3)
@@ -817,6 +819,17 @@ Partial Class frmMain
         Me.imgListPlayStop.Images.SetKeyName(0, "Play")
         Me.imgListPlayStop.Images.SetKeyName(1, "Stop")
         '
+        'ToolStripSeparator5
+        '
+        Me.ToolStripSeparator5.Name = "ToolStripSeparator5"
+        Me.ToolStripSeparator5.Size = New System.Drawing.Size(197, 6)
+        '
+        'NetworkDiscoveryToolStripMenuItem
+        '
+        Me.NetworkDiscoveryToolStripMenuItem.Name = "NetworkDiscoveryToolStripMenuItem"
+        Me.NetworkDiscoveryToolStripMenuItem.Size = New System.Drawing.Size(200, 22)
+        Me.NetworkDiscoveryToolStripMenuItem.Text = "Network Discovery"
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -944,4 +957,6 @@ Partial Class frmMain
     Friend WithEvents mnuAddToChart As ToolStripButton
     Friend WithEvents SaveToolStripButton As ToolStripSplitButton
     Friend WithEvents chkAutosave As ToolStripMenuItem
+    Friend WithEvents ToolStripSeparator5 As ToolStripSeparator
+    Friend WithEvents NetworkDiscoveryToolStripMenuItem As ToolStripMenuItem
 End Class
