@@ -27,11 +27,11 @@ Partial Class frmMain
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMain))
-        Dim ChartArea2 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend2 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim ListViewGroup4 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Switch", System.Windows.Forms.HorizontalAlignment.Left)
-        Dim ListViewGroup5 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Gateway", System.Windows.Forms.HorizontalAlignment.Left)
-        Dim ListViewGroup6 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Access Point", System.Windows.Forms.HorizontalAlignment.Left)
+        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim ListViewGroup1 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Switch", System.Windows.Forms.HorizontalAlignment.Left)
+        Dim ListViewGroup2 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Gateway", System.Windows.Forms.HorizontalAlignment.Left)
+        Dim ListViewGroup3 As System.Windows.Forms.ListViewGroup = New System.Windows.Forms.ListViewGroup("Access Point", System.Windows.Forms.HorizontalAlignment.Left)
         Me.PrintPreviewDialog1 = New System.Windows.Forms.PrintPreviewDialog()
         Me.lstContextMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.mnuGroups = New System.Windows.Forms.ToolStripMenuItem()
@@ -51,6 +51,8 @@ Partial Class frmMain
         Me.RemoveSelectedToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EditGroupingToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuUnifi = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator5 = New System.Windows.Forms.ToolStripSeparator()
+        Me.NetworkDiscoveryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ViewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ShowChartToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.toolRefreshUNIFI = New System.Windows.Forms.ToolStripMenuItem()
@@ -63,17 +65,6 @@ Partial Class frmMain
         Me.pnlChart = New System.Windows.Forms.Panel()
         Me.TabMain = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
-        Me.lstIP = New Ping.ListViewX()
-        Me.ColumnHeader7 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader10 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader3 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader4 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader5 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader6 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader8 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader9 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.Splitter1 = New System.Windows.Forms.Splitter()
         Me.TabUnifiDevices = New System.Windows.Forms.TabPage()
         Me.lblDevicedetail = New System.Windows.Forms.TextBox()
@@ -93,15 +84,6 @@ Partial Class frmMain
         Me.TabUnifiClients = New System.Windows.Forms.TabPage()
         Me.lblFullDetails = New System.Windows.Forms.Label()
         Me.Splitter2 = New System.Windows.Forms.Splitter()
-        Me.lstClient = New Ping.ListViewX()
-        Me.ColumnHeader19 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader20 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader21 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader27 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader22 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader23 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader24 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
-        Me.ColumnHeader25 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ClientContextStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.mnuAddClientToPingList = New System.Windows.Forms.ToolStripMenuItem()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
@@ -116,12 +98,29 @@ Partial Class frmMain
         Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
         Me.RefreshUNIFITool = New System.Windows.Forms.ToolStripButton()
         Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
-        Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator()
         Me.btnShowChart = New System.Windows.Forms.ToolStripButton()
         Me.mnuAddToChart = New System.Windows.Forms.ToolStripButton()
         Me.imgListPlayStop = New System.Windows.Forms.ImageList(Me.components)
-        Me.ToolStripSeparator5 = New System.Windows.Forms.ToolStripSeparator()
-        Me.NetworkDiscoveryToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.lstIP = New Ping.ListViewX()
+        Me.ColumnHeader7 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader10 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader3 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader4 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader5 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader6 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader8 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader9 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.lstClient = New Ping.ListViewX()
+        Me.ColumnHeader19 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader20 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader21 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader27 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader22 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader23 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader24 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader25 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.lstContextMenu.SuspendLayout()
         CType(Me.NumInterval, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MenuStrip1.SuspendLayout()
@@ -274,6 +273,17 @@ Partial Class frmMain
         Me.mnuUnifi.Size = New System.Drawing.Size(200, 22)
         Me.mnuUnifi.Text = "Unifi Controller Settings"
         '
+        'ToolStripSeparator5
+        '
+        Me.ToolStripSeparator5.Name = "ToolStripSeparator5"
+        Me.ToolStripSeparator5.Size = New System.Drawing.Size(197, 6)
+        '
+        'NetworkDiscoveryToolStripMenuItem
+        '
+        Me.NetworkDiscoveryToolStripMenuItem.Name = "NetworkDiscoveryToolStripMenuItem"
+        Me.NetworkDiscoveryToolStripMenuItem.Size = New System.Drawing.Size(200, 22)
+        Me.NetworkDiscoveryToolStripMenuItem.Text = "Network Discovery"
+        '
         'ViewToolStripMenuItem
         '
         Me.ViewToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowChartToolStripMenuItem, Me.toolRefreshUNIFI})
@@ -329,22 +339,22 @@ Partial Class frmMain
         'Chart1
         '
         Me.Chart1.BorderSkin.BorderColor = System.Drawing.Color.DarkGray
-        ChartArea2.AxisX.LineColor = System.Drawing.Color.Gray
-        ChartArea2.AxisX.MajorGrid.LineColor = System.Drawing.Color.Silver
-        ChartArea2.AxisX.MinorGrid.LineColor = System.Drawing.Color.Silver
-        ChartArea2.AxisY.LineColor = System.Drawing.Color.Gray
-        ChartArea2.AxisY.MajorGrid.LineColor = System.Drawing.Color.Silver
-        ChartArea2.AxisY.Minimum = 0R
-        ChartArea2.AxisY.Title = "Milliseconds"
-        ChartArea2.BorderColor = System.Drawing.Color.Silver
-        ChartArea2.Name = "ChartArea1"
-        Me.Chart1.ChartAreas.Add(ChartArea2)
+        ChartArea1.AxisX.LineColor = System.Drawing.Color.Gray
+        ChartArea1.AxisX.MajorGrid.LineColor = System.Drawing.Color.Silver
+        ChartArea1.AxisX.MinorGrid.LineColor = System.Drawing.Color.Silver
+        ChartArea1.AxisY.LineColor = System.Drawing.Color.Gray
+        ChartArea1.AxisY.MajorGrid.LineColor = System.Drawing.Color.Silver
+        ChartArea1.AxisY.Minimum = 0R
+        ChartArea1.AxisY.Title = "Milliseconds"
+        ChartArea1.BorderColor = System.Drawing.Color.Silver
+        ChartArea1.Name = "ChartArea1"
+        Me.Chart1.ChartAreas.Add(ChartArea1)
         Me.Chart1.Dock = System.Windows.Forms.DockStyle.Fill
-        Legend2.DockedToChartArea = "ChartArea1"
-        Legend2.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom
-        Legend2.IsDockedInsideChartArea = False
-        Legend2.Name = "Legend1"
-        Me.Chart1.Legends.Add(Legend2)
+        Legend1.DockedToChartArea = "ChartArea1"
+        Legend1.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Bottom
+        Legend1.IsDockedInsideChartArea = False
+        Legend1.Name = "Legend1"
+        Me.Chart1.Legends.Add(Legend1)
         Me.Chart1.Location = New System.Drawing.Point(0, 0)
         Me.Chart1.Margin = New System.Windows.Forms.Padding(1)
         Me.Chart1.Name = "Chart1"
@@ -399,86 +409,6 @@ Partial Class frmMain
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Ping"
         Me.TabPage1.UseVisualStyleBackColor = True
-        '
-        'lstIP
-        '
-        Me.lstIP.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader7, Me.ColumnHeader10, Me.ColumnHeader1, Me.ColumnHeader2, Me.ColumnHeader3, Me.ColumnHeader4, Me.ColumnHeader5, Me.ColumnHeader6, Me.ColumnHeader8, Me.ColumnHeader9})
-        Me.lstIP.ContextMenuStrip = Me.lstContextMenu
-        Me.lstIP.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.lstIP.FullRowSelect = True
-        Me.lstIP.GridLines = True
-        ListViewGroup4.Header = "Switch"
-        ListViewGroup4.Name = "ListViewGroup1"
-        ListViewGroup5.Header = "Gateway"
-        ListViewGroup5.Name = "ListViewGroup2"
-        ListViewGroup6.Header = "Access Point"
-        ListViewGroup6.Name = "ListViewGroup3"
-        Me.lstIP.Groups.AddRange(New System.Windows.Forms.ListViewGroup() {ListViewGroup4, ListViewGroup5, ListViewGroup6})
-        Me.lstIP.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable
-        Me.lstIP.HideSelection = False
-        Me.lstIP.Location = New System.Drawing.Point(3, 3)
-        Me.lstIP.Margin = New System.Windows.Forms.Padding(1)
-        Me.lstIP.Name = "lstIP"
-        Me.lstIP.Size = New System.Drawing.Size(712, 365)
-        Me.lstIP.TabIndex = 4
-        Me.lstIP.UseCompatibleStateImageBehavior = False
-        Me.lstIP.View = System.Windows.Forms.View.Details
-        '
-        'ColumnHeader7
-        '
-        Me.ColumnHeader7.Text = "Name"
-        Me.ColumnHeader7.Width = 200
-        '
-        'ColumnHeader10
-        '
-        Me.ColumnHeader10.Text = "Requested"
-        Me.ColumnHeader10.Width = 200
-        '
-        'ColumnHeader1
-        '
-        Me.ColumnHeader1.Text = "IP Address"
-        Me.ColumnHeader1.Width = 200
-        '
-        'ColumnHeader2
-        '
-        Me.ColumnHeader2.Text = "DNS Name"
-        Me.ColumnHeader2.Width = 200
-        '
-        'ColumnHeader3
-        '
-        Me.ColumnHeader3.Text = "Recent"
-        Me.ColumnHeader3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.ColumnHeader3.Width = 150
-        '
-        'ColumnHeader4
-        '
-        Me.ColumnHeader4.Text = "Average"
-        Me.ColumnHeader4.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.ColumnHeader4.Width = 150
-        '
-        'ColumnHeader5
-        '
-        Me.ColumnHeader5.Text = "Best"
-        Me.ColumnHeader5.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.ColumnHeader5.Width = 150
-        '
-        'ColumnHeader6
-        '
-        Me.ColumnHeader6.Text = "Worst"
-        Me.ColumnHeader6.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.ColumnHeader6.Width = 150
-        '
-        'ColumnHeader8
-        '
-        Me.ColumnHeader8.Text = "Count"
-        Me.ColumnHeader8.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.ColumnHeader8.Width = 150
-        '
-        'ColumnHeader9
-        '
-        Me.ColumnHeader9.Text = "Failures"
-        Me.ColumnHeader9.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.ColumnHeader9.Width = 150
         '
         'Splitter1
         '
@@ -622,6 +552,225 @@ Partial Class frmMain
         Me.Splitter2.TabIndex = 5
         Me.Splitter2.TabStop = False
         '
+        'ClientContextStrip
+        '
+        Me.ClientContextStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuAddClientToPingList})
+        Me.ClientContextStrip.Name = "ClientContextStrip"
+        Me.ClientContextStrip.Size = New System.Drawing.Size(193, 26)
+        '
+        'mnuAddClientToPingList
+        '
+        Me.mnuAddClientToPingList.Name = "mnuAddClientToPingList"
+        Me.mnuAddClientToPingList.Size = New System.Drawing.Size(192, 22)
+        Me.mnuAddClientToPingList.Text = "&Add Client to Ping List"
+        '
+        'GroupBox1
+        '
+        Me.GroupBox1.Controls.Add(Me.btnPlayStop)
+        Me.GroupBox1.Controls.Add(Me.Label2)
+        Me.GroupBox1.Controls.Add(Me.NumInterval)
+        Me.GroupBox1.Location = New System.Drawing.Point(293, 24)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(200, 59)
+        Me.GroupBox1.TabIndex = 17
+        Me.GroupBox1.TabStop = False
+        Me.GroupBox1.Text = "Active Ping"
+        '
+        'ToolStrip1
+        '
+        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ResetIPListToolStripButton, Me.OpenToolStripButton, Me.SaveToolStripButton, Me.toolStripSeparator, Me.ToolStripButton2, Me.PlayStopbtn, Me.ToolStripSeparator2, Me.RefreshUNIFITool, Me.ToolStripSeparator3, Me.btnShowChart, Me.mnuAddToChart})
+        Me.ToolStrip1.Location = New System.Drawing.Point(0, 24)
+        Me.ToolStrip1.Name = "ToolStrip1"
+        Me.ToolStrip1.Size = New System.Drawing.Size(1120, 25)
+        Me.ToolStrip1.TabIndex = 22
+        Me.ToolStrip1.Text = "ToolStrip1"
+        '
+        'ResetIPListToolStripButton
+        '
+        Me.ResetIPListToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ResetIPListToolStripButton.Image = CType(resources.GetObject("ResetIPListToolStripButton.Image"), System.Drawing.Image)
+        Me.ResetIPListToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ResetIPListToolStripButton.Name = "ResetIPListToolStripButton"
+        Me.ResetIPListToolStripButton.Size = New System.Drawing.Size(23, 22)
+        Me.ResetIPListToolStripButton.Text = "&Reset"
+        Me.ResetIPListToolStripButton.ToolTipText = "Reset List"
+        '
+        'OpenToolStripButton
+        '
+        Me.OpenToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.OpenToolStripButton.Image = CType(resources.GetObject("OpenToolStripButton.Image"), System.Drawing.Image)
+        Me.OpenToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.OpenToolStripButton.Name = "OpenToolStripButton"
+        Me.OpenToolStripButton.Size = New System.Drawing.Size(23, 22)
+        Me.OpenToolStripButton.Text = "&Open"
+        '
+        'SaveToolStripButton
+        '
+        Me.SaveToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.SaveToolStripButton.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.chkAutosave})
+        Me.SaveToolStripButton.Image = CType(resources.GetObject("SaveToolStripButton.Image"), System.Drawing.Image)
+        Me.SaveToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.SaveToolStripButton.Name = "SaveToolStripButton"
+        Me.SaveToolStripButton.Size = New System.Drawing.Size(32, 22)
+        Me.SaveToolStripButton.Text = "&Save"
+        '
+        'chkAutosave
+        '
+        Me.chkAutosave.CheckOnClick = True
+        Me.chkAutosave.Enabled = False
+        Me.chkAutosave.Name = "chkAutosave"
+        Me.chkAutosave.Size = New System.Drawing.Size(123, 22)
+        Me.chkAutosave.Text = "Autosave"
+        '
+        'toolStripSeparator
+        '
+        Me.toolStripSeparator.Name = "toolStripSeparator"
+        Me.toolStripSeparator.Size = New System.Drawing.Size(6, 25)
+        '
+        'ToolStripButton2
+        '
+        Me.ToolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.ToolStripButton2.Image = Global.Ping.My.Resources.Resources.add1
+        Me.ToolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.ToolStripButton2.Name = "ToolStripButton2"
+        Me.ToolStripButton2.Size = New System.Drawing.Size(23, 22)
+        Me.ToolStripButton2.Text = "Add New IP Adress"
+        '
+        'PlayStopbtn
+        '
+        Me.PlayStopbtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.PlayStopbtn.Image = Global.Ping.My.Resources.Resources.Play
+        Me.PlayStopbtn.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.PlayStopbtn.Name = "PlayStopbtn"
+        Me.PlayStopbtn.Size = New System.Drawing.Size(23, 22)
+        Me.PlayStopbtn.Text = "Play"
+        '
+        'ToolStripSeparator2
+        '
+        Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
+        Me.ToolStripSeparator2.Size = New System.Drawing.Size(6, 25)
+        '
+        'RefreshUNIFITool
+        '
+        Me.RefreshUNIFITool.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.RefreshUNIFITool.Image = CType(resources.GetObject("RefreshUNIFITool.Image"), System.Drawing.Image)
+        Me.RefreshUNIFITool.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.RefreshUNIFITool.Name = "RefreshUNIFITool"
+        Me.RefreshUNIFITool.Size = New System.Drawing.Size(23, 22)
+        Me.RefreshUNIFITool.Text = "&Refresh Unifi"
+        Me.RefreshUNIFITool.ToolTipText = "Refresh Unifi Clients and Devices"
+        '
+        'ToolStripSeparator3
+        '
+        Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
+        Me.ToolStripSeparator3.Size = New System.Drawing.Size(6, 25)
+        '
+        'btnShowChart
+        '
+        Me.btnShowChart.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.btnShowChart.Image = CType(resources.GetObject("btnShowChart.Image"), System.Drawing.Image)
+        Me.btnShowChart.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.btnShowChart.Name = "btnShowChart"
+        Me.btnShowChart.Size = New System.Drawing.Size(23, 22)
+        Me.btnShowChart.Text = "Show Chart"
+        '
+        'mnuAddToChart
+        '
+        Me.mnuAddToChart.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.mnuAddToChart.Enabled = False
+        Me.mnuAddToChart.Image = Global.Ping.My.Resources.Resources.AddToChart
+        Me.mnuAddToChart.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.mnuAddToChart.Name = "mnuAddToChart"
+        Me.mnuAddToChart.Size = New System.Drawing.Size(23, 22)
+        Me.mnuAddToChart.Text = "ToolStripButton1"
+        '
+        'imgListPlayStop
+        '
+        Me.imgListPlayStop.ImageStream = CType(resources.GetObject("imgListPlayStop.ImageStream"), System.Windows.Forms.ImageListStreamer)
+        Me.imgListPlayStop.TransparentColor = System.Drawing.Color.Transparent
+        Me.imgListPlayStop.Images.SetKeyName(0, "Play")
+        Me.imgListPlayStop.Images.SetKeyName(1, "Stop")
+        '
+        'lstIP
+        '
+        Me.lstIP.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader7, Me.ColumnHeader10, Me.ColumnHeader1, Me.ColumnHeader2, Me.ColumnHeader3, Me.ColumnHeader4, Me.ColumnHeader5, Me.ColumnHeader6, Me.ColumnHeader8, Me.ColumnHeader9})
+        Me.lstIP.ContextMenuStrip = Me.lstContextMenu
+        Me.lstIP.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.lstIP.FullRowSelect = True
+        Me.lstIP.GridLines = True
+        ListViewGroup1.Header = "Switch"
+        ListViewGroup1.Name = "ListViewGroup1"
+        ListViewGroup2.Header = "Gateway"
+        ListViewGroup2.Name = "ListViewGroup2"
+        ListViewGroup3.Header = "Access Point"
+        ListViewGroup3.Name = "ListViewGroup3"
+        Me.lstIP.Groups.AddRange(New System.Windows.Forms.ListViewGroup() {ListViewGroup1, ListViewGroup2, ListViewGroup3})
+        Me.lstIP.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable
+        Me.lstIP.HideSelection = False
+        Me.lstIP.Location = New System.Drawing.Point(3, 3)
+        Me.lstIP.Margin = New System.Windows.Forms.Padding(1)
+        Me.lstIP.Name = "lstIP"
+        Me.lstIP.Size = New System.Drawing.Size(712, 365)
+        Me.lstIP.TabIndex = 4
+        Me.lstIP.UseCompatibleStateImageBehavior = False
+        Me.lstIP.View = System.Windows.Forms.View.Details
+        '
+        'ColumnHeader7
+        '
+        Me.ColumnHeader7.Text = "Name"
+        Me.ColumnHeader7.Width = 200
+        '
+        'ColumnHeader10
+        '
+        Me.ColumnHeader10.Text = "Requested"
+        Me.ColumnHeader10.Width = 200
+        '
+        'ColumnHeader1
+        '
+        Me.ColumnHeader1.Text = "IP Address"
+        Me.ColumnHeader1.Width = 200
+        '
+        'ColumnHeader2
+        '
+        Me.ColumnHeader2.Text = "DNS Name"
+        Me.ColumnHeader2.Width = 200
+        '
+        'ColumnHeader3
+        '
+        Me.ColumnHeader3.Text = "Recent"
+        Me.ColumnHeader3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.ColumnHeader3.Width = 150
+        '
+        'ColumnHeader4
+        '
+        Me.ColumnHeader4.Text = "Average"
+        Me.ColumnHeader4.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.ColumnHeader4.Width = 150
+        '
+        'ColumnHeader5
+        '
+        Me.ColumnHeader5.Text = "Best"
+        Me.ColumnHeader5.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.ColumnHeader5.Width = 150
+        '
+        'ColumnHeader6
+        '
+        Me.ColumnHeader6.Text = "Worst"
+        Me.ColumnHeader6.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.ColumnHeader6.Width = 150
+        '
+        'ColumnHeader8
+        '
+        Me.ColumnHeader8.Text = "Count"
+        Me.ColumnHeader8.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.ColumnHeader8.Width = 150
+        '
+        'ColumnHeader9
+        '
+        Me.ColumnHeader9.Text = "Failures"
+        Me.ColumnHeader9.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.ColumnHeader9.Width = 150
+        '
         'lstClient
         '
         Me.lstClient.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader19, Me.ColumnHeader20, Me.ColumnHeader21, Me.ColumnHeader27, Me.ColumnHeader22, Me.ColumnHeader23, Me.ColumnHeader24, Me.ColumnHeader25})
@@ -674,161 +823,6 @@ Partial Class frmMain
         '
         Me.ColumnHeader25.Text = "Last Seen"
         Me.ColumnHeader25.Width = 120
-        '
-        'ClientContextStrip
-        '
-        Me.ClientContextStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuAddClientToPingList})
-        Me.ClientContextStrip.Name = "ClientContextStrip"
-        Me.ClientContextStrip.Size = New System.Drawing.Size(193, 26)
-        '
-        'mnuAddClientToPingList
-        '
-        Me.mnuAddClientToPingList.Name = "mnuAddClientToPingList"
-        Me.mnuAddClientToPingList.Size = New System.Drawing.Size(192, 22)
-        Me.mnuAddClientToPingList.Text = "&Add Client to Ping List"
-        '
-        'GroupBox1
-        '
-        Me.GroupBox1.Controls.Add(Me.btnPlayStop)
-        Me.GroupBox1.Controls.Add(Me.Label2)
-        Me.GroupBox1.Controls.Add(Me.NumInterval)
-        Me.GroupBox1.Location = New System.Drawing.Point(293, 24)
-        Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(200, 59)
-        Me.GroupBox1.TabIndex = 17
-        Me.GroupBox1.TabStop = False
-        Me.GroupBox1.Text = "Active Ping"
-        '
-        'ToolStrip1
-        '
-        Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ResetIPListToolStripButton, Me.OpenToolStripButton, Me.SaveToolStripButton, Me.toolStripSeparator, Me.ToolStripButton2, Me.PlayStopbtn, Me.ToolStripSeparator2, Me.RefreshUNIFITool, Me.ToolStripSeparator3, Me.ToolStripSeparator4, Me.btnShowChart, Me.mnuAddToChart})
-        Me.ToolStrip1.Location = New System.Drawing.Point(0, 24)
-        Me.ToolStrip1.Name = "ToolStrip1"
-        Me.ToolStrip1.Size = New System.Drawing.Size(1120, 25)
-        Me.ToolStrip1.TabIndex = 22
-        Me.ToolStrip1.Text = "ToolStrip1"
-        '
-        'ResetIPListToolStripButton
-        '
-        Me.ResetIPListToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ResetIPListToolStripButton.Image = CType(resources.GetObject("ResetIPListToolStripButton.Image"), System.Drawing.Image)
-        Me.ResetIPListToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.ResetIPListToolStripButton.Name = "ResetIPListToolStripButton"
-        Me.ResetIPListToolStripButton.Size = New System.Drawing.Size(23, 22)
-        Me.ResetIPListToolStripButton.Text = "&Reset"
-        Me.ResetIPListToolStripButton.ToolTipText = "Reset List"
-        '
-        'OpenToolStripButton
-        '
-        Me.OpenToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.OpenToolStripButton.Image = CType(resources.GetObject("OpenToolStripButton.Image"), System.Drawing.Image)
-        Me.OpenToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.OpenToolStripButton.Name = "OpenToolStripButton"
-        Me.OpenToolStripButton.Size = New System.Drawing.Size(23, 22)
-        Me.OpenToolStripButton.Text = "&Open"
-        '
-        'SaveToolStripButton
-        '
-        Me.SaveToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.SaveToolStripButton.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.chkAutosave})
-        Me.SaveToolStripButton.Image = CType(resources.GetObject("SaveToolStripButton.Image"), System.Drawing.Image)
-        Me.SaveToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.SaveToolStripButton.Name = "SaveToolStripButton"
-        Me.SaveToolStripButton.Size = New System.Drawing.Size(32, 22)
-        Me.SaveToolStripButton.Text = "&Save"
-        '
-        'chkAutosave
-        '
-        Me.chkAutosave.CheckOnClick = True
-        Me.chkAutosave.Enabled = False
-        Me.chkAutosave.Name = "chkAutosave"
-        Me.chkAutosave.Size = New System.Drawing.Size(180, 22)
-        Me.chkAutosave.Text = "Autosave"
-        '
-        'toolStripSeparator
-        '
-        Me.toolStripSeparator.Name = "toolStripSeparator"
-        Me.toolStripSeparator.Size = New System.Drawing.Size(6, 25)
-        '
-        'ToolStripButton2
-        '
-        Me.ToolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripButton2.Image = Global.Ping.My.Resources.Resources.add1
-        Me.ToolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.ToolStripButton2.Name = "ToolStripButton2"
-        Me.ToolStripButton2.Size = New System.Drawing.Size(23, 22)
-        Me.ToolStripButton2.Text = "Add New IP Adress"
-        '
-        'PlayStopbtn
-        '
-        Me.PlayStopbtn.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.PlayStopbtn.Image = Global.Ping.My.Resources.Resources.Play
-        Me.PlayStopbtn.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.PlayStopbtn.Name = "PlayStopbtn"
-        Me.PlayStopbtn.Size = New System.Drawing.Size(23, 22)
-        Me.PlayStopbtn.Text = "Play"
-        '
-        'ToolStripSeparator2
-        '
-        Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
-        Me.ToolStripSeparator2.Size = New System.Drawing.Size(6, 25)
-        '
-        'RefreshUNIFITool
-        '
-        Me.RefreshUNIFITool.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.RefreshUNIFITool.Image = CType(resources.GetObject("RefreshUNIFITool.Image"), System.Drawing.Image)
-        Me.RefreshUNIFITool.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.RefreshUNIFITool.Name = "RefreshUNIFITool"
-        Me.RefreshUNIFITool.Size = New System.Drawing.Size(23, 22)
-        Me.RefreshUNIFITool.Text = "&Refresh Unifi"
-        Me.RefreshUNIFITool.ToolTipText = "Refresh Unifi Clients and Devices"
-        '
-        'ToolStripSeparator3
-        '
-        Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
-        Me.ToolStripSeparator3.Size = New System.Drawing.Size(6, 25)
-        '
-        'ToolStripSeparator4
-        '
-        Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
-        Me.ToolStripSeparator4.Size = New System.Drawing.Size(6, 25)
-        '
-        'btnShowChart
-        '
-        Me.btnShowChart.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.btnShowChart.Image = CType(resources.GetObject("btnShowChart.Image"), System.Drawing.Image)
-        Me.btnShowChart.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.btnShowChart.Name = "btnShowChart"
-        Me.btnShowChart.Size = New System.Drawing.Size(23, 22)
-        Me.btnShowChart.Text = "Show Chart"
-        '
-        'mnuAddToChart
-        '
-        Me.mnuAddToChart.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.mnuAddToChart.Enabled = False
-        Me.mnuAddToChart.Image = Global.Ping.My.Resources.Resources.AddToChart
-        Me.mnuAddToChart.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.mnuAddToChart.Name = "mnuAddToChart"
-        Me.mnuAddToChart.Size = New System.Drawing.Size(23, 22)
-        Me.mnuAddToChart.Text = "ToolStripButton1"
-        '
-        'imgListPlayStop
-        '
-        Me.imgListPlayStop.ImageStream = CType(resources.GetObject("imgListPlayStop.ImageStream"), System.Windows.Forms.ImageListStreamer)
-        Me.imgListPlayStop.TransparentColor = System.Drawing.Color.Transparent
-        Me.imgListPlayStop.Images.SetKeyName(0, "Play")
-        Me.imgListPlayStop.Images.SetKeyName(1, "Stop")
-        '
-        'ToolStripSeparator5
-        '
-        Me.ToolStripSeparator5.Name = "ToolStripSeparator5"
-        Me.ToolStripSeparator5.Size = New System.Drawing.Size(197, 6)
-        '
-        'NetworkDiscoveryToolStripMenuItem
-        '
-        Me.NetworkDiscoveryToolStripMenuItem.Name = "NetworkDiscoveryToolStripMenuItem"
-        Me.NetworkDiscoveryToolStripMenuItem.Size = New System.Drawing.Size(200, 22)
-        Me.NetworkDiscoveryToolStripMenuItem.Text = "Network Discovery"
         '
         'frmMain
         '
@@ -953,7 +947,6 @@ Partial Class frmMain
     Friend WithEvents ToolStripSeparator3 As ToolStripSeparator
     Friend WithEvents ToolStripButton2 As ToolStripButton
     Friend WithEvents LblCurrentFile As ToolStripStatusLabel
-    Friend WithEvents ToolStripSeparator4 As ToolStripSeparator
     Friend WithEvents mnuAddToChart As ToolStripButton
     Friend WithEvents SaveToolStripButton As ToolStripSplitButton
     Friend WithEvents chkAutosave As ToolStripMenuItem
