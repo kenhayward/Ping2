@@ -41,27 +41,38 @@ Public Class PingIP
         Dim data As String = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
         Dim buffer As Byte() = Encoding.ASCII.GetBytes(data)
         Dim timeout As Integer = 120
-        Dim reply As PingReply = pingSender.Send(IPAddress, timeout, buffer, options)
-        If Me.HostName Is Nothing Then
-            RefreshWorker.ReportProgress(1, "Resolving Hostname for " & FriendlyName & " (" & IPAddress & ")")
-            Me.HostName = GetHostName()
-        End If
-        If reply.Status = IPStatus.Success Then
-            Me.Success = True
-            Me.IPAddress = reply.Address.ToString()
-            Me.RoundtripTime = reply.RoundtripTime
-            Me.TTL = reply.Options.Ttl
-
-            If RoundtripTime > Worst Then Worst = RoundtripTime
-            If Best = -1 Then
-                Best = RoundtripTime
-            Else
-                If RoundtripTime < Best Then Best = RoundtripTime
+        Dim reply As PingReply = Nothing
+        Try
+            reply = pingSender.Send(IPAddress, timeout, buffer, options)
+        Catch ex As Exception
+        End Try
+        If reply IsNot Nothing Then
+            If Me.HostName Is Nothing Then
+                RefreshWorker.ReportProgress(1, "Resolving Hostname for " & FriendlyName & " (" & IPAddress & ")")
+                Me.HostName = GetHostName()
             End If
-            If Average = -1 Then
-                Average = RoundtripTime
+        End If
+        If reply IsNot Nothing Then
+            If reply.Status = IPStatus.Success Then
+                Me.Success = True
+                Me.IPAddress = reply.Address.ToString()
+                Me.RoundtripTime = reply.RoundtripTime
+                Me.TTL = reply.Options.Ttl
+
+                If RoundtripTime > Worst Then Worst = RoundtripTime
+                If Best = -1 Then
+                    Best = RoundtripTime
+                Else
+                    If RoundtripTime < Best Then Best = RoundtripTime
+                End If
+                If Average = -1 Then
+                    Average = RoundtripTime
+                Else
+                    Average = (((PingCount - 1) * Average) + RoundtripTime) / (PingCount)
+                End If
             Else
-                Average = (((PingCount - 1) * Average) + RoundtripTime) / (PingCount)
+                Me.Success = False
+                Failures += 1
             End If
         Else
             Me.Success = False

@@ -17,6 +17,8 @@ Public Class frmMain
     Private Const imgPlay = 0  ' Imagelist entry for play button
     Private Const imgStop = 1  ' Imagelist entry for stop button
     Private IPListFile As String ' The current persisted IP List File
+    Private Autosave As Boolean = False ' TRue if the Ping list should be autosaved each cycle, false otherwise
+
 
 #End Region
 #Region "Ping ListView Support Functions"
@@ -101,7 +103,7 @@ Public Class frmMain
             lstIP.ApplyGroup(PIngit.Group, MyItem)
         End If
         lstIP.UpdateItem(MyItem)
-        If chkAutosave.Checked Then SaveIPList(IPListFile)
+        If Autosave Then SaveIPList(IPListFile)
         UpdateStatus()
     End Sub
 #End Region
@@ -304,7 +306,7 @@ Public Class frmMain
         End If
     End Sub
 
-    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles SaveIPListToolStripMenuItem.Click, SaveToolStripButton.Click
+    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles SaveIPListToolStripMenuItem.Click, SaveToolStripButton.ButtonClick
         Dim MySave As New SaveFileDialog With {
             .Title = "Save IP List",
             .FileName = "PingTest.csv",
@@ -436,7 +438,7 @@ Public Class frmMain
         Me.ChartIPs.Clear()
     End Sub
 
-    Private Sub AddToChartToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AddToChartToolStripMenuItem.Click
+    Private Sub AddToChartToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AddToChartToolStripMenuItem.Click, mnuAddToChart.Click
         ' Add this one to the chart as a new series
         If lstIP.SelectedItems.Count > 0 Then
             For Each item In lstIP.SelectedItems
@@ -631,6 +633,8 @@ Public Class frmMain
         Me.Chart1.Series.Clear()
         Me.lstIP.Items.Clear()
         Me.lstIP.Refresh()
+        SetAutosaveOff
+        chkAutosave.Enabled = False
         Me.Cursor = Cursors.Default
 
     End Sub
@@ -662,14 +666,45 @@ Public Class frmMain
 
     Private Sub AddIpMenu_Click(sender As Object, e As EventArgs) Handles ToolStripButton2.Click
         Dim MyForm As New frmAddIP
+        MyForm.LstIP = lstIP
         If MyForm.ShowDialog = DialogResult.OK Then
             Cursor = Cursors.WaitCursor
-            CreatePing(MyForm.IPAddress, MyForm.Friendlyname, "")
+            Dim MyPing = CreatePing(MyForm.IPAddress, MyForm.Friendlyname, "")
+            MyPing.Group = MyForm.GroupName
+            If MyForm.NewGroup Then
+                Dim group As New ListViewGroup(MyForm.GroupName)
+                lstIP.Groups.Add(group)
+            End If
             StartWorker()
             Me.lstIP.Refresh()
             Cursor = Cursors.Default
         End If
     End Sub
+
+    Private Sub SetAutosaveOff()
+        Autosave = False
+
+    End Sub
+    Private Sub SetAutosaveOn()
+        Autosave = True
+
+    End Sub
+    Private Sub chkAutosave_CheckedChanged(sender As Object, e As EventArgs) Handles chkAutosave.CheckedChanged
+        If chkAutosave.Checked Then
+            SetAutosaveOn()
+        Else
+            SetAutosaveOff()
+        End If
+    End Sub
+
+    Private Sub lstIP_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lstIP.SelectedIndexChanged
+        If lstIP.SelectedItems.Count > 0 Then
+            mnuAddToChart.Enabled = True
+        Else
+            mnuAddToChart.Enabled = False
+        End If
+    End Sub
+
 
 
 #End Region

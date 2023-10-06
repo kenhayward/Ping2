@@ -185,6 +185,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\.editorconfig">
+      <Link>.editorconfig</Link>
+    </None>
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -203,6 +206,9 @@
   <ItemGroup>
     <None Include="Resources\Chart1.png" />
     <None Include="Resources\Chart.png" />
+    <None Include="Resources\CheckBox Checked.png" />
+    <None Include="Resources\CheckBox Unchecked.png" />
+    <None Include="Resources\AddToChart.png" />
     <Content Include="Resources\Google-Noto-Emoji-Activities-52744-ping-pong.ico" />
     <None Include="Resources\Play.png" />
     <None Include="Resources\Stop.png" />
