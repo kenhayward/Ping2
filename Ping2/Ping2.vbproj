@@ -126,6 +126,12 @@
     <Compile Include="Forms\frmAddIP.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\frmNetworkDiscovery.Designer.vb">
+      <DependentUpon>frmNetworkDiscovery.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmNetworkDiscovery.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\frmUnifi.Designer.vb">
       <DependentUpon>frmUnifi.vb</DependentUpon>
     </Compile>
@@ -168,6 +174,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Forms\frmAddIP.resx">
       <DependentUpon>frmAddIP.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmNetworkDiscovery.resx">
+      <DependentUpon>frmNetworkDiscovery.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmUnifi.resx">
       <DependentUpon>frmUnifi.vb</DependentUpon>

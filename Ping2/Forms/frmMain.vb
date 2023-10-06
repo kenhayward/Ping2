@@ -706,14 +706,10 @@ Public Class frmMain
     End Sub
 
     Private Sub NetworkDiscoveryToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NetworkDiscoveryToolStripMenuItem.Click
-        Dim MyNetwork As New NetworkDiscovery
-        MyNetwork.getNetworkGateway()
-        Debug.Print("Gateway " & MyNetwork.GatewayAddress)
-        MyNetwork.Ping_all()
-        Thread.Sleep(60000)
-        For Each client In MyNetwork.Clients
-            Debug.Print(client.Key & " " & client.Value)
-        Next
+        Dim MyForm As New frmNetworkDiscovery
+        MyForm.ClienList = UnifiController.ClientList
+        MyForm.DeviceList = UnifiController.DeviceList
+        MyForm.ShowDialog()
 
     End Sub
 

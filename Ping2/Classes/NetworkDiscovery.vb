@@ -2,11 +2,14 @@
 Imports System.Net
 Imports System.Net.NetworkInformation
 Imports System.Net.Sockets
-Imports System.Threading
 
 Public Class NetworkDiscovery
     Public Property GatewayAddress As String
     Public Property Clients As New Dictionary(Of String, String)
+    Private Blocking As New Object
+    Public Property TargetList As ListView
+    Public Property PingsLeft As Integer
+    Public Event Pingscomplete()
     Public Sub getNetworkGateway()
 
         For Each f As NetworkInterface In NetworkInterface.GetAllNetworkInterfaces()
@@ -21,9 +24,9 @@ Public Class NetworkDiscovery
 
     End Sub
 
-
     Public Sub Ping_all()
         getNetworkGateway()
+        PingsLeft = 254
         Dim array As String() = GatewayAddress.Split("."c)
         For i As Integer = 2 To 255
             Dim ping_var As String = array(0) & "." & array(1) & "." & array(2) & "." & i
@@ -37,11 +40,11 @@ Public Class NetworkDiscovery
         ping.SendAsync(e.Argument, 120, e.Argument)
     End Sub
     Public Sub Ping(ByVal host As String, ByVal attempts As Integer, ByVal timeout As Integer)
-        For i As Integer = 0 To attempts - 1
-            Dim Worker = New BackgroundWorker
-            AddHandler Worker.DoWork, AddressOf StartPing
-            Worker.RunWorkerAsync(argument:=host)
-        Next
+
+        Dim Worker = New BackgroundWorker
+        AddHandler Worker.DoWork, AddressOf StartPing
+        Worker.RunWorkerAsync(argument:=host)
+
     End Sub
     Private Sub PingCompleted(ByVal sender As Object, ByVal e As PingCompletedEventArgs)
         Dim ip As String = CStr(e.UserState)
@@ -49,9 +52,19 @@ Public Class NetworkDiscovery
         If e.Reply IsNot Nothing AndAlso e.Reply.Status = IPStatus.Success Then
             'Dim hostname As String = GetHostName(ip)
             Dim macaddres As String = GetMacAddress(ip)
+            SyncLock Blocking
+                Dim MyItem As New ListViewItem
+                MyItem.Text = ip
+                MyItem.SubItems.Add(macaddres)
+                TargetList.Items.Add(MyItem)
+            End SyncLock
             If Not Clients.ContainsKey(ip) Then
                 Clients.Add(ip, macaddres)
             End If
+        End If
+        PingsLeft -= 1
+        If PingsLeft = 0 Then
+            RaiseEvent Pingscomplete()
         End If
     End Sub
 
