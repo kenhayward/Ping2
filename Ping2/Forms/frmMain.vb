@@ -665,8 +665,7 @@ Public Class frmMain
     End Sub
 
     Private Sub AddIpMenu_Click(sender As Object, e As EventArgs) Handles ToolStripButton2.Click
-        Dim MyForm As New frmAddIP
-        MyForm.LstIP = lstIP
+        Dim MyForm As New frmAddIP With {.LstIP = lstIP}
         If MyForm.ShowDialog = DialogResult.OK Then
             Cursor = Cursors.WaitCursor
             Dim MyPing = CreatePing(MyForm.IPAddress, MyForm.Friendlyname, "")
@@ -706,9 +705,10 @@ Public Class frmMain
     End Sub
 
     Private Sub NetworkDiscoveryToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NetworkDiscoveryToolStripMenuItem.Click
-        Dim MyForm As New frmNetworkDiscovery
-        MyForm.ClienList = UnifiController.ClientList
-        MyForm.DeviceList = UnifiController.DeviceList
+        Dim MyForm As New frmNetworkDiscovery With {
+            .ClienList = UnifiController.ClientList,
+            .DeviceList = UnifiController.DeviceList
+        }
         MyForm.ShowDialog()
 
     End Sub

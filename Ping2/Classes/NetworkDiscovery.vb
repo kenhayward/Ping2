@@ -6,7 +6,7 @@ Imports System.Net.Sockets
 Public Class NetworkDiscovery
     Public Property GatewayAddress As String
     Public Property Clients As New Dictionary(Of String, String)
-    Private Blocking As New Object
+    Private ReadOnly Blocking As New Object
     Public Property TargetList As ListView
     Public Property PingsLeft As Integer
     Public Event Pingscomplete()
@@ -29,8 +29,7 @@ Public Class NetworkDiscovery
         PingsLeft = 254
         Dim array As String() = GatewayAddress.Split("."c)
         For i As Integer = 2 To 255
-            Dim ping_var As String = array(0) & "." & array(1) & "." & array(2) & "." & i
-            Ping(ping_var, 4, 4000)
+            Ping(array(0) & "." & array(1) & "." & array(2) & "." & i)
         Next
     End Sub
     Private Sub StartPing(sender As Object, e As DoWorkEventArgs)
@@ -39,7 +38,7 @@ Public Class NetworkDiscovery
         AddHandler ping.PingCompleted, AddressOf PingCompleted
         ping.SendAsync(e.Argument, 120, e.Argument)
     End Sub
-    Public Sub Ping(ByVal host As String, ByVal attempts As Integer, ByVal timeout As Integer)
+    Public Sub Ping(ByVal host As String)
 
         Dim Worker = New BackgroundWorker
         AddHandler Worker.DoWork, AddressOf StartPing
@@ -53,8 +52,7 @@ Public Class NetworkDiscovery
             'Dim hostname As String = GetHostName(ip)
             Dim macaddres As String = GetMacAddress(ip)
             SyncLock Blocking
-                Dim MyItem As New ListViewItem
-                MyItem.Text = ip
+                Dim MyItem As New ListViewItem With {.Text = ip}
                 MyItem.SubItems.Add(macaddres)
                 TargetList.Items.Add(MyItem)
             End SyncLock
@@ -83,9 +81,9 @@ Public Class NetworkDiscovery
         End Function
 
         Public Function GetMacAddress(ByVal ipAddress As String) As String
-            Dim macAddress As String = String.Empty
-            Dim Process As System.Diagnostics.Process = New System.Diagnostics.Process()
-            Process.StartInfo.FileName = "arp"
+        Dim macAddress As String
+        Dim Process As New System.Diagnostics.Process()
+        Process.StartInfo.FileName = "arp"
             Process.StartInfo.Arguments = "-a " & ipAddress
             Process.StartInfo.UseShellExecute = False
             Process.StartInfo.RedirectStandardOutput = True
