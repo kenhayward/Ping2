@@ -173,7 +173,7 @@ Public Class frmMain
                     x += 1
                     RefreshWorker.ReportProgress(x, "Pinging " & pingit.Value.FriendlyName & " (" & pingit.Value.RequestedAddress & ")")
                     pingit.Value.ExecutePing(RefreshWorker)
-                    RefreshWorker.ReportProgress(x, pingit.Value)
+
                     If RefreshWorker.CancellationPending Then
                         e.Cancel = True
                         Exit Do

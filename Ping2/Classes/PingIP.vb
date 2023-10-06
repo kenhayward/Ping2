@@ -3,6 +3,7 @@ Imports System.Text
 Imports System.Net
 Imports System.Net.Sockets
 Imports System.ComponentModel
+Imports System.Windows.Forms.DataVisualization.Charting
 
 Public Class PingIP
     Public Property RequestedAddress As String
@@ -18,6 +19,7 @@ Public Class PingIP
     Public Property Best As Long = -1
     Public Property Worst As Long = -1
     Public Property Average As Long = -1
+    Private Worker As BackgroundWorker
     Private _Timeout As Integer = 120
     Public Property Timeout As Integer
         Get
@@ -33,6 +35,7 @@ Public Class PingIP
         Me.FriendlyName = Friendly
     End Sub
     Public Sub ExecutePing(RefreshWorker As BackgroundWorker)
+        Me.Worker = RefreshWorker
         PingCount += 1
         Dim pingSender As New NetworkInformation.Ping()
         Dim options As New PingOptions With {
@@ -43,41 +46,12 @@ Public Class PingIP
         Dim timeout As Integer = 120
         Dim reply As PingReply = Nothing
         Try
-            reply = pingSender.Send(IPAddress, timeout, buffer, options)
+            AddHandler pingSender.PingCompleted, AddressOf PingCompleted
+            pingSender.SendAsync(IPAddress, timeout, buffer, options, Me)
+            'reply = pingSender.Send(IPAddress, timeout, buffer, options)
         Catch ex As Exception
         End Try
-        If reply IsNot Nothing Then
-            If Me.HostName Is Nothing Then
-                RefreshWorker.ReportProgress(1, "Resolving Hostname for " & FriendlyName & " (" & IPAddress & ")")
-                Me.HostName = GetHostName()
-            End If
-        End If
-        If reply IsNot Nothing Then
-            If reply.Status = IPStatus.Success Then
-                Me.Success = True
-                Me.IPAddress = reply.Address.ToString()
-                Me.RoundtripTime = reply.RoundtripTime
-                Me.TTL = reply.Options.Ttl
 
-                If RoundtripTime > Worst Then Worst = RoundtripTime
-                If Best = -1 Then
-                    Best = RoundtripTime
-                Else
-                    If RoundtripTime < Best Then Best = RoundtripTime
-                End If
-                If Average = -1 Then
-                    Average = RoundtripTime
-                Else
-                    Average = (((PingCount - 1) * Average) + RoundtripTime) / (PingCount)
-                End If
-            Else
-                Me.Success = False
-                Failures += 1
-            End If
-        Else
-            Me.Success = False
-            Failures += 1
-        End If
     End Sub
     Private Function GetHostName() As String
         Dim ReturnValue As String = ""
@@ -89,6 +63,61 @@ Public Class PingIP
         End Try
         Return ReturnValue
     End Function
+
+    Private Sub StartPing(sender As Object, e As DoWorkEventArgs)
+
+        Dim ping = New System.Net.NetworkInformation.Ping()
+        AddHandler ping.PingCompleted, AddressOf PingCompleted
+        ping.SendAsync(e.Argument, 120, e.Argument)
+    End Sub
+    Public Sub Ping(ByVal host As String)
+
+        Dim Worker = New BackgroundWorker
+        AddHandler Worker.DoWork, AddressOf StartPing
+        Worker.RunWorkerAsync(argument:=host)
+
+    End Sub
+    Private Sub PingCompleted(ByVal sender As Object, ByVal e As PingCompletedEventArgs)
+        Dim PingIp As PingIP = e.UserState
+        Dim reply = e.Reply
+
+        If PingIp IsNot Nothing Then
+            If PingIp.HostName Is Nothing Then
+                Worker.ReportProgress(1, "Resolving Hostname for " & FriendlyName & " (" & IPAddress & ")")
+                PingIp.HostName = PingIp.GetHostName()
+            End If
+        End If
+        If reply IsNot Nothing Then
+            If reply.Status = IPStatus.Success Then
+                PingIp.Success = True
+                PingIp.IPAddress = reply.Address.ToString()
+                PingIp.RoundtripTime = reply.RoundtripTime
+                PingIp.TTL = reply.Options.Ttl
+
+                If PingIp.RoundtripTime > PingIp.Worst Then PingIp.Worst = PingIp.RoundtripTime
+                If PingIp.Best = -1 Then
+                    PingIp.Best = PingIp.RoundtripTime
+                Else
+                    If PingIp.RoundtripTime < PingIp.Best Then PingIp.Best = PingIp.RoundtripTime
+                End If
+                If PingIp.Average = -1 Then
+                    PingIp.Average = PingIp.RoundtripTime
+                Else
+                    PingIp.Average = (((PingIp.PingCount - 1) * PingIp.Average) + PingIp.RoundtripTime) / (PingCount)
+                End If
+            Else
+                PingIp.Success = False
+                PingIp.Failures += 1
+            End If
+        Else
+            PingIp.Success = False
+            PingIp.Failures += 1
+        End If
+
+        Worker.ReportProgress(1, PingIp)
+    End Sub
+
+
 End Class
 
 Public Class Pinglist
