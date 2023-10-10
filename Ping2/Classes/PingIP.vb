@@ -48,21 +48,34 @@ Public Class PingIP
         Try
             AddHandler pingSender.PingCompleted, AddressOf PingCompleted
             pingSender.SendAsync(IPAddress, timeout, buffer, options, Me)
-            'reply = pingSender.Send(IPAddress, timeout, buffer, options)
         Catch ex As Exception
         End Try
 
     End Sub
-    Private Function GetHostName() As String
-        Dim ReturnValue As String = ""
+    Public Shared Sub GetHostnames(sender As Object, e As DoWorkEventArgs)
+        Dim Pinglist As Pinglist = e.Argument
+        For Each pingKVP In Pinglist
+            Dim Pingip = pingKVP.Value
+            sender.ReportProgress(1, "Resolving Hostname for " & Pingip.FriendlyName & " (" & Pingip.IPAddress & ")")
+            Dim thisWorker = New BackgroundWorker
+            AddHandler thisWorker.DoWork, AddressOf Pingip.GetHostName
+            thisWorker.RunWorkerAsync(argument:=Pingip)
+        Next
+    End Sub
+    Public Shared Event HostNameUpdated(Pingip As PingIP)
+    Private Shared Sub GetHostName(sender As Object, e As DoWorkEventArgs)
         Try
-            Dim entry As IPHostEntry = Dns.GetHostEntry(IPAddress)
-            If entry IsNot Nothing Then ReturnValue = entry.HostName
+            Dim PIngip = e.Argument
+            Dim entry As IPHostEntry = Dns.GetHostEntry(PIngip.IPAddress)
+            If entry IsNot Nothing Then
+                PIngip.HostName = entry.HostName
+            Else
+                PIngip.Hostname = "<Error>"
+            End If
+            RaiseEvent HostNameUpdated(PIngip)
         Catch ex As SocketException
-            ReturnValue = "<Error>"
         End Try
-        Return ReturnValue
-    End Function
+    End Sub
 
     Private Sub StartPing(sender As Object, e As DoWorkEventArgs)
 
@@ -72,21 +85,18 @@ Public Class PingIP
     End Sub
     Public Sub Ping(ByVal host As String)
 
-        Dim Worker = New BackgroundWorker
-        AddHandler Worker.DoWork, AddressOf StartPing
-        Worker.RunWorkerAsync(argument:=host)
+        Dim thisWorker = New BackgroundWorker
+        AddHandler thisWorker.DoWork, AddressOf StartPing
+        thisWorker.RunWorkerAsync(argument:=host)
 
     End Sub
+
+
     Private Sub PingCompleted(ByVal sender As Object, ByVal e As PingCompletedEventArgs)
         Dim PingIp As PingIP = e.UserState
         Dim reply = e.Reply
 
-        If PingIp IsNot Nothing Then
-            If PingIp.HostName Is Nothing Then
-                Worker.ReportProgress(1, "Resolving Hostname for " & FriendlyName & " (" & IPAddress & ")")
-                PingIp.HostName = PingIp.GetHostName()
-            End If
-        End If
+
         If reply IsNot Nothing Then
             If reply.Status = IPStatus.Success Then
                 PingIp.Success = True

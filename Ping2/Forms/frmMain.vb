@@ -3,6 +3,7 @@ Imports System.ComponentModel
 Imports System.Windows.Forms.DataVisualization.Charting
 Imports Newtonsoft.Json.Linq
 Imports Newtonsoft.Json
+Imports System.Web.UI.WebControls
 
 Public Class frmMain
 #Region "Class Variables"
@@ -41,70 +42,74 @@ Public Class frmMain
         Return MyItem
     End Function
     Private Sub UpdateListView(PIngit As PingIP)
-        AddPointToChart(PIngit)
-        Dim MyItem = CreateItemForListView(PIngit)
+        If Me.InvokeRequired Then
+            Me.Invoke(Sub() UpdateListView(PIngit))
+        Else
+            AddPointToChart(PIngit)
+            Dim MyItem = CreateItemForListView(PIngit)
 
-        ' Constants for Subitem Positioning
-        Const SIRequestedAddress = 1
-        Const SIIPAddress = 2
-        Const SIHostName = 3
-        Const SIRoundtripTime = 4
-        Const SIAverage = 5
-        Const SIBest = 6
-        Const SIWorst = 7
-        Const SIPingCount = 8
-        Const SIFailures = 9
+            ' Constants for Subitem Positioning
+            Const SIRequestedAddress = 1
+            Const SIIPAddress = 2
+            Const SIHostName = 3
+            Const SIRoundtripTime = 4
+            Const SIAverage = 5
+            Const SIBest = 6
+            Const SIWorst = 7
+            Const SIPingCount = 8
+            Const SIFailures = 9
 
-        MyItem.SubItems(SIRequestedAddress).Text = PIngit.RequestedAddress
-        MyItem.SubItems(SIIPAddress).Text = PIngit.IPAddress
-        MyItem.SubItems(SIHostName).Text = PIngit.HostName
-        Dim PCItem = MyItem.SubItems(SIRoundtripTime)
-        If PIngit.PingCount > 0 Then
-            If PIngit.Success Then
-                PCItem.Text = PIngit.RoundtripTime.ToString()
-                Select Case PIngit.RoundtripTime
-                    Case < 25
-                        PCItem.BackColor = Color.Green
-                        PCItem.ForeColor = Color.White
-                    Case 26 To 100
-                        PCItem.BackColor = Color.Yellow
-                        PCItem.ForeColor = Color.Black
-                    Case Else
-                        PCItem.BackColor = Color.Orange
-                        PCItem.ForeColor = Color.Black
-                End Select
-            Else
-                PCItem.Text = "No Response"
-                PCItem.ForeColor = Color.White
-                PCItem.BackColor = Color.Red
+            MyItem.SubItems(SIRequestedAddress).Text = PIngit.RequestedAddress
+            MyItem.SubItems(SIIPAddress).Text = PIngit.IPAddress
+            MyItem.SubItems(SIHostName).Text = PIngit.HostName
+            Dim PCItem = MyItem.SubItems(SIRoundtripTime)
+            If PIngit.PingCount > 0 Then
+                If PIngit.Success Then
+                    PCItem.Text = PIngit.RoundtripTime.ToString()
+                    Select Case PIngit.RoundtripTime
+                        Case < 25
+                            PCItem.BackColor = Color.Green
+                            PCItem.ForeColor = Color.White
+                        Case 26 To 100
+                            PCItem.BackColor = Color.Yellow
+                            PCItem.ForeColor = Color.Black
+                        Case Else
+                            PCItem.BackColor = Color.Orange
+                            PCItem.ForeColor = Color.Black
+                    End Select
+                Else
+                    PCItem.Text = "No Response"
+                    PCItem.ForeColor = Color.White
+                    PCItem.BackColor = Color.Red
+                End If
+                If PIngit.Average = -1 Then
+                    MyItem.SubItems(SIAverage).Text = "N/A"
+                Else
+                    MyItem.SubItems(SIAverage).Text = PIngit.Average.ToString()
+                End If
+                If PIngit.Best = -1 Then
+                    MyItem.SubItems(SIBest).Text = "N/A"
+                Else
+                    MyItem.SubItems(SIBest).Text = PIngit.Best.ToString()
+                End If
+                If PIngit.Worst = -1 Then
+                    MyItem.SubItems(SIWorst).Text = "N/A"
+                Else
+                    MyItem.SubItems(SIWorst).Text = PIngit.Worst.ToString()
+                End If
+                MyItem.SubItems(SIPingCount).Text = PIngit.PingCount.ToString()
+                Dim Failitem = MyItem.SubItems(SIFailures)
+                Failitem.Text = PIngit.Failures.ToString()
+                If PIngit.Failures > 0 Then
+                    Failitem.BackColor = Color.Red
+                    Failitem.ForeColor = Color.White
+                End If
+                lstIP.ApplyGroup(PIngit.Group, MyItem)
             End If
-            If PIngit.Average = -1 Then
-                MyItem.SubItems(SIAverage).Text = "N/A"
-            Else
-                MyItem.SubItems(SIAverage).Text = PIngit.Average.ToString()
-            End If
-            If PIngit.Best = -1 Then
-                MyItem.SubItems(SIBest).Text = "N/A"
-            Else
-                MyItem.SubItems(SIBest).Text = PIngit.Best.ToString()
-            End If
-            If PIngit.Worst = -1 Then
-                MyItem.SubItems(SIWorst).Text = "N/A"
-            Else
-                MyItem.SubItems(SIWorst).Text = PIngit.Worst.ToString()
-            End If
-            MyItem.SubItems(SIPingCount).Text = PIngit.PingCount.ToString()
-            Dim Failitem = MyItem.SubItems(SIFailures)
-            Failitem.Text = PIngit.Failures.ToString()
-            If PIngit.Failures > 0 Then
-                Failitem.BackColor = Color.Red
-                Failitem.ForeColor = Color.White
-            End If
-            lstIP.ApplyGroup(PIngit.Group, MyItem)
+            lstIP.UpdateItem(MyItem)
+            If Autosave Then SaveIPList(IPListFile)
+            UpdateStatus()
         End If
-        lstIP.UpdateItem(MyItem)
-        If Autosave Then SaveIPList(IPListFile)
-        UpdateStatus()
     End Sub
 #End Region
 #Region "Background Ping Worker"
@@ -120,9 +125,11 @@ Public Class frmMain
             RefreshWorker = New BackgroundWorker With {.WorkerReportsProgress = True, .WorkerSupportsCancellation = True}
             RefreshWorker.RunWorkerAsync()
             SetbtnToStop()
+            UpdateDNSNames() ' Do it once
         Else
             If isBtnPlay() Then
                 RefreshWorker.RunWorkerAsync()
+                UpdateDNSNames() ' Do it once
                 SetbtnToStop()
             Else
                 RefreshNow = True
@@ -712,6 +719,17 @@ Public Class frmMain
         MyForm.ShowDialog()
 
     End Sub
+    Private Sub UpdateDNSNames()
+        Dim Myworker As New BackgroundWorker With {.WorkerReportsProgress = True}
+        AddHandler PingIP.HostNameUpdated, AddressOf UpdateListView
+        AddHandler Myworker.DoWork, AddressOf PingIP.GetHostnames
+        Myworker.RunWorkerAsync(argument:=PingList)
+    End Sub
+
+    Private Sub UpdateHostnamesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles UpdateHostnamesToolStripMenuItem.Click, ToolStripBtnUpdateHostnames.Click
+        UpdateDNSNames()
+    End Sub
+
 
 
 
