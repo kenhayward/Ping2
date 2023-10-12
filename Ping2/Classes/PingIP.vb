@@ -1,9 +1,8 @@
-﻿Imports System.Net.NetworkInformation
-Imports System.Text
+﻿Imports System.ComponentModel
 Imports System.Net
+Imports System.Net.NetworkInformation
 Imports System.Net.Sockets
-Imports System.ComponentModel
-Imports System.Windows.Forms.DataVisualization.Charting
+Imports System.Text
 
 Public Class PingIP
     Public Property RequestedAddress As String

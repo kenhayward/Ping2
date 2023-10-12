@@ -1,11 +1,8 @@
-﻿Imports System.Threading
-Imports System.ComponentModel
+﻿Imports System.ComponentModel
+Imports System.Threading
 Imports System.Windows.Forms.DataVisualization.Charting
-Imports Newtonsoft.Json.Linq
 Imports Newtonsoft.Json
-Imports System.Web.UI.WebControls
-Imports System.Net.NetworkInformation
-Imports System.Windows.Forms.VisualStyles.VisualStyleElement
+Imports Newtonsoft.Json.Linq
 
 Public Class frmMain
 #Region "Class Variables"

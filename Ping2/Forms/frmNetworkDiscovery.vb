@@ -1,6 +1,4 @@
-﻿Imports System.Threading
-
-Public Class frmNetworkDiscovery
+﻿Public Class frmNetworkDiscovery
     Public Property ClienList As UnifiClientList
     Public Property DeviceList As UnifiDeviceList
     Private Sub PingsComplete()

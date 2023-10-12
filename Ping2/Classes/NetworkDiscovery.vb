@@ -59,28 +59,28 @@ Public Class NetworkDiscovery
                 End SyncLock
             End If
             If Not Clients.ContainsKey(ip) Then
-                    Clients.Add(ip, macaddres)
-                End If
+                Clients.Add(ip, macaddres)
             End If
-            PingsLeft -= 1
+        End If
+        PingsLeft -= 1
         If PingsLeft = 0 Then
             RaiseEvent Pingscomplete()
         End If
     End Sub
 
     Public Function GetHostName(ByVal ipAddress As String) As String
-            Try
-                Dim entry As IPHostEntry = Dns.GetHostEntry(ipAddress)
+        Try
+            Dim entry As IPHostEntry = Dns.GetHostEntry(ipAddress)
 
-                If entry IsNot Nothing Then
-                    Return entry.HostName
-                End If
+            If entry IsNot Nothing Then
+                Return entry.HostName
+            End If
 
-            Catch __unusedSocketException1__ As SocketException
-            End Try
+        Catch __unusedSocketException1__ As SocketException
+        End Try
 
-            Return Nothing
-        End Function
+        Return Nothing
+    End Function
 
     Public Function GetMacAddress(ByVal ipAddress As String) As String
         Dim macAddress As String
