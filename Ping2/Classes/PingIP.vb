@@ -52,30 +52,6 @@ Public Class PingIP
         End Try
 
     End Sub
-    Public Shared Sub GetHostnames(sender As Object, e As DoWorkEventArgs)
-        Dim Pinglist As Pinglist = e.Argument
-        For Each pingKVP In Pinglist
-            Dim Pingip = pingKVP.Value
-            sender.ReportProgress(1, "Resolving Hostname for " & Pingip.FriendlyName & " (" & Pingip.IPAddress & ")")
-            Dim thisWorker = New BackgroundWorker
-            AddHandler thisWorker.DoWork, AddressOf Pingip.GetHostName
-            thisWorker.RunWorkerAsync(argument:=Pingip)
-        Next
-    End Sub
-    Public Shared Event HostNameUpdated(Pingip As PingIP)
-    Private Shared Sub GetHostName(sender As Object, e As DoWorkEventArgs)
-        Try
-            Dim PIngip = e.Argument
-            Dim entry As IPHostEntry = Dns.GetHostEntry(PIngip.IPAddress)
-            If entry IsNot Nothing Then
-                PIngip.HostName = entry.HostName
-            Else
-                PIngip.Hostname = "<Error>"
-            End If
-            RaiseEvent HostNameUpdated(PIngip)
-        Catch ex As SocketException
-        End Try
-    End Sub
 
     Private Sub StartPing(sender As Object, e As DoWorkEventArgs)
 
@@ -123,8 +99,9 @@ Public Class PingIP
             PingIp.Success = False
             PingIp.Failures += 1
         End If
-
-        Worker.ReportProgress(1, PingIp)
+        If Not Worker.CancellationPending Then
+            Worker.ReportProgress(1, PingIp)
+        End If
     End Sub
 
 

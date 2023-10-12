@@ -4,6 +4,8 @@ Imports System.Windows.Forms.DataVisualization.Charting
 Imports Newtonsoft.Json.Linq
 Imports Newtonsoft.Json
 Imports System.Web.UI.WebControls
+Imports System.Net.NetworkInformation
+Imports System.Windows.Forms.VisualStyles.VisualStyleElement
 
 Public Class frmMain
 #Region "Class Variables"
@@ -108,7 +110,7 @@ Public Class frmMain
             End If
             lstIP.UpdateItem(MyItem)
             If Autosave Then SaveIPList(IPListFile)
-            UpdateStatus()
+            'UpdateStatus()
         End If
     End Sub
 #End Region
@@ -125,11 +127,11 @@ Public Class frmMain
             RefreshWorker = New BackgroundWorker With {.WorkerReportsProgress = True, .WorkerSupportsCancellation = True}
             RefreshWorker.RunWorkerAsync()
             SetbtnToStop()
-            UpdateDNSNames() ' Do it once
+            'UpdateDNSNames() ' Do it once
         Else
             If isBtnPlay() Then
                 RefreshWorker.RunWorkerAsync()
-                UpdateDNSNames() ' Do it once
+                'UpdateDNSNames() ' Do it once
                 SetbtnToStop()
             Else
                 RefreshNow = True
@@ -345,7 +347,7 @@ Public Class frmMain
                 StartWorker()
 
                 SetIPListFile(MySave.FileName)
-                UpdateStatus()
+                'UpdateStatus()
             End SyncLock
             Me.Cursor = Cursors.Default
         End If
@@ -364,8 +366,12 @@ Public Class frmMain
         UpdateStatus("Ready")
     End Sub
     Private Sub UpdateStatus(Status As String)
-        Me.lblStatus.Text = Status
-        Me.StatusStrip1.Refresh()
+        If Me.InvokeRequired Then
+            Me.Invoke(Sub() UpdateStatus(Status))
+        Else
+            Me.lblStatus.Text = Status
+            Me.StatusStrip1.Refresh()
+        End If
     End Sub
 
     Private Sub lstContextMenu_Opening(sender As Object, e As CancelEventArgs) Handles lstContextMenu.Opening
@@ -586,7 +592,7 @@ Public Class frmMain
                 Me.lstClient.Items.Add(MyItem)
             Next
         End If
-        UpdateStatus()
+        'UpdateStatus()
         Return Success
     End Function
 
@@ -719,19 +725,36 @@ Public Class frmMain
         MyForm.ShowDialog()
 
     End Sub
-    Private Sub UpdateDNSNames()
-        Dim Myworker As New BackgroundWorker With {.WorkerReportsProgress = True}
-        AddHandler PingIP.HostNameUpdated, AddressOf UpdateListView
-        AddHandler Myworker.DoWork, AddressOf PingIP.GetHostnames
-        Myworker.RunWorkerAsync(argument:=PingList)
-    End Sub
+
 
     Private Sub UpdateHostnamesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles UpdateHostnamesToolStripMenuItem.Click, ToolStripBtnUpdateHostnames.Click
         UpdateDNSNames()
     End Sub
 
 
+#End Region
+#Region "Update Host names"
+    Private MyDNS As DNSUpdater
+    Private Sub UpdateDNSNames()
+        MyDNS = New DNSUpdater
+        AddHandler MyDNS.HostNameUpdated, AddressOf UpdateHostName
+        AddHandler MyDNS.UpdateStatus, AddressOf UpdateStatus
+        AddHandler MyDNS.DNSComplete, AddressOf DNSComplete
+        MyDNS.UpdateDNSNames(PingList)
+    End Sub
 
-
+    Private Sub UpdateHostName(Pingip As PingIP)
+        If Me.InvokeRequired Then
+            Me.Invoke(Sub() UpdateHostName(Pingip))
+        Else
+            Me.ProgressBar1.Maximum = PingList.Count
+            Me.ProgressBar1.Value = MyDNS.ActiveWorkerCount
+            Me.ProgressBar1.ToolTipText = "Remaining " & MyDNS.ActiveWorkerCount.ToString
+            UpdateListView(Pingip)
+        End If
+    End Sub
+    Private Sub DNSComplete()
+        UpdateStatus("DNS Update Completed")
+    End Sub
 #End Region
 End Class
