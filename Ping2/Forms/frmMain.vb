@@ -365,7 +365,7 @@ Public Class frmMain
     Private Sub UpdateStatus()
         UpdateStatus("Ready")
     End Sub
-    Private Sub UpdateStatus(Status As String)
+    Private Sub UpdateStatus(Status As String) Handles MyDNS.UpdateStatus
         If Me.InvokeRequired Then
             Me.Invoke(Sub() UpdateStatus(Status))
         Else
@@ -734,27 +734,41 @@ Public Class frmMain
 
 #End Region
 #Region "Update Host names"
-    Private MyDNS As DNSUpdater
+    Private WithEvents MyDNS As New DNSUpdater
     Private Sub UpdateDNSNames()
-        MyDNS = New DNSUpdater
-        AddHandler MyDNS.HostNameUpdated, AddressOf UpdateHostName
-        AddHandler MyDNS.UpdateStatus, AddressOf UpdateStatus
-        AddHandler MyDNS.DNSComplete, AddressOf DNSComplete
+        If MyDNS.ActiveWorkerCount > 0 Then
+            UpdateStatus("DNS Updater already running.")
+            Exit Sub
+        End If
+        Me.UpdateHostnamesToolStripMenuItem.Enabled = False
+        Me.ToolStripBtnUpdateHostnames.Enabled = False
+        Me.ProgressLbl.Text = " Updating Hostnames "
+        Me.ProgressBar1.Visible = True
+        Me.ProgressLbl.Visible = True
+
         MyDNS.UpdateDNSNames(PingList)
     End Sub
 
-    Private Sub UpdateHostName(Pingip As PingIP)
+    Private Sub UpdateHostName(Pingip As PingIP) Handles MyDNS.HostNameUpdated
         If Me.InvokeRequired Then
             Me.Invoke(Sub() UpdateHostName(Pingip))
         Else
+
             Me.ProgressBar1.Maximum = PingList.Count
-            Me.ProgressBar1.Value = MyDNS.ActiveWorkerCount
+            Me.ProgressBar1.Value = (PingList.Count - MyDNS.ActiveWorkerCount)
             Me.ProgressBar1.ToolTipText = "Remaining " & MyDNS.ActiveWorkerCount.ToString
             UpdateListView(Pingip)
         End If
     End Sub
-    Private Sub DNSComplete()
+    Private Sub DNSComplete() Handles MyDNS.DNSComplete
+        Me.UpdateHostnamesToolStripMenuItem.Enabled = True
+        Me.ToolStripBtnUpdateHostnames.Enabled = True
+        Me.ProgressLbl.Text = ""
+        Me.ProgressBar1.Visible = False
+        Me.ProgressLbl.Visible = False
+
         UpdateStatus("DNS Update Completed")
     End Sub
+
 #End Region
 End Class

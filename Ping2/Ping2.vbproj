@@ -49,7 +49,7 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Resources\Google-Noto-Emoji-Activities-52744-ping-pong.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\Ping.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Json.Net, Version=1.0.33.1, Culture=neutral, processorArchitecture=MSIL">
@@ -221,7 +221,7 @@
     <None Include="Resources\CheckBox Unchecked.png" />
     <None Include="Resources\AddToChart.png" />
     <None Include="Resources\dns.png" />
-    <Content Include="Resources\Google-Noto-Emoji-Activities-52744-ping-pong.ico" />
+    <Content Include="Resources\Ping.ico" />
     <None Include="Resources\Play.png" />
     <None Include="Resources\Stop.png" />
   </ItemGroup>
