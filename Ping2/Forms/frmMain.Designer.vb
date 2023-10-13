@@ -298,13 +298,13 @@ Partial Class frmMain
         '
         Me.ShowChartToolStripMenuItem.Name = "ShowChartToolStripMenuItem"
         Me.ShowChartToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.T), System.Windows.Forms.Keys)
-        Me.ShowChartToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ShowChartToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
         Me.ShowChartToolStripMenuItem.Text = "Show Chart"
         '
         'toolRefreshUNIFI
         '
         Me.toolRefreshUNIFI.Name = "toolRefreshUNIFI"
-        Me.toolRefreshUNIFI.Size = New System.Drawing.Size(180, 22)
+        Me.toolRefreshUNIFI.Size = New System.Drawing.Size(175, 22)
         Me.toolRefreshUNIFI.Text = "Refresh UNIFI Lists"
         '
         'btnPlayStop
@@ -824,7 +824,7 @@ Partial Class frmMain
         'btnShowChart
         '
         Me.btnShowChart.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.btnShowChart.Image = CType(resources.GetObject("btnShowChart.Image"), System.Drawing.Image)
+        Me.btnShowChart.Image = Global.Ping.My.Resources.Resources.Chart
         Me.btnShowChart.ImageTransparentColor = System.Drawing.Color.Magenta
         Me.btnShowChart.Name = "btnShowChart"
         Me.btnShowChart.Size = New System.Drawing.Size(23, 22)

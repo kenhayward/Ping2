@@ -215,7 +215,6 @@
     <None Include="Resources\add1.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Chart1.png" />
     <None Include="Resources\Chart.png" />
     <None Include="Resources\CheckBox Checked.png" />
     <None Include="Resources\CheckBox Unchecked.png" />
