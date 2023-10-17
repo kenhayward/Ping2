@@ -62,6 +62,7 @@ Partial Class frmMain
         ProgressBar1 = New ToolStripProgressBar()
         btnResetGraph = New Button()
         pnlChart = New Panel()
+        GraphControl1 = New Unvell.UIControl.PlainGraph.GraphControl()
         TabMain = New TabControl()
         TabPage1 = New TabPage()
         lstIP = New ListViewX()
@@ -77,7 +78,10 @@ Partial Class frmMain
         ColumnHeader9 = New ColumnHeader()
         Splitter1 = New Splitter()
         TabUnifiDevices = New TabPage()
+        TabDevice = New TabControl()
+        TabPage2 = New TabPage()
         lblDevicedetail = New TextBox()
+        TabPage3 = New TabPage()
         Splitter3 = New Splitter()
         lstUnifiDevices = New ListView()
         ColumnHeader11 = New ColumnHeader()
@@ -91,6 +95,7 @@ Partial Class frmMain
         ColumnHeader18 = New ColumnHeader()
         DeviceContextStrip = New ContextMenuStrip(components)
         AddRemoveFromPingListToolStripMenuItem = New ToolStripMenuItem()
+        mnuGetLogs = New ToolStripMenuItem()
         TabUnifiClients = New TabPage()
         lblFullDetails = New Label()
         Splitter2 = New Splitter()
@@ -121,6 +126,7 @@ Partial Class frmMain
         btnShowChart = New ToolStripButton()
         mnuAddToChart = New ToolStripButton()
         imgListPlayStop = New ImageList(components)
+        lblMessages = New TextBox()
         lstContextMenu.SuspendLayout()
         CType(NumInterval, ISupportInitialize).BeginInit()
         MenuStrip1.SuspendLayout()
@@ -129,6 +135,9 @@ Partial Class frmMain
         TabMain.SuspendLayout()
         TabPage1.SuspendLayout()
         TabUnifiDevices.SuspendLayout()
+        TabDevice.SuspendLayout()
+        TabPage2.SuspendLayout()
+        TabPage3.SuspendLayout()
         DeviceContextStrip.SuspendLayout()
         TabUnifiClients.SuspendLayout()
         ClientContextStrip.SuspendLayout()
@@ -331,7 +340,7 @@ Partial Class frmMain
         ' LblCurrentFile
         ' 
         LblCurrentFile.Name = "LblCurrentFile"
-        LblCurrentFile.Size = New Size(1103, 19)
+        LblCurrentFile.Size = New Size(1134, 19)
         LblCurrentFile.Spring = True
         LblCurrentFile.TextAlign = ContentAlignment.MiddleRight
         ' 
@@ -359,6 +368,7 @@ Partial Class frmMain
         ' 
         ' pnlChart
         ' 
+        pnlChart.Controls.Add(GraphControl1)
         pnlChart.Controls.Add(btnResetGraph)
         pnlChart.Dock = DockStyle.Right
         pnlChart.Location = New Point(847, 3)
@@ -367,6 +377,22 @@ Partial Class frmMain
         pnlChart.Size = New Size(448, 433)
         pnlChart.TabIndex = 20
         pnlChart.Visible = False
+        ' 
+        ' GraphControl1
+        ' 
+        GraphControl1.BackColor = Color.White
+        GraphControl1.DataSource = Nothing
+        GraphControl1.Dock = DockStyle.Fill
+        GraphControl1.GraphMargin = New Padding(0)
+        GraphControl1.GraphType = Unvell.UIControl.PlainGraph.PlainGraphType.Line
+        GraphControl1.LegendFont = New Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point)
+        GraphControl1.Location = New Point(0, 0)
+        GraphControl1.Name = "GraphControl1"
+        GraphControl1.Size = New Size(448, 433)
+        GraphControl1.TabIndex = 20
+        GraphControl1.Text = "GraphControl1"
+        GraphControl1.XRulerFont = New Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point)
+        GraphControl1.YRulerFont = New Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point)
         ' 
         ' TabMain
         ' 
@@ -487,7 +513,7 @@ Partial Class frmMain
         ' 
         ' TabUnifiDevices
         ' 
-        TabUnifiDevices.Controls.Add(lblDevicedetail)
+        TabUnifiDevices.Controls.Add(TabDevice)
         TabUnifiDevices.Controls.Add(Splitter3)
         TabUnifiDevices.Controls.Add(lstUnifiDevices)
         TabUnifiDevices.Location = New Point(4, 24)
@@ -499,18 +525,51 @@ Partial Class frmMain
         TabUnifiDevices.Text = "Unifi Devices"
         TabUnifiDevices.UseVisualStyleBackColor = True
         ' 
+        ' TabDevice
+        ' 
+        TabDevice.Controls.Add(TabPage2)
+        TabDevice.Controls.Add(TabPage3)
+        TabDevice.Dock = DockStyle.Fill
+        TabDevice.Location = New Point(4, 262)
+        TabDevice.Name = "TabDevice"
+        TabDevice.SelectedIndex = 0
+        TabDevice.Size = New Size(1291, 174)
+        TabDevice.TabIndex = 9
+        ' 
+        ' TabPage2
+        ' 
+        TabPage2.Controls.Add(lblDevicedetail)
+        TabPage2.Location = New Point(4, 24)
+        TabPage2.Name = "TabPage2"
+        TabPage2.Padding = New Padding(3)
+        TabPage2.Size = New Size(1283, 146)
+        TabPage2.TabIndex = 0
+        TabPage2.Text = "Device Detail"
+        TabPage2.UseVisualStyleBackColor = True
+        ' 
         ' lblDevicedetail
         ' 
         lblDevicedetail.BorderStyle = BorderStyle.None
         lblDevicedetail.Dock = DockStyle.Fill
-        lblDevicedetail.Location = New Point(4, 262)
+        lblDevicedetail.Location = New Point(3, 3)
         lblDevicedetail.Margin = New Padding(4, 3, 4, 3)
         lblDevicedetail.Multiline = True
         lblDevicedetail.Name = "lblDevicedetail"
         lblDevicedetail.ReadOnly = True
         lblDevicedetail.ScrollBars = ScrollBars.Both
-        lblDevicedetail.Size = New Size(1291, 174)
+        lblDevicedetail.Size = New Size(1277, 140)
         lblDevicedetail.TabIndex = 8
+        ' 
+        ' TabPage3
+        ' 
+        TabPage3.Controls.Add(lblMessages)
+        TabPage3.Location = New Point(4, 24)
+        TabPage3.Name = "TabPage3"
+        TabPage3.Padding = New Padding(3)
+        TabPage3.Size = New Size(1283, 146)
+        TabPage3.TabIndex = 1
+        TabPage3.Text = "Message Logs"
+        TabPage3.UseVisualStyleBackColor = True
         ' 
         ' Splitter3
         ' 
@@ -580,15 +639,21 @@ Partial Class frmMain
         ' 
         ' DeviceContextStrip
         ' 
-        DeviceContextStrip.Items.AddRange(New ToolStripItem() {AddRemoveFromPingListToolStripMenuItem})
+        DeviceContextStrip.Items.AddRange(New ToolStripItem() {AddRemoveFromPingListToolStripMenuItem, mnuGetLogs})
         DeviceContextStrip.Name = "DeviceContextStrip"
-        DeviceContextStrip.Size = New Size(197, 26)
+        DeviceContextStrip.Size = New Size(208, 48)
         ' 
         ' AddRemoveFromPingListToolStripMenuItem
         ' 
         AddRemoveFromPingListToolStripMenuItem.Name = "AddRemoveFromPingListToolStripMenuItem"
-        AddRemoveFromPingListToolStripMenuItem.Size = New Size(196, 22)
+        AddRemoveFromPingListToolStripMenuItem.Size = New Size(207, 22)
         AddRemoveFromPingListToolStripMenuItem.Text = "&Add Device to Ping List"
+        ' 
+        ' mnuGetLogs
+        ' 
+        mnuGetLogs.Name = "mnuGetLogs"
+        mnuGetLogs.Size = New Size(207, 22)
+        mnuGetLogs.Text = "&Get Device Log Messages"
         ' 
         ' TabUnifiClients
         ' 
@@ -826,6 +891,19 @@ Partial Class frmMain
         imgListPlayStop.Images.SetKeyName(0, "Play")
         imgListPlayStop.Images.SetKeyName(1, "Stop")
         ' 
+        ' lblMessages
+        ' 
+        lblMessages.BorderStyle = BorderStyle.None
+        lblMessages.Dock = DockStyle.Fill
+        lblMessages.Location = New Point(3, 3)
+        lblMessages.Margin = New Padding(4, 3, 4, 3)
+        lblMessages.Multiline = True
+        lblMessages.Name = "lblMessages"
+        lblMessages.ReadOnly = True
+        lblMessages.ScrollBars = ScrollBars.Both
+        lblMessages.Size = New Size(1277, 140)
+        lblMessages.TabIndex = 9
+        ' 
         ' frmMain
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
@@ -851,7 +929,11 @@ Partial Class frmMain
         TabMain.ResumeLayout(False)
         TabPage1.ResumeLayout(False)
         TabUnifiDevices.ResumeLayout(False)
-        TabUnifiDevices.PerformLayout()
+        TabDevice.ResumeLayout(False)
+        TabPage2.ResumeLayout(False)
+        TabPage2.PerformLayout()
+        TabPage3.ResumeLayout(False)
+        TabPage3.PerformLayout()
         DeviceContextStrip.ResumeLayout(False)
         TabUnifiClients.ResumeLayout(False)
         ClientContextStrip.ResumeLayout(False)
@@ -955,4 +1037,10 @@ Partial Class frmMain
     Friend WithEvents ToolStripBtnUpdateHostnames As ToolStripButton
     Friend WithEvents ProgressBar1 As ToolStripProgressBar
     Friend WithEvents ProgressLbl As ToolStripStatusLabel
+    Friend WithEvents GraphControl1 As Unvell.UIControl.PlainGraph.GraphControl
+    Friend WithEvents mnuGetLogs As ToolStripMenuItem
+    Friend WithEvents TabDevice As TabControl
+    Friend WithEvents TabPage2 As TabPage
+    Friend WithEvents TabPage3 As TabPage
+    Friend WithEvents lblMessages As TextBox
 End Class

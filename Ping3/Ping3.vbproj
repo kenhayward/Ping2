@@ -96,4 +96,8 @@
     <Compile Remove="frm Main.vb" />
     <EmbeddedResource Remove="frm Main.resx" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\PlainGraph\PlainGraph\PlainGraph.csproj" />
+    <ProjectReference Include="..\..\SSH.NET\src\Renci.SshNet\Renci.SshNet.csproj" />
+  </ItemGroup>
 </Project>

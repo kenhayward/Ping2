@@ -503,6 +503,7 @@ Public Class frmMain
             Catch ex As Exception
                 Me.lblDevicedetail.Text = thisDevice.FullDetails
             End Try
+            Me.lblMessages.Text = thisDevice.Logs
         End If
     End Sub
 
@@ -548,9 +549,9 @@ Public Class frmMain
         End If
         If UnifiController.LoggedIn Then
             If UnifiController.GetDeviceList() Then
-                UpdateStatus("UNIFI Devices Retrieved")
+                UpdateStatus(UnifiController.DeviceList.Count & " UNIFI Devices Retrieved")
                 If UnifiController.GetClientList() Then
-                    UpdateStatus("UNIFI Clients Retrieved")
+                    UpdateStatus(UnifiController.ClientList.Count & " UNIFI Clients Retrieved")
                     Success = True
                 End If
             End If
@@ -764,6 +765,32 @@ Public Class frmMain
         Me.ProgressLbl.Visible = False
 
         UpdateStatus("DNS Update Completed")
+    End Sub
+
+    Private Sub DeviceContextStrip_Opening(sender As Object, e As CancelEventArgs) Handles DeviceContextStrip.Opening
+        If lstUnifiDevices.SelectedItems.Count > 0 Then
+            mnuGetLogs.Enabled = True
+        Else
+            mnuGetLogs.Enabled = False
+        End If
+    End Sub
+
+    Private Sub mnuGetLogs_Click(sender As Object, e As EventArgs) Handles mnuGetLogs.Click
+        If lstUnifiDevices.SelectedItems.Count > 0 Then
+            Me.Cursor = Cursors.WaitCursor
+            For Each item In lstUnifiDevices.SelectedItems
+                Dim Device As UnifiDevice = item.Tag
+                UpdateStatus("Getting Unifi Logs for " & Device.Name)
+                Dim Result = Device.GetSSHLogs(UnifiController)
+                If Result Is Nothing Then
+                    UpdateStatus("Failed to get Unifi Logs for " & Device.Name)
+                Else
+                    UpdateStatus("Retrieved Unifi Logs for " & Device.Name)
+                End If
+            Next
+            Me.Cursor = Cursors.Default
+
+        End If
     End Sub
 
 #End Region

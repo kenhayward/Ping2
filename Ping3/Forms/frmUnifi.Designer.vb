@@ -22,252 +22,311 @@ Partial Class frmUnifi
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.btnCancel = New System.Windows.Forms.Button()
-        Me.btnOK = New System.Windows.Forms.Button()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.txtURLBase = New System.Windows.Forms.TextBox()
-        Me.txtUser = New System.Windows.Forms.TextBox()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.txtPassword = New System.Windows.Forms.TextBox()
-        Me.Label3 = New System.Windows.Forms.Label()
-        Me.txtSite = New System.Windows.Forms.TextBox()
-        Me.Label4 = New System.Windows.Forms.Label()
-        Me.btnLogin = New System.Windows.Forms.Button()
-        Me.txtEndPoint = New System.Windows.Forms.TextBox()
-        Me.Label5 = New System.Windows.Forms.Label()
-        Me.btnTest = New System.Windows.Forms.Button()
-        Me.Label6 = New System.Windows.Forms.Label()
-        Me.txtResponse = New System.Windows.Forms.TextBox()
-        Me.pnlTest = New System.Windows.Forms.TabControl()
-        Me.TabPage2 = New System.Windows.Forms.TabPage()
-        Me.lblCode = New System.Windows.Forms.Label()
-        Me.lblRequest = New System.Windows.Forms.Label()
-        Me.pnlTest.SuspendLayout()
-        Me.TabPage2.SuspendLayout()
-        Me.SuspendLayout()
-        '
-        'btnCancel
-        '
-        Me.btnCancel.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.btnCancel.Location = New System.Drawing.Point(419, 303)
-        Me.btnCancel.Name = "btnCancel"
-        Me.btnCancel.Size = New System.Drawing.Size(75, 23)
-        Me.btnCancel.TabIndex = 0
-        Me.btnCancel.Text = "Cancel"
-        Me.btnCancel.UseVisualStyleBackColor = True
-        '
-        'btnOK
-        '
-        Me.btnOK.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnOK.Location = New System.Drawing.Point(338, 303)
-        Me.btnOK.Name = "btnOK"
-        Me.btnOK.Size = New System.Drawing.Size(75, 23)
-        Me.btnOK.TabIndex = 1
-        Me.btnOK.Text = "OK"
-        Me.btnOK.UseVisualStyleBackColor = True
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(12, 15)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(56, 13)
-        Me.Label1.TabIndex = 2
-        Me.Label1.Text = "URL Base"
-        '
-        'txtURLBase
-        '
-        Me.txtURLBase.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtURLBase.Location = New System.Drawing.Point(74, 12)
-        Me.txtURLBase.Name = "txtURLBase"
-        Me.txtURLBase.Size = New System.Drawing.Size(420, 20)
-        Me.txtURLBase.TabIndex = 3
-        '
-        'txtUser
-        '
-        Me.txtUser.Location = New System.Drawing.Point(74, 38)
-        Me.txtUser.Name = "txtUser"
-        Me.txtUser.Size = New System.Drawing.Size(174, 20)
-        Me.txtUser.TabIndex = 5
-        '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(12, 41)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(29, 13)
-        Me.Label2.TabIndex = 4
-        Me.Label2.Text = "User"
-        '
-        'txtPassword
-        '
-        Me.txtPassword.Location = New System.Drawing.Point(74, 64)
-        Me.txtPassword.Name = "txtPassword"
-        Me.txtPassword.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
-        Me.txtPassword.Size = New System.Drawing.Size(174, 20)
-        Me.txtPassword.TabIndex = 7
-        '
-        'Label3
-        '
-        Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(12, 67)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(53, 13)
-        Me.Label3.TabIndex = 6
-        Me.Label3.Text = "Password"
-        '
-        'txtSite
-        '
-        Me.txtSite.Location = New System.Drawing.Point(74, 90)
-        Me.txtSite.Name = "txtSite"
-        Me.txtSite.Size = New System.Drawing.Size(174, 20)
-        Me.txtSite.TabIndex = 9
-        '
-        'Label4
-        '
-        Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(12, 93)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(25, 13)
-        Me.Label4.TabIndex = 8
-        Me.Label4.Text = "Site"
-        '
-        'btnLogin
-        '
-        Me.btnLogin.Location = New System.Drawing.Point(254, 90)
-        Me.btnLogin.Name = "btnLogin"
-        Me.btnLogin.Size = New System.Drawing.Size(75, 20)
-        Me.btnLogin.TabIndex = 10
-        Me.btnLogin.Text = "Login"
-        Me.btnLogin.UseVisualStyleBackColor = True
-        '
-        'txtEndPoint
-        '
-        Me.txtEndPoint.Location = New System.Drawing.Point(77, 6)
-        Me.txtEndPoint.Name = "txtEndPoint"
-        Me.txtEndPoint.Size = New System.Drawing.Size(174, 20)
-        Me.txtEndPoint.TabIndex = 12
-        '
-        'Label5
-        '
-        Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(15, 9)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(49, 13)
-        Me.Label5.TabIndex = 11
-        Me.Label5.Text = "Endpoint"
-        '
-        'btnTest
-        '
-        Me.btnTest.Location = New System.Drawing.Point(257, 5)
-        Me.btnTest.Name = "btnTest"
-        Me.btnTest.Size = New System.Drawing.Size(75, 20)
-        Me.btnTest.TabIndex = 13
-        Me.btnTest.Text = "Test"
-        Me.btnTest.UseVisualStyleBackColor = True
-        '
-        'Label6
-        '
-        Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(15, 45)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(55, 13)
-        Me.Label6.TabIndex = 15
-        Me.Label6.Text = "Response"
-        '
-        'txtResponse
-        '
-        Me.txtResponse.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtResponse.Location = New System.Drawing.Point(77, 42)
-        Me.txtResponse.Multiline = True
-        Me.txtResponse.Name = "txtResponse"
-        Me.txtResponse.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        Me.txtResponse.Size = New System.Drawing.Size(391, 107)
-        Me.txtResponse.TabIndex = 14
-        '
-        'pnlTest
-        '
-        Me.pnlTest.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.pnlTest.Controls.Add(Me.TabPage2)
-        Me.pnlTest.Enabled = False
-        Me.pnlTest.Location = New System.Drawing.Point(12, 116)
-        Me.pnlTest.Name = "pnlTest"
-        Me.pnlTest.SelectedIndex = 0
-        Me.pnlTest.Size = New System.Drawing.Size(482, 181)
-        Me.pnlTest.TabIndex = 15
-        '
-        'TabPage2
-        '
-        Me.TabPage2.Controls.Add(Me.lblCode)
-        Me.TabPage2.Controls.Add(Me.lblRequest)
-        Me.TabPage2.Controls.Add(Me.txtResponse)
-        Me.TabPage2.Controls.Add(Me.Label5)
-        Me.TabPage2.Controls.Add(Me.Label6)
-        Me.TabPage2.Controls.Add(Me.txtEndPoint)
-        Me.TabPage2.Controls.Add(Me.btnTest)
-        Me.TabPage2.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage2.Name = "TabPage2"
-        Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(474, 155)
-        Me.TabPage2.TabIndex = 1
-        Me.TabPage2.Text = "Debug Test"
-        Me.TabPage2.UseVisualStyleBackColor = True
-        '
-        'lblCode
-        '
-        Me.lblCode.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.lblCode.Location = New System.Drawing.Point(15, 69)
-        Me.lblCode.Name = "lblCode"
-        Me.lblCode.Size = New System.Drawing.Size(55, 80)
-        Me.lblCode.TabIndex = 17
-        '
-        'lblRequest
-        '
-        Me.lblRequest.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lblRequest.Location = New System.Drawing.Point(355, 11)
-        Me.lblRequest.Name = "lblRequest"
-        Me.lblRequest.Size = New System.Drawing.Size(113, 23)
-        Me.lblRequest.TabIndex = 16
-        '
-        'frmUnifi
-        '
-        Me.AcceptButton = Me.btnTest
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
-        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.CancelButton = Me.btnCancel
-        Me.ClientSize = New System.Drawing.Size(506, 338)
-        Me.Controls.Add(Me.pnlTest)
-        Me.Controls.Add(Me.btnLogin)
-        Me.Controls.Add(Me.txtSite)
-        Me.Controls.Add(Me.Label4)
-        Me.Controls.Add(Me.txtPassword)
-        Me.Controls.Add(Me.Label3)
-        Me.Controls.Add(Me.txtUser)
-        Me.Controls.Add(Me.Label2)
-        Me.Controls.Add(Me.txtURLBase)
-        Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.btnOK)
-        Me.Controls.Add(Me.btnCancel)
-        Me.Margin = New System.Windows.Forms.Padding(1)
-        Me.MaximizeBox = False
-        Me.MinimizeBox = False
-        Me.Name = "frmUnifi"
-        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
-        Me.Text = "Setup Unifi Controller"
-        Me.pnlTest.ResumeLayout(False)
-        Me.TabPage2.ResumeLayout(False)
-        Me.TabPage2.PerformLayout()
-        Me.ResumeLayout(False)
-        Me.PerformLayout()
-
+        btnCancel = New Button()
+        btnOK = New Button()
+        Label1 = New Label()
+        txtURLBase = New TextBox()
+        txtUser = New TextBox()
+        Label2 = New Label()
+        txtPassword = New TextBox()
+        Label3 = New Label()
+        txtSite = New TextBox()
+        Label4 = New Label()
+        btnLogin = New Button()
+        txtEndPoint = New TextBox()
+        Label5 = New Label()
+        btnTest = New Button()
+        Label6 = New Label()
+        txtResponse = New TextBox()
+        pnlTest = New TabControl()
+        TabPage2 = New TabPage()
+        lblCode = New Label()
+        lblRequest = New Label()
+        txtDevicePassword = New TextBox()
+        Label7 = New Label()
+        txtDeviceUser = New TextBox()
+        Label8 = New Label()
+        pnlTest.SuspendLayout()
+        TabPage2.SuspendLayout()
+        SuspendLayout()
+        ' 
+        ' btnCancel
+        ' 
+        btnCancel.Anchor = AnchorStyles.Bottom Or AnchorStyles.Right
+        btnCancel.DialogResult = DialogResult.Cancel
+        btnCancel.Location = New Point(486, 455)
+        btnCancel.Margin = New Padding(4, 3, 4, 3)
+        btnCancel.Name = "btnCancel"
+        btnCancel.Size = New Size(88, 27)
+        btnCancel.TabIndex = 0
+        btnCancel.Text = "Cancel"
+        btnCancel.UseVisualStyleBackColor = True
+        ' 
+        ' btnOK
+        ' 
+        btnOK.Anchor = AnchorStyles.Bottom Or AnchorStyles.Right
+        btnOK.Location = New Point(391, 455)
+        btnOK.Margin = New Padding(4, 3, 4, 3)
+        btnOK.Name = "btnOK"
+        btnOK.Size = New Size(88, 27)
+        btnOK.TabIndex = 1
+        btnOK.Text = "OK"
+        btnOK.UseVisualStyleBackColor = True
+        ' 
+        ' Label1
+        ' 
+        Label1.AutoSize = True
+        Label1.Location = New Point(14, 17)
+        Label1.Margin = New Padding(4, 0, 4, 0)
+        Label1.Name = "Label1"
+        Label1.Size = New Size(55, 15)
+        Label1.TabIndex = 2
+        Label1.Text = "URL Base"
+        ' 
+        ' txtURLBase
+        ' 
+        txtURLBase.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
+        txtURLBase.Location = New Point(86, 14)
+        txtURLBase.Margin = New Padding(4, 3, 4, 3)
+        txtURLBase.Name = "txtURLBase"
+        txtURLBase.Size = New Size(486, 23)
+        txtURLBase.TabIndex = 3
+        ' 
+        ' txtUser
+        ' 
+        txtUser.Location = New Point(86, 44)
+        txtUser.Margin = New Padding(4, 3, 4, 3)
+        txtUser.Name = "txtUser"
+        txtUser.Size = New Size(202, 23)
+        txtUser.TabIndex = 5
+        ' 
+        ' Label2
+        ' 
+        Label2.AutoSize = True
+        Label2.Location = New Point(14, 47)
+        Label2.Margin = New Padding(4, 0, 4, 0)
+        Label2.Name = "Label2"
+        Label2.Size = New Size(30, 15)
+        Label2.TabIndex = 4
+        Label2.Text = "User"
+        ' 
+        ' txtPassword
+        ' 
+        txtPassword.Location = New Point(86, 74)
+        txtPassword.Margin = New Padding(4, 3, 4, 3)
+        txtPassword.Name = "txtPassword"
+        txtPassword.PasswordChar = "*"c
+        txtPassword.Size = New Size(202, 23)
+        txtPassword.TabIndex = 7
+        ' 
+        ' Label3
+        ' 
+        Label3.AutoSize = True
+        Label3.Location = New Point(14, 77)
+        Label3.Margin = New Padding(4, 0, 4, 0)
+        Label3.Name = "Label3"
+        Label3.Size = New Size(57, 15)
+        Label3.TabIndex = 6
+        Label3.Text = "Password"
+        ' 
+        ' txtSite
+        ' 
+        txtSite.Location = New Point(86, 104)
+        txtSite.Margin = New Padding(4, 3, 4, 3)
+        txtSite.Name = "txtSite"
+        txtSite.Size = New Size(202, 23)
+        txtSite.TabIndex = 9
+        ' 
+        ' Label4
+        ' 
+        Label4.AutoSize = True
+        Label4.Location = New Point(14, 107)
+        Label4.Margin = New Padding(4, 0, 4, 0)
+        Label4.Name = "Label4"
+        Label4.Size = New Size(26, 15)
+        Label4.TabIndex = 8
+        Label4.Text = "Site"
+        ' 
+        ' btnLogin
+        ' 
+        btnLogin.Location = New Point(481, 133)
+        btnLogin.Margin = New Padding(4, 3, 4, 3)
+        btnLogin.Name = "btnLogin"
+        btnLogin.Size = New Size(88, 23)
+        btnLogin.TabIndex = 10
+        btnLogin.Text = "Login"
+        btnLogin.UseVisualStyleBackColor = True
+        ' 
+        ' txtEndPoint
+        ' 
+        txtEndPoint.Location = New Point(90, 7)
+        txtEndPoint.Margin = New Padding(4, 3, 4, 3)
+        txtEndPoint.Name = "txtEndPoint"
+        txtEndPoint.Size = New Size(202, 23)
+        txtEndPoint.TabIndex = 12
+        ' 
+        ' Label5
+        ' 
+        Label5.AutoSize = True
+        Label5.Location = New Point(18, 10)
+        Label5.Margin = New Padding(4, 0, 4, 0)
+        Label5.Name = "Label5"
+        Label5.Size = New Size(55, 15)
+        Label5.TabIndex = 11
+        Label5.Text = "Endpoint"
+        ' 
+        ' btnTest
+        ' 
+        btnTest.Location = New Point(300, 6)
+        btnTest.Margin = New Padding(4, 3, 4, 3)
+        btnTest.Name = "btnTest"
+        btnTest.Size = New Size(88, 23)
+        btnTest.TabIndex = 13
+        btnTest.Text = "Test"
+        btnTest.UseVisualStyleBackColor = True
+        ' 
+        ' Label6
+        ' 
+        Label6.AutoSize = True
+        Label6.Location = New Point(18, 52)
+        Label6.Margin = New Padding(4, 0, 4, 0)
+        Label6.Name = "Label6"
+        Label6.Size = New Size(57, 15)
+        Label6.TabIndex = 15
+        Label6.Text = "Response"
+        ' 
+        ' txtResponse
+        ' 
+        txtResponse.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
+        txtResponse.Location = New Point(90, 48)
+        txtResponse.Margin = New Padding(4, 3, 4, 3)
+        txtResponse.Multiline = True
+        txtResponse.Name = "txtResponse"
+        txtResponse.ScrollBars = ScrollBars.Both
+        txtResponse.Size = New Size(452, 200)
+        txtResponse.TabIndex = 14
+        ' 
+        ' pnlTest
+        ' 
+        pnlTest.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
+        pnlTest.Controls.Add(TabPage2)
+        pnlTest.Enabled = False
+        pnlTest.Location = New Point(14, 162)
+        pnlTest.Margin = New Padding(4, 3, 4, 3)
+        pnlTest.Name = "pnlTest"
+        pnlTest.SelectedIndex = 0
+        pnlTest.Size = New Size(559, 286)
+        pnlTest.TabIndex = 15
+        ' 
+        ' TabPage2
+        ' 
+        TabPage2.Controls.Add(lblCode)
+        TabPage2.Controls.Add(lblRequest)
+        TabPage2.Controls.Add(txtResponse)
+        TabPage2.Controls.Add(Label5)
+        TabPage2.Controls.Add(Label6)
+        TabPage2.Controls.Add(txtEndPoint)
+        TabPage2.Controls.Add(btnTest)
+        TabPage2.Location = New Point(4, 24)
+        TabPage2.Margin = New Padding(4, 3, 4, 3)
+        TabPage2.Name = "TabPage2"
+        TabPage2.Padding = New Padding(4, 3, 4, 3)
+        TabPage2.Size = New Size(551, 258)
+        TabPage2.TabIndex = 1
+        TabPage2.Text = "Debug Test"
+        TabPage2.UseVisualStyleBackColor = True
+        ' 
+        ' lblCode
+        ' 
+        lblCode.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left
+        lblCode.Location = New Point(18, 80)
+        lblCode.Margin = New Padding(4, 0, 4, 0)
+        lblCode.Name = "lblCode"
+        lblCode.Size = New Size(64, 169)
+        lblCode.TabIndex = 17
+        ' 
+        ' lblRequest
+        ' 
+        lblRequest.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
+        lblRequest.Location = New Point(414, 13)
+        lblRequest.Margin = New Padding(4, 0, 4, 0)
+        lblRequest.Name = "lblRequest"
+        lblRequest.Size = New Size(129, 27)
+        lblRequest.TabIndex = 16
+        ' 
+        ' txtDevicePassword
+        ' 
+        txtDevicePassword.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
+        txtDevicePassword.Location = New Point(401, 77)
+        txtDevicePassword.Margin = New Padding(4, 3, 4, 3)
+        txtDevicePassword.Name = "txtDevicePassword"
+        txtDevicePassword.PasswordChar = "*"c
+        txtDevicePassword.Size = New Size(171, 23)
+        txtDevicePassword.TabIndex = 19
+        ' 
+        ' Label7
+        ' 
+        Label7.AutoSize = True
+        Label7.Location = New Point(298, 80)
+        Label7.Margin = New Padding(4, 0, 4, 0)
+        Label7.Name = "Label7"
+        Label7.Size = New Size(95, 15)
+        Label7.TabIndex = 18
+        Label7.Text = "Device Password"
+        ' 
+        ' txtDeviceUser
+        ' 
+        txtDeviceUser.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
+        txtDeviceUser.Location = New Point(401, 47)
+        txtDeviceUser.Margin = New Padding(4, 3, 4, 3)
+        txtDeviceUser.Name = "txtDeviceUser"
+        txtDeviceUser.Size = New Size(171, 23)
+        txtDeviceUser.TabIndex = 17
+        ' 
+        ' Label8
+        ' 
+        Label8.AutoSize = True
+        Label8.Location = New Point(298, 50)
+        Label8.Margin = New Padding(4, 0, 4, 0)
+        Label8.Name = "Label8"
+        Label8.Size = New Size(68, 15)
+        Label8.TabIndex = 16
+        Label8.Text = "Device User"
+        ' 
+        ' frmUnifi
+        ' 
+        AcceptButton = btnTest
+        AutoScaleDimensions = New SizeF(7F, 15F)
+        AutoScaleMode = AutoScaleMode.Font
+        CancelButton = btnCancel
+        ClientSize = New Size(587, 495)
+        Controls.Add(txtDevicePassword)
+        Controls.Add(Label7)
+        Controls.Add(txtDeviceUser)
+        Controls.Add(Label8)
+        Controls.Add(pnlTest)
+        Controls.Add(btnLogin)
+        Controls.Add(txtSite)
+        Controls.Add(Label4)
+        Controls.Add(txtPassword)
+        Controls.Add(Label3)
+        Controls.Add(txtUser)
+        Controls.Add(Label2)
+        Controls.Add(txtURLBase)
+        Controls.Add(Label1)
+        Controls.Add(btnOK)
+        Controls.Add(btnCancel)
+        Margin = New Padding(1)
+        MaximizeBox = False
+        MinimizeBox = False
+        Name = "frmUnifi"
+        StartPosition = FormStartPosition.CenterParent
+        Text = "Setup Unifi Controller"
+        pnlTest.ResumeLayout(False)
+        TabPage2.ResumeLayout(False)
+        TabPage2.PerformLayout()
+        ResumeLayout(False)
+        PerformLayout()
     End Sub
 
     Friend WithEvents btnCancel As Button
@@ -290,4 +349,8 @@ Partial Class frmUnifi
     Friend WithEvents TabPage2 As TabPage
     Friend WithEvents lblCode As Label
     Friend WithEvents lblRequest As Label
+    Friend WithEvents txtDevicePassword As TextBox
+    Friend WithEvents Label7 As Label
+    Friend WithEvents txtDeviceUser As TextBox
+    Friend WithEvents Label8 As Label
 End Class

@@ -11,12 +11,15 @@ Public Class frmUnifi
     Private Const ForwardSlash = "/"
 #End Region
 
-    Private Sub frmUnifi_Load(sender As Object, e As EventArgs) Handles Me.Load
+    Private Sub frmUnifi_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         If Controller.LoadDefaults() Then
             txtPassword.Text = Controller.Password
             txtSite.Text = Controller.Site
             txtURLBase.Text = Controller.URLBase
             txtUser.Text = Controller.UserName
+            txtDevicePassword.Text = Controller.DevicePassword
+            txtDeviceUser.Text = Controller.DeviceUser
+
         End If
     End Sub
     Private Sub SaveFields(UC As UnifiController)
@@ -24,6 +27,8 @@ Public Class frmUnifi
         UC.Site = txtSite.Text.Trim
         UC.URLBase = txtURLBase.Text.Trim
         UC.UserName = Me.txtUser.Text.Trim
+        UC.DevicePassword = txtDevicePassword.Text
+        UC.DeviceUSer = txtDeviceUser.Text
         If Not UC.URLBase.EndsWith(ForwardSlash) Then UC.URLBase &= ForwardSlash
     End Sub
     Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click

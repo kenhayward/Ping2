@@ -14,6 +14,8 @@ Imports RestSharp
     Public Property UserName As String
     Public Property Password As String
     Public Property Site As String
+    Public Property DeviceUser As String
+    Public Property DevicePassword As String
 #End Region
 
 #Region "Non Serialised Properties"
@@ -217,6 +219,7 @@ Imports RestSharp
             Me.ClientList.Clear()
             Me.DeviceList.Clear()
             Me.Token = Nothing
+            Me._LoggedIn = False
             If File.Exists(Filename) Then
                 Using fs As New FileStream(Filename, FileMode.Open, FileAccess.Read)
                     Dim formatter As New BinaryFormatter
@@ -228,6 +231,9 @@ Imports RestSharp
                     Me.Password = MyC.Password
                     Me.Site = MyC.Site
                     Me.URLBase = MyC.URLBase
+                    Me.DevicePassword = MyC.DevicePassword
+                    Me.DeviceUser = MyC.DeviceUser
+
                     Retval = True
                 End Using
             End If
