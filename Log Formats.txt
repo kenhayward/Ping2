@@ -1,0 +1,63 @@
+USW Lite 16 PoE USL16LP
+
+Jan  1 00:00:49 USW-Lite-16-PoE syslog.info syslogd started: BusyBox v1.25.1
+Jan  1 00:00:49 USW-Lite-16-PoE kern.notice kernel: [   48.940000] Port 12 link up
+Jan  1 00:00:49 USW-Lite-16-PoE kern.warn kernel: [   49.050000] Port 12 moving from Disabled to Blocking
+Jan  1 00:00:49 USW-Lite-16-PoE kern.notice kernel: [   49.240000] Port 1 link up
+
+Loft Switch B US8Pl50
+
+Jan  1 00:00:55 LoftSwitchB syslog.info syslogd started: BusyBox v1.25.1
+Jan  1 00:00:55 LoftSwitchB kern.info kernel: [    0.090000] NET: Registered protocol family 1
+Jan  1 00:00:55 LoftSwitchB kern.warn kernel: [   15.010000] pm_init: Initializing Power Management ....
+
+Front Gates  U2HSR
+
+Mon Oct 16 16:25:57 2023 user.info : mcad[5179]: wireless_agg_stats.log_sta_anomalies(): bssid=06:18:d6:e7:2f:37 radio=wifi0 vap=ath1 sta=34:3e:a4:35:ef:b8 satisfaction_now=60 anomalies=tcp_latency
+Mon Oct 16 16:28:13 2023 user.info : mcad[5179]: wireless_agg_stats.log_sta_anomalies(): bssid=06:18:d6:e7:2f:37 radio=wifi0 vap=ath1 sta=34:3e:a4:35:ef:b8 satisfaction_now=60 anomalies=tcp_latency
+Mon Oct 16 16:38:27 2023 user.info : mcad[5179]: wireless_agg_stats.log_sta_anomalies(): bssid=06:18:d6:e7:2f:37 radio=wifi0 vap=ath1 sta=34:3e:a4:35:ef:b8 satisfaction_now=60 anomalies=tcp_latency
+
+Garage U7LT 
+
+Tue Oct 17 14:28:48 2023 daemon.info stahtd: stahtd[3266]: [STA-TRACKER].stahtd_dump_event(): {"message_type":"STA_ASSOC_TRACKER","mac":"00:35:ff:1b:e4:22","vap":"ath0","event_type":"fixup","assoc_status":"0","event_id":"3","arp_reply_gw_seen":"yes","dns_resp_seen":"yes","avg_rssi":"-77"}
+Tue Oct 17 14:29:18 2023 daemon.info stahtd: stahtd[3266]: [STA-TRACKER].stahtd_dump_event(): {"message_type":"STA_ASSOC_TRACKER","mac":"00:35:ff:1b:e4:22","vap":"ath0","event_type":"fixup","assoc_status":"0","event_id":"3","arp_reply_gw_seen":"yes","dns_resp_seen":"yes","avg_rssi":"-76"}
+Tue Oct 17 14:29:48 2023 daemon.info stahtd: stahtd[3266]: [STA-TRACKER].stahtd_dump_event(): {"message_type":"STA_ASSOC_TRACKER","mac":"00:35:ff:1b:e4:22","vap":"ath0","event_type":"fixup","assoc_status":"0","event_id":"3","arp_reply_gw_seen":"yes","dns_resp_seen":"yes","avg_rssi":"-76"}
+Tue Oct 17 14:30:18 2023 daemon.info stahtd: stahtd[3266]: [STA-TRACKER].stahtd_dump_event(): 
+
+Snug U7HD
+
+Tue Oct 17 14:33:07 2023 daemon.info stahtd: stahtd[24008]: [STA-TRACKER].stahtd_dump_event(): {"message_type":"STA_ASSOC_TRACKER","mac":"38:68:a4:0c:c5:a6","vap":"ath1","event_type":"fixup","assoc_status":"0","event_id":"1","arp_reply_gw_seen":"yes","dns_resp_seen":"yes","avg_rssi":"-90"}
+Tue Oct 17 14:33:10 2023 daemon.info stahtd: stahtd[24008]: [STA-TRACKER].stahtd_dump_event(): {"message_type":"STA_ASSOC_TRACKER","mac":"e8:e8:b7:a0:78:a7","vap":"ath5","event_type":"fixup","assoc_status":"0","event_id":"1","arp_reply_gw_seen":"yes","dns_resp_seen":"yes","avg_rssi":"-48"}
+Tue Oct 17 14:33:22 2023 daemon.info stahtd: stahtd[24008]: [STA-TRACKER].stahtd_dump_event(): 
+
+Gateway UGW
+
+Oct 17 15:48:50 Gateway dhcpd: execute_statement argv[0] = /opt/vyatta/sbin/on-dhcp-event.sh
+Oct 17 15:48:50 Gateway dhcpd: execute_statement argv[1] = release
+Oct 17 15:48:50 Gateway dhcpd: execute: bad arg 2
+Oct 17 15:48:50 Gateway dhcpd: DHCPRELEASE of 192.168.1.75 from 70:ee:50:13:87:66 (Netatmo-Personal-Weather-Station) via eth1 (found)
+
+Sitting Room TV US8P60
+
+Jan  1 00:00:44 SittingRoomTV syslog.info syslogd started: BusyBox v1.25.1
+Jan  1 00:00:44 SittingRoomTV kern.info kernel: [    0.000000] PERCPU: Embedded 7 pages/cpu @c1cb4000 s6272 r8192 d14208 u32768
+Jan  1 00:00:44 SittingRoomTV kern.warn kernel: [    0.000000] Built 1 zonelists in Zone order, mobility grouping on.  Total pages: 61952
+Jan  1 00:00:44 SittingRoomTV kern.notice kernel: [    0.000000] Kernel command line: console=ttyS0,115200 mem=128M@0x0 mem=128M@0x68000000 mtdparts=spi1.0:768k(u-boot),64k(u-boot-env),64k(shmoo),15360k(kernel0),15424k(kernel1),1024k(cfg),64k(EEPROM) ubntbootid=1 ubootver=usw-v1.1.4.115-g14af1ee6
+
+Garage Switch USC8
+
+Jan  1 00:01:11 SpareSwitch syslog.info syslogd started: BusyBox v1.25.1
+Jan  1 00:01:11 SpareSwitch daemon.info mcad: mcad[534]: ace_reporter.reporter_reload_default_url(): mgmt_cfg.default_url gets http://unifi:8080/inform
+Jan  1 00:01:11 SpareSwitch daemon.info mcad: mcad[534]: ace_reporter.reporter_reload_config(): default url = http://unifi:8080/inform
+Jan  1 00:01:11 SpareSwitch daemon.info mcad: mcad[534]: ace_reporter.reporter_reload_config(): set inform_url http://192.168.1.45:8080/inform
+Jan  1 00:01:11 SpareSwitch daemon.info mcad: mcad[534]: ace_reporter.reporter_reload_config(): authkey=74CEA31B2963288191EC30859CC6600B
+
+Cloakroom U7PG2
+
+Tue Oct 17 10:58:22 2023 daemon.info mcad: mcad[21270]: wireless_agg_stats.log_sta_anomalies(): bssid=1e:e8:29:67:97:b5 radio=wifi0 vap=ath1 sta=70:2c:1f:5d:9c:8f satisfaction_now=78 anomalies=tcp_latency
+Tue Oct 17 10:58:37 2023 daemon.info mcad: mcad[21270]: wireless_agg_stats.log_sta_anomalies(): bssid=1e:e8:29:67:97:b5 radio=wifi0 vap=ath1 sta=70:2c:1f:5d:9c:8f satisfaction_now=78 anomalies=tcp_latency
+Tue Oct 17 10:58:52 2023 daemon.info mcad: mcad[21270]: wireless_agg_stats.log_sta_anomalies(): bssid=1e:e8:29:67:97:b5 radio=wifi0 vap=ath1 sta=70:2c:1f:5d:9c:8f satisfaction_now=75 anomalies=tcp_latency
+Tue Oct 17 10:59:37 2023 daemon.info mcad: mcad[21270]: wireless_agg_stats.log_sta_anomalies(): bssid=1e:e8:29:67:97:b5 radio=wifi0 vap=ath1 sta=70:2c:1f:5d:9c:8f satisfaction_now=74 anomalies=tcp_latency
+Tue Oct 17 10:59:52 2023 daemon.info mcad: mcad[21270]: wireless_agg_stats.log_sta_anomalies(): bssid=1e:e8:29:67:97:b5 radio=wifi0 vap=ath1 sta=70:2c:1f:5d:9c:8f satisfaction_now=74 anomalies=tcp_latency
+Tue Oct 17 11:00:08 2023 daemon.info hostapd[21258]: ath1: STA 8a:8c:50:44:44:e0 IEEE 802.11: sta_stats
+

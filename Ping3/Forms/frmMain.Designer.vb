@@ -27,9 +27,9 @@ Partial Class frmMain
     Private Sub InitializeComponent()
         components = New Container()
         Dim resources As ComponentResourceManager = New ComponentResourceManager(GetType(frmMain))
-        Dim ListViewGroup1 As ListViewGroup = New ListViewGroup("Switch", HorizontalAlignment.Left)
-        Dim ListViewGroup2 As ListViewGroup = New ListViewGroup("Gateway", HorizontalAlignment.Left)
-        Dim ListViewGroup3 As ListViewGroup = New ListViewGroup("Access Point", HorizontalAlignment.Left)
+        Dim ListViewGroup4 As ListViewGroup = New ListViewGroup("Switch", HorizontalAlignment.Left)
+        Dim ListViewGroup5 As ListViewGroup = New ListViewGroup("Gateway", HorizontalAlignment.Left)
+        Dim ListViewGroup6 As ListViewGroup = New ListViewGroup("Access Point", HorizontalAlignment.Left)
         PrintPreviewDialog1 = New PrintPreviewDialog()
         lstContextMenu = New ContextMenuStrip(components)
         mnuGroups = New ToolStripMenuItem()
@@ -79,9 +79,17 @@ Partial Class frmMain
         Splitter1 = New Splitter()
         TabUnifiDevices = New TabPage()
         TabDevice = New TabControl()
-        TabPage2 = New TabPage()
+        TabPage4 = New TabPage()
         lblDevicedetail = New TextBox()
-        TabPage3 = New TabPage()
+        TabPage2 = New TabPage()
+        lstMessageTable = New ListView()
+        ColumnHeader28 = New ColumnHeader()
+        ColumnHeader29 = New ColumnHeader()
+        ColumnHeader30 = New ColumnHeader()
+        ColumnHeader31 = New ColumnHeader()
+        ColumnHeader32 = New ColumnHeader()
+        ToolStrip2 = New ToolStrip()
+        btnLogRefresh = New ToolStripButton()
         Splitter3 = New Splitter()
         lstUnifiDevices = New ListView()
         ColumnHeader11 = New ColumnHeader()
@@ -126,7 +134,7 @@ Partial Class frmMain
         btnShowChart = New ToolStripButton()
         mnuAddToChart = New ToolStripButton()
         imgListPlayStop = New ImageList(components)
-        lblMessages = New TextBox()
+        btnFilter = New ToolStripDropDownButton()
         lstContextMenu.SuspendLayout()
         CType(NumInterval, ISupportInitialize).BeginInit()
         MenuStrip1.SuspendLayout()
@@ -136,8 +144,9 @@ Partial Class frmMain
         TabPage1.SuspendLayout()
         TabUnifiDevices.SuspendLayout()
         TabDevice.SuspendLayout()
+        TabPage4.SuspendLayout()
         TabPage2.SuspendLayout()
-        TabPage3.SuspendLayout()
+        ToolStrip2.SuspendLayout()
         DeviceContextStrip.SuspendLayout()
         TabUnifiClients.SuspendLayout()
         ClientContextStrip.SuspendLayout()
@@ -209,7 +218,7 @@ Partial Class frmMain
         ' MenuStrip1
         ' 
         MenuStrip1.ImageScalingSize = New Size(36, 36)
-        MenuStrip1.Items.AddRange(New ToolStripItem() {FileToolStripMenuItem, EditToolStripMenuItem, ViewToolStripMenuItem})
+        MenuStrip1.Items.AddRange(New ToolStripItem() {FileToolStripMenuItem, ViewToolStripMenuItem, EditToolStripMenuItem})
         MenuStrip1.Location = New Point(0, 0)
         MenuStrip1.Name = "MenuStrip1"
         MenuStrip1.Size = New Size(1307, 24)
@@ -428,13 +437,13 @@ Partial Class frmMain
         lstIP.Dock = DockStyle.Fill
         lstIP.FullRowSelect = True
         lstIP.GridLines = True
-        ListViewGroup1.Header = "Switch"
-        ListViewGroup1.Name = "ListViewGroup1"
-        ListViewGroup2.Header = "Gateway"
-        ListViewGroup2.Name = "ListViewGroup2"
-        ListViewGroup3.Header = "Access Point"
-        ListViewGroup3.Name = "ListViewGroup3"
-        lstIP.Groups.AddRange(New ListViewGroup() {ListViewGroup1, ListViewGroup2, ListViewGroup3})
+        ListViewGroup4.Header = "Switch"
+        ListViewGroup4.Name = "ListViewGroup1"
+        ListViewGroup5.Header = "Gateway"
+        ListViewGroup5.Name = "ListViewGroup2"
+        ListViewGroup6.Header = "Access Point"
+        ListViewGroup6.Name = "ListViewGroup3"
+        lstIP.Groups.AddRange(New ListViewGroup() {ListViewGroup4, ListViewGroup5, ListViewGroup6})
         lstIP.HeaderStyle = ColumnHeaderStyle.Nonclickable
         lstIP.Location = New Point(4, 3)
         lstIP.Margin = New Padding(1)
@@ -527,8 +536,8 @@ Partial Class frmMain
         ' 
         ' TabDevice
         ' 
+        TabDevice.Controls.Add(TabPage4)
         TabDevice.Controls.Add(TabPage2)
-        TabDevice.Controls.Add(TabPage3)
         TabDevice.Dock = DockStyle.Fill
         TabDevice.Location = New Point(4, 262)
         TabDevice.Name = "TabDevice"
@@ -536,16 +545,16 @@ Partial Class frmMain
         TabDevice.Size = New Size(1291, 174)
         TabDevice.TabIndex = 9
         ' 
-        ' TabPage2
+        ' TabPage4
         ' 
-        TabPage2.Controls.Add(lblDevicedetail)
-        TabPage2.Location = New Point(4, 24)
-        TabPage2.Name = "TabPage2"
-        TabPage2.Padding = New Padding(3)
-        TabPage2.Size = New Size(1283, 146)
-        TabPage2.TabIndex = 0
-        TabPage2.Text = "Device Detail"
-        TabPage2.UseVisualStyleBackColor = True
+        TabPage4.Controls.Add(lblDevicedetail)
+        TabPage4.Location = New Point(4, 24)
+        TabPage4.Name = "TabPage4"
+        TabPage4.Padding = New Padding(3)
+        TabPage4.Size = New Size(1283, 146)
+        TabPage4.TabIndex = 2
+        TabPage4.Text = "Device Detail"
+        TabPage4.UseVisualStyleBackColor = True
         ' 
         ' lblDevicedetail
         ' 
@@ -558,18 +567,73 @@ Partial Class frmMain
         lblDevicedetail.ReadOnly = True
         lblDevicedetail.ScrollBars = ScrollBars.Both
         lblDevicedetail.Size = New Size(1277, 140)
-        lblDevicedetail.TabIndex = 8
+        lblDevicedetail.TabIndex = 9
         ' 
-        ' TabPage3
+        ' TabPage2
         ' 
-        TabPage3.Controls.Add(lblMessages)
-        TabPage3.Location = New Point(4, 24)
-        TabPage3.Name = "TabPage3"
-        TabPage3.Padding = New Padding(3)
-        TabPage3.Size = New Size(1283, 146)
-        TabPage3.TabIndex = 1
-        TabPage3.Text = "Message Logs"
-        TabPage3.UseVisualStyleBackColor = True
+        TabPage2.Controls.Add(lstMessageTable)
+        TabPage2.Controls.Add(ToolStrip2)
+        TabPage2.Location = New Point(4, 24)
+        TabPage2.Name = "TabPage2"
+        TabPage2.Padding = New Padding(3)
+        TabPage2.Size = New Size(1283, 146)
+        TabPage2.TabIndex = 0
+        TabPage2.Text = "Log Messages"
+        TabPage2.UseVisualStyleBackColor = True
+        ' 
+        ' lstMessageTable
+        ' 
+        lstMessageTable.Columns.AddRange(New ColumnHeader() {ColumnHeader28, ColumnHeader29, ColumnHeader30, ColumnHeader31, ColumnHeader32})
+        lstMessageTable.Dock = DockStyle.Fill
+        lstMessageTable.Location = New Point(3, 28)
+        lstMessageTable.Name = "lstMessageTable"
+        lstMessageTable.Size = New Size(1277, 115)
+        lstMessageTable.TabIndex = 10
+        lstMessageTable.UseCompatibleStateImageBehavior = False
+        lstMessageTable.View = View.Details
+        ' 
+        ' ColumnHeader28
+        ' 
+        ColumnHeader28.Text = "Time"
+        ColumnHeader28.Width = 100
+        ' 
+        ' ColumnHeader29
+        ' 
+        ColumnHeader29.Text = "Reporter"
+        ColumnHeader29.Width = 120
+        ' 
+        ' ColumnHeader30
+        ' 
+        ColumnHeader30.Text = " Module"
+        ColumnHeader30.Width = 100
+        ' 
+        ' ColumnHeader31
+        ' 
+        ColumnHeader31.Text = "Level"
+        ColumnHeader31.Width = 100
+        ' 
+        ' ColumnHeader32
+        ' 
+        ColumnHeader32.Text = "Message"
+        ColumnHeader32.Width = 1000
+        ' 
+        ' ToolStrip2
+        ' 
+        ToolStrip2.Items.AddRange(New ToolStripItem() {btnLogRefresh, btnFilter})
+        ToolStrip2.Location = New Point(3, 3)
+        ToolStrip2.Name = "ToolStrip2"
+        ToolStrip2.Size = New Size(1277, 25)
+        ToolStrip2.TabIndex = 9
+        ToolStrip2.Text = "ToolStrip2"
+        ' 
+        ' btnLogRefresh
+        ' 
+        btnLogRefresh.DisplayStyle = ToolStripItemDisplayStyle.Text
+        btnLogRefresh.Image = CType(resources.GetObject("btnLogRefresh.Image"), Image)
+        btnLogRefresh.ImageTransparentColor = Color.Magenta
+        btnLogRefresh.Name = "btnLogRefresh"
+        btnLogRefresh.Size = New Size(50, 22)
+        btnLogRefresh.Text = "Refresh"
         ' 
         ' Splitter3
         ' 
@@ -891,18 +955,14 @@ Partial Class frmMain
         imgListPlayStop.Images.SetKeyName(0, "Play")
         imgListPlayStop.Images.SetKeyName(1, "Stop")
         ' 
-        ' lblMessages
+        ' btnFilter
         ' 
-        lblMessages.BorderStyle = BorderStyle.None
-        lblMessages.Dock = DockStyle.Fill
-        lblMessages.Location = New Point(3, 3)
-        lblMessages.Margin = New Padding(4, 3, 4, 3)
-        lblMessages.Multiline = True
-        lblMessages.Name = "lblMessages"
-        lblMessages.ReadOnly = True
-        lblMessages.ScrollBars = ScrollBars.Both
-        lblMessages.Size = New Size(1277, 140)
-        lblMessages.TabIndex = 9
+        btnFilter.DisplayStyle = ToolStripItemDisplayStyle.Text
+        btnFilter.Image = CType(resources.GetObject("btnFilter.Image"), Image)
+        btnFilter.ImageTransparentColor = Color.Magenta
+        btnFilter.Name = "btnFilter"
+        btnFilter.Size = New Size(46, 22)
+        btnFilter.Text = "Filter"
         ' 
         ' frmMain
         ' 
@@ -930,10 +990,12 @@ Partial Class frmMain
         TabPage1.ResumeLayout(False)
         TabUnifiDevices.ResumeLayout(False)
         TabDevice.ResumeLayout(False)
+        TabPage4.ResumeLayout(False)
+        TabPage4.PerformLayout()
         TabPage2.ResumeLayout(False)
         TabPage2.PerformLayout()
-        TabPage3.ResumeLayout(False)
-        TabPage3.PerformLayout()
+        ToolStrip2.ResumeLayout(False)
+        ToolStrip2.PerformLayout()
         DeviceContextStrip.ResumeLayout(False)
         TabUnifiClients.ResumeLayout(False)
         ClientContextStrip.ResumeLayout(False)
@@ -1005,7 +1067,6 @@ Partial Class frmMain
     Friend WithEvents lblFullDetails As Label
     Friend WithEvents Splitter2 As Splitter
     Friend WithEvents Splitter3 As Splitter
-    Friend WithEvents lblDevicedetail As TextBox
     Friend WithEvents ColumnHeader26 As ColumnHeader
     Friend WithEvents ColumnHeader27 As ColumnHeader
     Friend WithEvents ClientContextStrip As ContextMenuStrip
@@ -1041,6 +1102,16 @@ Partial Class frmMain
     Friend WithEvents mnuGetLogs As ToolStripMenuItem
     Friend WithEvents TabDevice As TabControl
     Friend WithEvents TabPage2 As TabPage
-    Friend WithEvents TabPage3 As TabPage
-    Friend WithEvents lblMessages As TextBox
+    Friend WithEvents lstMessageTable As ListView
+    Friend WithEvents ToolStrip2 As ToolStrip
+    Friend WithEvents btnLogRefresh As ToolStripButton
+    Friend WithEvents ToolStripButton3 As ToolStripButton
+    Friend WithEvents TabPage4 As TabPage
+    Friend WithEvents ColumnHeader28 As ColumnHeader
+    Friend WithEvents ColumnHeader29 As ColumnHeader
+    Friend WithEvents ColumnHeader30 As ColumnHeader
+    Friend WithEvents ColumnHeader31 As ColumnHeader
+    Friend WithEvents ColumnHeader32 As ColumnHeader
+    Friend WithEvents lblDevicedetail As TextBox
+    Friend WithEvents btnFilter As ToolStripDropDownButton
 End Class

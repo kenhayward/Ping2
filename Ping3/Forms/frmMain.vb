@@ -503,10 +503,61 @@ Public Class frmMain
             Catch ex As Exception
                 Me.lblDevicedetail.Text = thisDevice.FullDetails
             End Try
-            Me.lblMessages.Text = thisDevice.Logs
+            ShowLogMessages(thisDevice, True)
         End If
     End Sub
-
+    Private MenuBuilding As Boolean
+    Private Sub filter_reset()
+        MenuBuilding = True
+        For Each item As Object In btnFilter.DropDownItems
+            If TypeOf item Is ToolStripMenuItem Then
+                If item.CheckOnClick Then
+                    item.Checked = True
+                End If
+            End If
+        Next
+        MenuBuilding = False
+    End Sub
+    Private Sub ShowLogMessages(thisDevice As UnifiDevice, ResetFilter As Boolean)
+        If MenuBuilding Then Exit Sub
+        If ResetFilter Then
+            btnFilter.DropDownItems.Clear()
+            For Each level In thisDevice.Levels
+                Dim newmnu = New ToolStripMenuItem(level.Key) With {.Tag = level, .CheckOnClick = True, .Checked = True}
+                btnFilter.DropDownItems.Add(newmnu)
+                AddHandler newmnu.Click, AddressOf filter_click
+            Next
+            Dim mnuSep = New ToolStripSeparator
+            btnFilter.DropDownItems.Add(mnuSep)
+            Dim mnuAddNew = New ToolStripMenuItem("Reset")
+            btnFilter.DropDownItems.Add(mnuAddNew)
+            AddHandler mnuAddNew.Click, AddressOf filter_reset
+        End If
+        Dim filters As New Dictionary(Of String, Boolean)
+        For Each item In btnFilter.DropDownItems
+            If TypeOf item IsNot ToolStripSeparator Then
+                If item.CheckOnClick Then
+                    filters.Add(item.Text, item.Checked)
+                End If
+            End If
+        Next
+        Me.lstMessageTable.Items.Clear()
+        lstMessageTable.Tag = thisDevice
+        For Each log In thisDevice.DeviceLogs
+            If filters.ContainsKey(log.LogLevel) Then
+                If filters.Item(log.LogLevel) Then
+                    Dim MyItem As New ListViewItem
+                    MyItem.Text = log.LogWhen
+                    MyItem.SubItems.Add(log.LogReporter)
+                    MyItem.SubItems.Add(log.LogModule)
+                    MyItem.SubItems.Add(log.LogLevel)
+                    MyItem.SubItems.Add(log.LogMessage)
+                    MyItem.Tag = log
+                    Me.lstMessageTable.Items.Add(MyItem)
+                End If
+            End If
+        Next
+    End Sub
     Private Sub mnuAddClientToPingList_Click(sender As Object, e As EventArgs) Handles mnuAddClientToPingList.Click
         If lstClient.SelectedItems.Count > 0 Then
             Dim ClientsToAdd As New Dictionary(Of String, String)
@@ -774,8 +825,7 @@ Public Class frmMain
             mnuGetLogs.Enabled = False
         End If
     End Sub
-
-    Private Sub mnuGetLogs_Click(sender As Object, e As EventArgs) Handles mnuGetLogs.Click
+    Private Sub GetLogmessages()
         If lstUnifiDevices.SelectedItems.Count > 0 Then
             Me.Cursor = Cursors.WaitCursor
             For Each item In lstUnifiDevices.SelectedItems
@@ -785,13 +835,25 @@ Public Class frmMain
                 If Result Is Nothing Then
                     UpdateStatus("Failed to get Unifi Logs for " & Device.Name)
                 Else
+                    If lstUnifiDevices.SelectedItems.Count = 1 Then
+                        ShowLogMessages(Device, True)
+                    End If
                     UpdateStatus("Retrieved Unifi Logs for " & Device.Name)
                 End If
             Next
             Me.Cursor = Cursors.Default
 
         End If
+
+    End Sub
+    Private Sub mnuGetLogs_Click(sender As Object, e As EventArgs) Handles mnuGetLogs.Click, btnLogRefresh.Click
+        GetLogmessages()
     End Sub
 
+
+    Private Sub filter_click(sender As Object, e As EventArgs)
+
+        ShowLogMessages(lstMessageTable.Tag, False)
+    End Sub
 #End Region
 End Class
